@@ -1,0 +1,18 @@
+﻿@model BLL.DTO.PictureInScreen
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="card mb-3">
+    <img src="@Model.Picture.Path" class="card-img-top img-fluid" alt="" style="object-fit: contain;width: auto; max-height: 500px;">
+    <div class="card-body" align="center">
+        <div class="row">
+            <h6 class="col-6" style="text-decoration: underline; text-align: end"><b>@Resources.Domain.PictureView.Picture.Shown:</b></h6>
+            <h6 class="col-6 blue-text" style="text-align: start; padding-right: 5px;">@Model.ShowAddSeconds</h6>
+        </div>
+        <p class="card-text">@Model.Picture.Comment</p>
+    </div>
+    <div class="card-footer" align="center">
+        <a asp-controller="ScreenSettings" asp-action="Index" class="btn dark-blue-outline-button">@Resources.Domain.ScreenView.Screen.BackToScreen</a>
+    </div>
+</div>

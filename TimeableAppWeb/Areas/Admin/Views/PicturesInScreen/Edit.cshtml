@@ -1,0 +1,36 @@
+﻿@model BLL.DTO.Picture
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@Resources.Domain.PictureView.Picture.ChangeBgPicture</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <img src="@Model.Path" alt="" style="max-width: 100%; max-height: 400px;">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <hr style="margin-top: 20px" />
+            <div class="col-md-10">
+                <p>@Resources.Domain.PictureView.Picture.Upload:</p>
+                <input type="file" name="file" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label">@Resources.Domain.PictureView.Picture.Comment</label>
+                <textarea asp-for="Comment" class="form-control"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <input type="hidden" asp-for="Path" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn light-blue-button" />
+                <a asp-controller="ScreenSettings" asp-action="Index" class="btn dark-blue-outline-button" style="margin-left: 20px;">@Resources.Domain.ScreenView.Screen.BackToScreen</a>
+            </div>
+        </form>
+    </div>
+</div>
+

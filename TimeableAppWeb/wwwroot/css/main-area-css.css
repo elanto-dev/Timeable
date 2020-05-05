@@ -1,0 +1,74 @@
+﻿.green-text {
+    color: #136C2F;
+}
+
+.red-text {
+    color: #A70C1C;
+}
+
+.blue-text {
+    color: #342B60;
+}
+
+.event-bg {
+    background: #CBF7CC;
+}
+
+.started-lesson-bg {
+    background: #FFE3E3;
+}
+
+.starting-in-5min-lesson-bg {
+    background: #FFF0BF;
+}
+
+.starting-in-15min-lesson-bg {
+    background: #FFFEE6;
+}
+
+.light-blue-button {
+    background: #8DCFFF;
+    color: #342B60;
+    border-color: #7A8288;
+    width: 40%
+}
+
+.light-blue-button:hover {
+    color: #342B60;
+    background-color: #81BDE8;
+    border-color: #7A8288;
+}
+
+.light-blue-button:focus, .light-blue-button.focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.light-blue-button.disabled, .light-blue-button:disabled {
+    color: #342B60;
+    background-color: #8DCFFF;
+    border-color: #7A8288;
+}
+
+.light-blue-button:not(:disabled):not(.disabled):active, .light-blue-button:not(:disabled):not(.disabled).active,
+.show > .light-blue-button.dropdown-toggle {
+    color: #342B60;
+    background-color: #81BDE8;
+    border-color: #7A8288;
+}
+
+.light-blue-button:not(:disabled):not(.disabled):active:focus, .light-blue-button:not(:disabled):not(.disabled).active:focus,
+.show > .light-blue-button.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.table-wrap {
+    display: block;
+    overflow-y: auto;
+}
+
+.background-image {
+    background: no-repeat center center fixed;
+}
+
+
+

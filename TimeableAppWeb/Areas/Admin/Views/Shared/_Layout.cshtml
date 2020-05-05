@@ -1,0 +1,81 @@
+﻿@using System.Globalization
+@using Domain.Identity
+@using Microsoft.AspNetCore.Identity
+@using TimeableAppWeb.Areas.Admin.Helpers
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Timeable</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" href="~/css/admin-area-css.css" />
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/flatpickr/flatpickr.min.js"></script>
+    <script src="~/lib/flatpickr/l10n/default.js"></script>
+    <script src="~/lib/flatpickr/l10n/et.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+</head>
+
+<body style="background: #F4F4F4;">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background-color: #342B60">
+            <div class="container">
+                <a class="navbar-brand blue-text" asp-area="Admin" asp-controller="Home" asp-action="Index" style="margin-right: 10px;">Timeable</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="ScreenSettings" asp-action="Index">@Resources.Views.Shared._Layout.Screen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="ScheduleAndEvents" asp-action="Index">@Resources.Views.Shared._Layout.Schedule</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            var user = UserManager.FindByIdAsync(UserManager.GetUserId(User)).Result;
+                            var roles = UserManager.GetRolesAsync(user).Result;
+                            @if (roles.Any(e => e.Equals(nameof(RoleNamesEnum.HeadAdmin))))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AppUsers" asp-action="Index">@Resources.Views.Shared._Layout.Users</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container blue-text">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer blue-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">&copy; 2020 - Timeable - <a asp-area="Admin" asp-controller="Home" asp-action="Privacy">@Resources.Views.Shared._Layout.Privacy</a></div>
+                <div class="col-md-4">
+                    <partial name="_LanguageSelectionPartial" /></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

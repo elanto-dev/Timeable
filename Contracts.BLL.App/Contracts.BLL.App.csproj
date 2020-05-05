@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BLL.DTO\BLL.DTO.csproj" />
+    <ProjectReference Include="..\Contracts.Bll.Base\Contracts.BLL.Base.csproj" />
+    <ProjectReference Include="..\Contracts.DAL.App\Contracts.DAL.App.csproj" />
+  </ItemGroup>
+
+</Project>

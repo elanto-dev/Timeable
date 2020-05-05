@@ -1,0 +1,142 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Domain\AppUsersView\AppUser.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppUser.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\ScheduleAndEventView\ScheduleAndEvent.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ScheduleAndEvent.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\EventView\Events.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Events.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\PictureView\Picture.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Picture.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\ScreenView\Screen.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Screen.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\SubjectInSchedule\SubjectInSchedule.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SubjectInSchedule.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ClientHome\Index.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Index.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Common.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Shared\_Layout.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_Layout.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Shared\_LoginPartial.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_LoginPartial.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SubjectInScheduleViewModel\SubjectTypes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SubjectTypes.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Domain\AppUsersView\AppUser.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\AppUsersView\AppUser.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppUser.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\ScheduleAndEventView\ScheduleAndEvent.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\ScheduleAndEventView\ScheduleAndEvent.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ScheduleAndEvent.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\EventView\Events.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\EventView\Events.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Events.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\PictureView\Picture.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Picture.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\ScreenView\Screen.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\ScreenView\Screen.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Screen.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\SubjectInSchedule\SubjectInSchedule.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Domain\SubjectInSchedule\SubjectInSchedule.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubjectInSchedule.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ClientHome\Index.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ClientHome\Index.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Index.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Common.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Common.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Shared\_Layout.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Shared\_Layout.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Shared\_LoginPartial.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Shared\_LoginPartial.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>_LoginPartial.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SubjectInScheduleViewModel\SubjectTypes.et-EE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SubjectInScheduleViewModel\SubjectTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubjectTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,50 @@
+﻿@model TimeableAppWeb.Areas.Admin.ViewModels.PictureCreateEditViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@if (Model.IsBackgroundPicture)
+{
+    <h1>@Resources.Domain.PictureView.Picture.CreateBgPicture</h1>
+}
+else
+{
+<h1>@Resources.Domain.PictureView.Picture.AddPromotion</h1>
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="col-md-10">
+                <p>@Resources.Domain.PictureView.Picture.Upload:</p>
+                <input type="file" name="file" />
+            </div>
+            <hr style="margin-top: 20px" />
+            @if (!Model.IsBackgroundPicture)
+            {
+                <div class="form-group">
+                    <label asp-for="@Model.ShowPromotionSecondsString">@Resources.Domain.PictureView.Picture.ShowPromo:</label>
+                    @Html.DropDownListFor(m => m.ShowPromotionSecondsString, Model.PromotionSecondsSelectList, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.ShowScheduleSecondsString">@Resources.Domain.PictureView.Picture.ShowSchedule:</label>
+                    @Html.DropDownListFor(m => m.ShowScheduleSecondsString, Model.ScheduleSecondsSelectList, new { @class = "form-control" })
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="@Model.Picture.Comment">@Resources.Domain.PictureView.Picture.Comment</label>
+                <textarea asp-for="@Model.Picture.Comment" class="form-control"></textarea>
+                <span asp-validation-for="@Model.Picture.Comment" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="@Model.ScreenId" />
+            <input type="hidden" asp-for="@Model.IsBackgroundPicture" />
+            <div class="form-group">
+                <input type="submit" value="@Resources.Views.Common.Save" class="btn light-blue-button" />
+                <a asp-controller="ScreenSettings" asp-action="Index" class="btn dark-blue-outline-button" style="margin-left: 20px;">@Resources.Domain.ScreenView.Screen.BackToScreen</a>
+            </div>
+        </form>
+    </div>
+</div>

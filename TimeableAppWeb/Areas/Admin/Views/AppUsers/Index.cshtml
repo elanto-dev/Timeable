@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TimeableAppWeb.Areas.Admin.ViewModels.AppUserViewModels.AppUserIndexViewModelDtos>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@Resources.Domain.AppUsersView.AppUser.Users</h1>
+<p><a class="btn dark-blue-button" asp-action="Create">@Resources.Views.Common.Create</a></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Resources.Domain.AppUsersView.AppUser.FullName
+            </th>
+            <th>
+                @Resources.Domain.AppUsersView.AppUser.EMail
+            </th>
+            <th>
+                @Resources.Domain.AppUsersView.AppUser.ScheduleManagement
+            </th>
+            <th>
+                @Resources.Domain.AppUsersView.AppUser.EventManagement
+            </th>
+            <th>
+                @Resources.Domain.AppUsersView.AppUser.ScreenManagement
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScheduleManagement)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventsManagement)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScreenManagement)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        @if (!item.UserHasScreen)
+                        {
+                            <a class="btn btn-outline-success" asp-controller="AppUsers" asp-action="AddScreenToUser" asp-route-id="@item.Id">@Resources.Domain.AppUsersView.AppUser.AddScreenToUser</a>
+
+                        }
+                        <a class="btn light-blue-button" asp-controller="AppUsers" asp-action="Edit" asp-route-id="@item.Id">@Resources.Views.Common.Edit</a>
+                        <a class="btn btn-outline-danger" asp-controller="AppUsers" asp-action="Delete" asp-route-id="@item.Id">@Resources.Views.Common.Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

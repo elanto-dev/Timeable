@@ -1,0 +1,176 @@
+﻿@model TimeableAppWeb.Areas.Admin.ViewModels.ScheduleAndEventsIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <head>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    </head>
+
+<div class="row">
+    <div class="col-6">
+        <h1>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Events</h1>
+    </div>
+    <div class="col-6" style="position: relative">
+        <h3 style="position: absolute;bottom: 0; right: 0;">@Model.TodayDate</h3>
+    </div>
+
+    <div class="col-6">
+        <a class="btn dark-blue-button" asp-controller="Events" asp-action="Create">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.AddEvent</a>
+    </div>
+    <div class="col-6" style="position: relative">
+        <h4 style="position: absolute;bottom: 0; right: 0;">@Model.WeekNumber. @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Week</h4>
+    </div>
+</div>
+<hr />
+<table class="table blue-text">
+    <thead>
+        <tr>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.EventDateTime
+            </th>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.EventName
+            </th>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.EventPlace
+            </th>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.EventShowFromTo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FutureEvents)
+        {
+            <tr>
+                <td>
+                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.From</b> @Html.DisplayFor(modelItem => item.StartDateTimeString)
+                <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.to</b> @Html.DisplayFor(modelItem => item.EndDateTimeString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Place)
+                </td>
+                <td>
+                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.From</b> @Html.DisplayFor(modelItem => item.ShowFromDateTimeString)
+                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.to</b> @Html.DisplayFor(modelItem => item.ShowToDateTimeString)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn light-blue-button" asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">@Resources.Views.Common.Edit</a>
+                        <a class="modalEventLink btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="@item.Id">@Resources.Views.Common.Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        <h1>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Lectures</h1>
+    </div>
+    <div class="col-12">
+        <a class="btn dark-blue-button" asp-controller="SubjectInSchedules" asp-action="Create" asp-route-scheduleId="@Model.ScheduleId">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.AddLecture</a>
+    </div>
+</div>
+<hr />
+<table class="table blue-text">
+    <thead>
+        <tr>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureTime
+            </th>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureName
+            </th>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Lecturers
+            </th>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureTypes
+            </th>
+            <th>
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureRooms
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Subjects)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartToEndString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LectureNameWithCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lecturers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LectureType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rooms)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn light-blue-button" asp-controller="SubjectInSchedules" asp-action="Edit" asp-route-id="@item.SubjectInScheduleId">@Resources.Views.Common.Edit</a>
+                        <a class="modalSubjectLink btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="@item.SubjectInScheduleId">@Resources.Views.Common.Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@using (Html.BeginForm("DeleteEventOrSubject", "ScheduleAndEvents", FormMethod.Post))
+{
+
+    <div class="modal fade blue-text" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">@Resources.Views.Common.Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="delete-message"></p>
+                    @Html.Hidden("id", "", new { @class = "form-control" })
+                </div>
+                <div class="for-is-subject">
+                    @Html.Hidden("isSubject", "", new { @class = "form-control" })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark-blue-outline-button" data-dismiss="modal">@Resources.Views.Common.Close</button>
+                    <button type="Submit" class="btn btn-danger">@Resources.Views.Common.Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $('.modalSubjectLink').click(function () {
+        var subjectId = $(this).data('id');//get Id from data-id
+        $('.modal-body .form-control').val(subjectId); // load Edit page to modal content
+        $('.for-is-subject .form-control').val(true); // load Edit page to modal content
+        $('#delete-message').text('@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.DeleteSubjectMessage');
+    });
+    $('.modalEventLink').click(function () {
+        var eventId = $(this).data('id');//get Id from data-id
+        $('.modal-body .form-control').val(eventId); // load Edit page to modal content
+        $('.for-is-subject .form-control .for-is-subject').val(false); // load Edit page to modal content
+        $('#delete-message').text('@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.DeleteEventMessage');
+    });
+</script>

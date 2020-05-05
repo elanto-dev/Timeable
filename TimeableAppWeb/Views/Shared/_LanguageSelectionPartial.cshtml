@@ -1,0 +1,22 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    // ======================= i18n =============================
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = new SelectList(LocOptions.Value.SupportedUICultures, nameof(CultureInfo.Name),
+        nameof(CultureInfo.NativeName), CultureInfo.CurrentUICulture.Name);
+}
+
+<form id="selectLanguage" style="width: 100%" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" method="post">
+    <div class="form-group row">
+        <label for="languageSelect" class="col-sm-6 col-md-5 col-lg-4 col-form-label text-center" style="padding-top: 17px">@Resources.Views.Common.Language</label>
+        <div class="col-sm-6 col-md-7 col-lg-8 text-right" style="padding-top: 14px">
+            <select id="languageSelect" name="culture" onchange="this.form.submit();" asp-items="cultureItems" class="form-control form-control-sm"></select>
+        </div>
+    </div>
+</form>

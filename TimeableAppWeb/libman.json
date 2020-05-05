@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.3.1",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery.min.js",
+        "jquery.js",
+        "jquery.min.map"
+      ]
+    },
+    {
+      "library": "moment.js@2.24.0",
+      "destination": "wwwroot/lib/momentjs",
+      "files": [
+        "locale/et.js",
+        "moment.min.js"
+      ]
+    },
+    {
+      "library": "flatpickr@4.6.3",
+      "destination": "wwwroot/lib/flatpickr/",
+      "files": [
+        "flatpickr.min.js",
+        "plugins/confirmDate/confirmDate.css",
+        "plugins/confirmDate/confirmDate.js",
+        "plugins/labelPlugin/labelPlugin.js",
+        "plugins/monthSelect/style.css",
+        "plugins/weekSelect/weekSelect.js",
+        "plugins/minMaxTimePlugin.js",
+        "plugins/rangePlugin.js",
+        "plugins/scrollPlugin.js",
+        "themes/airbnb.css",
+        "themes/confetti.css",
+        "themes/dark.css",
+        "themes/light.css",
+        "themes/material_blue.css",
+        "themes/material_green.css",
+        "themes/material_orange.css",
+        "themes/material_red.css",
+        "flatpickr.css",
+        "flatpickr.js",
+        "flatpickr.min.css",
+        "ie.css",
+        "l10n/et.js",
+        "l10n/default.js"
+      ]
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    }
+  ]
+}

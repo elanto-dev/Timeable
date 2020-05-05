@@ -1,0 +1,183 @@
+﻿@model TimeableAppWeb.Areas.Admin.ViewModels.ScreenIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-3">
+        <h4>@Resources.Domain.ScreenView.Screen.Settings</h4>
+    </div>
+    <div class="col-1" style="position: relative">
+        @if (Model.Screen.IsActive)
+        {
+            <div style="position: absolute;bottom: 0; left: 0;">
+                <h6 class="green-text">@Resources.Domain.ScreenView.Screen.Active</h6>
+            </div>
+        }
+        else
+        {
+            <div style="position: absolute;bottom: 0; left: 0;">
+                <h6 class="red-text">@Resources.Domain.ScreenView.Screen.NotActive</h6>
+            </div>
+        }
+    </div>
+    <div class="col-1">
+        @if (Model.UserHasRightsToEdit)
+        {
+            @if (Model.Screen.IsActive)
+            {
+                <a class="btn btn-outline-danger" asp-action="ActivateScreen" asp-route-screenId="@Model.Screen.Id" asp-route-activate="false">@Resources.Domain.ScreenView.Screen.Inactivate</a>
+            }
+            else
+            {
+                <a class="btn btn-outline-success" asp-action="ActivateScreen" asp-route-screenId="@Model.Screen.Id" asp-route-activate="true">@Resources.Domain.ScreenView.Screen.Activate</a>
+            }
+        }
+    </div>
+    <div class="col-5"></div>
+    <div class="col-2" align="right">
+    @if (Model.UserHasRightsToEdit)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Screen.Id" class="btn light-blue-button">@Resources.Views.Common.Edit</a>
+    }
+    </div>
+</div>
+<hr />
+<dl class="row">
+    <dt class="col-3">@Resources.Domain.ScreenView.Screen.ShowSchedule:</dt>
+    <dd class="col-7">@Model.Screen.ShowScheduleSeconds</dd>
+    <dd class="col-2" align="right">
+        <div align="right">
+            <a asp-controller="ScheduleAndEvents" asp-action="Index" class="btn dark-blue-button">@Resources.Domain.ScreenView.Screen.ShowSchedule</a>
+        </div>
+    </dd>
+    <dt class="col-3">@Resources.Domain.ScreenView.Screen.SearchPrefix:</dt>
+    <dd class="col-9 green-text">@Model.Screen.Prefix</dd>
+    @if (Model.ShowPrefixError)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 20px;">
+            <strong>@Resources.Views.Common.Warning!</strong> @Model.PrefixError
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+</dl>
+<hr />
+<div class="row">
+    <div class="col-4"><h4>@Resources.Domain.ScreenView.Screen.Promotions</h4></div>
+    <div class="col-8"></div>
+    @if (Model.Promotions != null)
+    {
+        @for (int i = 0; i <= Model.Promotions.Count; i++)
+        {
+            if (i < Model.Promotions.Count)
+            {
+                <div class="col-lg-3 col-md-4 mb-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="@Model.Promotions[i].Picture.Path" alt="" style="object-fit: contain;width: auto; max-height: 300px;">
+                        <div class="card-body">
+                            <div class="row">
+                                <h6 class="col-6" style="text-decoration: underline; padding-left: 5px;"><b>@Resources.Domain.ScreenView.Screen.Shown:</b></h6>
+                                <h6 class="col-6" style="text-align: end; padding-right: 5px;">@Model.Promotions[i].ShowAddSeconds</h6>
+                            </div>
+                            <div class="row">
+                                <a class="btn light-blue-button col-12" asp-controller="PicturesInScreen" asp-action="Details" asp-route-pictureInScreenId="@Model.Promotions[i].Id">@Resources.Domain.ScreenView.Screen.SeePromotion</a>
+                                @if (Model.UserHasRightsToEdit)
+                                {
+                                    <a class="modalLink btn btn-outline-danger col-12" style="margin-top: 10px;" data-toggle="modal" data-target="#promoDeleteModal" data-id="@Model.Promotions[i].Picture.Id">@Resources.Domain.ScreenView.Screen.DeletePromotion</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if(Model.UserHasRightsToEdit)
+            {
+                <div class="col-lg-3 col-md-4 mb-3">
+                    <a asp-controller="PicturesInScreen" asp-action="Create" asp-route-screenId="@Model.Screen.Id" asp-route-isBackgroundImage="false">
+                        <div class="card card-body h-100 justify-content-center">
+                            <div style="text-align: center">
+                                <img class="card-img-top" src="/Images/Plus.png" alt="" style="max-height: 64px; max-width: 64px;">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <h1 class="col-12">@Resources.Domain.ScreenView.Screen.NoPromoFound</h1>
+    }
+</div>
+<hr />
+<div class="row">
+    <div class="col-3">
+        <div class="row">
+            <h4 class="col-12">@Resources.Domain.ScreenView.Screen.BackgroundPic</h4>
+            @if (Model.UserHasRightsToEdit)
+            {
+                @if (Model.BackgroundPicture != null)
+                {
+                    <div class="col-12" style="margin-top: 10px;">
+                        <a class="btn light-blue-button" style="width: 90%" asp-controller="PicturesInScreen" asp-action="Edit" asp-route-id="@Model.BackgroundPicture.Id">@Resources.Domain.ScreenView.Screen.Change</a>
+                    </div>
+                    <div class="col-12" style="margin-top: 10px;">
+                        <a class="btn btn-outline-danger" style="width: 90%" asp-controller="ScreenSettings" asp-action="UseDefaultBackground" asp-route-screenId="@Model.Screen.Id">@Resources.Domain.ScreenView.Screen.UseDefault</a>
+                    </div>
+                }
+                else
+                {
+                    <h5 class="col-12 green-text">@Resources.Domain.ScreenView.Screen.DefaultUsed</h5>
+                    <div class="col-12" style="margin-top: 10px;">
+                        <a class="btn light-blue-button" style="width: 90%" asp-controller="PicturesInScreen" asp-action="Create" asp-route-screenId="@Model.Screen.Id" asp-route-isBackgroundImage="true">@Resources.Domain.ScreenView.Screen.AddBackground</a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-9">
+        @{ var picturePath = Model.BackgroundPicture?.Path ?? "/Images/BackgroundPicture.jpg";}
+        <img src="@picturePath" alt="" style="max-width: 100%">
+    </div>
+</div>
+
+
+@using (Html.BeginForm("DeletePromotionFromScreen", "ScreenSettings", FormMethod.Post))
+{
+
+    <div class="modal fade blue-text" id="promoDeleteModal" tabindex="-1" role="dialog" aria-labelledby="promoDeleteModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-titlet" id="exampleModalLongTitle">@Resources.Views.Common.Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @Resources.Domain.ScreenView.Screen.DeletePromotionText
+                        @Html.Hidden("promotionId", "", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark-blue-outline-button" data-dismiss="modal">@Resources.Views.Common.Close</button>
+                    <button type="Submit" class="btn btn-danger">@Resources.Views.Common.Delete</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+}
+
+<script type="text/javascript">
+    $('.modalLink').on("click", function () {
+        var promotionId = $(this).data('id');//get Id from data-id
+        $('.modal-body .form-control').val(promotionId); // load Edit page to modal content
+    });
+</script>
+
+

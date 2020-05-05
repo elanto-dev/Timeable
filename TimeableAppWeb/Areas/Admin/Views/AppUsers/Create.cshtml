@@ -1,0 +1,80 @@
+﻿@model TimeableAppWeb.Areas.Admin.ViewModels.AppUserViewModels.AppUserCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>@Resources.Views.Common.Create</h1>
+<hr />
+<div class="row blue-text">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <label asp-for="FirstName" class="control-label">@Resources.Domain.AppUsersView.AppUser.FirstName</label>
+                </div>
+                <div class="col-sm-7">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <label asp-for="LastName" class="control-label">@Resources.Domain.AppUsersView.AppUser.LastName</label>
+                </div>
+                <div class="col-sm-7">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <label asp-for="Email" class="control-label">@Resources.Domain.AppUsersView.AppUser.EMail</label>
+                </div>
+                <div class="col-sm-7">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <label asp-for="Password">@Resources.Domain.AppUsersView.AppUser.Password</label>
+                </div>
+                <div class="col-sm-7">
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <label asp-for="ConfirmPassword">@Resources.Domain.AppUsersView.AppUser.PasswordConfirmation</label>
+                </div>
+                <div class="col-sm-7">
+
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ScheduleManagement" /> @Resources.Domain.AppUsersView.AppUser.ScheduleManagement
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EventsManagement" /> @Resources.Domain.AppUsersView.AppUser.EventManagement
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ScreenManagement" /> @Resources.Domain.AppUsersView.AppUser.ScreenManagement
+                </label>
+            </div>
+            <div class="form-group row" style="margin-top: 20px">
+                <input type="submit" value="@Resources.Views.Common.Save" class="btn light-blue-button" id="save-button" />
+                <a asp-controller="AppUsers" asp-action="Index" class="btn dark-blue-outline-button" style="margin-left: 20px;">@Resources.Domain.AppUsersView.AppUser.Back</a>
+            </div>
+        </form>
+    </div>
+</div>

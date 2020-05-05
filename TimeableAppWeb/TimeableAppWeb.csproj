@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-TimeableAppWeb-4995F2B6-BDED-418B-AE09-CA55B90E5D3A</UserSecretsId>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\moment.js\**" />
+    <Content Remove="wwwroot\lib\moment.js\**" />
+    <EmbeddedResource Remove="wwwroot\lib\moment.js\**" />
+    <None Remove="wwwroot\lib\moment.js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BLL.App\BLL.App.csproj" />
+    <ProjectReference Include="..\Contracts.BLL.App\Contracts.BLL.App.csproj" />
+    <ProjectReference Include="..\Contracts.BLL.Base\Contracts.BLL.Base.csproj" />
+    <ProjectReference Include="..\DAL.App\DAL.App.csproj" />
+    <ProjectReference Include="..\Resources\Resources.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\AppUsers\" />
+    <Folder Include="Areas\Admin\Views\Events\" />
+    <Folder Include="Areas\Admin\Views\PicturesInScreen\" />
+    <Folder Include="Areas\Admin\Views\ScheduleAndEvents\" />
+    <Folder Include="Areas\Admin\Views\ScreenSettings\" />
+    <Folder Include="Areas\Admin\Views\SubjectInSchedules\" />
+    <Folder Include="Areas\Identity\Pages\Account\Manage\" />
+    <Folder Include="Views\Timetables\" />
+    <Folder Include="wwwroot\Images\Background.Pictures\" />
+    <Folder Include="wwwroot\Images\Promotions\" />
+    <Folder Include="wwwroot\lib\flatpickr\l10n\" />
+    <Folder Include="wwwroot\lib\flatpickr\plugins\confirmDate\" />
+    <Folder Include="wwwroot\lib\flatpickr\plugins\labelPlugin\" />
+    <Folder Include="wwwroot\lib\flatpickr\plugins\monthSelect\" />
+    <Folder Include="wwwroot\lib\flatpickr\plugins\weekSelect\" />
+    <Folder Include="wwwroot\lib\flatpickr\themes\" />
+    <Folder Include="wwwroot\lib\toastr.js\" />
+  </ItemGroup>
+
+</Project>

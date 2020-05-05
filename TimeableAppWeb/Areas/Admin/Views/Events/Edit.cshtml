@@ -1,0 +1,89 @@
+﻿@using System.Globalization
+@model BLL.DTO.Event
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@Resources.Views.Common.Edit</h1>
+<h4>@Resources.Domain.EventView.Events.Event</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">@Resources.Domain.EventView.Events.Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Place" class="control-label">@Resources.Domain.EventView.Events.Place</label>
+                <input asp-for="Place" class="form-control" />
+                <span asp-validation-for="Place" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDateTime" class="control-label">@Resources.Domain.EventView.Events.EventStart</label>
+                <div class="flatpickrcontainer">
+                    <input asp-for="StartDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
+                </div>
+                <span asp-validation-for="StartDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDateTime" class="control-label">@Resources.Domain.EventView.Events.EventEnd</label>
+                <div class="flatpickrcontainer">
+                    <input asp-for="EndDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
+                </div>
+                <span asp-validation-for="EndDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShowStartDateTime" class="control-label">@Resources.Domain.EventView.Events.EventShowStart</label>
+                <div class="flatpickrcontainer">
+                    <input asp-for="ShowStartDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
+                </div>
+                <span asp-validation-for="ShowStartDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShowEndDateTime" class="control-label">@Resources.Domain.EventView.Events.EventShowEnd</label>
+                <div class="flatpickrcontainer">
+                    <input asp-for="ShowEndDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
+                </div>
+                <span asp-validation-for="ShowEndDateTime" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <div class="form-group">
+                <input type="submit" value="@Resources.Views.Common.Save" class="btn light-blue-button" />
+                <a asp-controller="ScheduleAndEvents" asp-action="Index" class="btn dark-blue-outline-button" style="margin-left: 20px;">@Resources.Domain.EventView.Events.BackToSchedule</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        var dateFormat = 'Y-m-d H:i';
+        let locale = '@CultureInfo.CurrentCulture.Name';
+        if (locale === "et-EE") {
+            dateFormat = 'd.m.Y H:i';
+            flatpickr.localize(flatpickr.l10ns.et);
+        } else {
+            flatpickr.localize(flatpickr.l10ns.en);
+
+        }
+        flatpickr($(".flatpickrcontainer"),
+            {
+                minDate: "today",
+                wrap: true,
+                weekNumbers: true,
+                enableTime: true, // enables timepicker default is false
+                time_24hr: true, // set to false for AM PM default is false
+                dateFormat: dateFormat,
+                onChange: function (selectedDates, dateStr, instance) {
+                    console.log("changed");
+                }
+            });
+    };
+</script>
+

@@ -1,0 +1,68 @@
+﻿@model TimeableAppWeb.Controllers.HomeController.InputModel
+@{
+    ViewData["Title"] = "Log into Timeable";
+}
+
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-lg-3" style="position: absolute;left: 50%;top: 50%; transform: translate(-50%, -50%);">
+        <div class="card text-center border-dark mb-3">
+            <div class="card-body text-dark align-content-center">
+                @if (Model.NoActiveScreen)
+                {
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        @Resources.Views.ClientHome.Index.NoActiveScreen
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+                <br/>
+                <a type="button" class="btn light-blue-button" asp-controller="Timetables" asp-action="Index">@Resources.Views.ClientHome.Index.ShowScreen</a>
+                <br/>
+                <br/>
+                <div class="row align-content-center">
+                    <div class="col-5">
+                        <hr style="border: 2px solid;"/>
+                    </div>
+                    <div class="col-2" style="padding: 0 0">
+                        <h5>@Resources.Views.ClientHome.Index.Or</h5>
+                    </div>
+                    <div class="col-5">
+                        <hr style="border: 2px solid;"/>
+                    </div>
+                </div>
+                <br/>
+                <h3 class="card-title">@Resources.Views.ClientHome.Index.LogIntoTimeable</h3>
+                <section>
+                    <form id="account" method="post">
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div asp-validation-summary="All" class="alert alert-danger"></div>
+                        }
+                        <div class="form-group">
+                            <input asp-for="@Model.Email" class="form-control" placeholder="@Resources.Views.ClientHome.Index.Email"/>
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="@Model.Password" class="form-control" placeholder="@Resources.Views.ClientHome.Index.Password"/>
+                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn light-blue-button">@Resources.Views.ClientHome.Index.Login</button>
+                        </div>
+                    </form>
+                </section>
+                <div class="row" align="center">
+                    <partial name="_LanguageSelectionPartial" />
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

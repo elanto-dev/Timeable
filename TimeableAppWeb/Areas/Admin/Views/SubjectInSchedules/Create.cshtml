@@ -1,0 +1,129 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.Extensions.Options
+@model TimeableAppWeb.Areas.Admin.ViewModels.SubjectInScheduleCreateEditViewModel
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<head>
+    <link rel="stylesheet" href="~/css/admin-area-css.css" />
+</head>
+
+<div class="blue-text">
+    <h1>@Resources.Domain.SubjectInSchedule.SubjectInSchedule.CreateNew</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Subject.SubjectName" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Name</label>
+                    <input asp-for="Subject.SubjectName" class="form-control" />
+                    <span asp-validation-for="Subject.SubjectName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Subject.SubjectCode" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Code</label>
+                    <input asp-for="Subject.SubjectCode" class="form-control" />
+                    <span asp-validation-for="Subject.SubjectCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubjectInSchedule.Groups" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Groups</label>
+                    <input asp-for="SubjectInSchedule.Groups" class="form-control" />
+                    <span asp-validation-for="SubjectInSchedule.Groups" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubjectInSchedule.Rooms" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Rooms</label>
+                    <input asp-for="SubjectInSchedule.Rooms" class="form-control" />
+                    <span asp-validation-for="SubjectInSchedule.Rooms" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SelectedSubjectType" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.SubjectType</label>
+                    @Html.DropDownListFor(m => m.SelectedSubjectType, Model.SelectList, new { @class = "form-control" })
+                    <span asp-validation-for="SelectedSubjectType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubjectInSchedule.StartDateTime" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.StartTime</label>
+                    <div class="flatpickrcontainer">
+                        <input asp-for="SubjectInSchedule.StartDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
+                    </div>
+                    <span asp-validation-for="SubjectInSchedule.StartDateTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubjectInSchedule.EndDateTime" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.EndTime</label>
+                    <div class="flatpickrcontainer">
+                        <input asp-for="SubjectInSchedule.EndDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
+                    </div>
+                    <span asp-validation-for="SubjectInSchedule.EndDateTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a id="add-teacher" value="Add teacher" class="btn btn-outline-success" onclick="AddNewTeacher(@Model.Teachers.Count)">
+                        @Resources.Domain.SubjectInSchedule.SubjectInSchedule.AddTeacher
+                    </a>
+                </div>
+                <div id="teachers-list">
+                    @for (int i = 0; i < Model.Teachers.Count; i++)
+                    {
+                        <div id="teacher-@i">
+                            <div class="form-group">
+                                <label asp-for="Teachers[i].FullName" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherName</label>
+                                <input asp-for="Teachers[i].FullName" class="form-control" />
+                                <span asp-validation-for="Teachers[i].FullName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Teachers[i].Role" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherRole</label>
+                                <input asp-for="Teachers[i].Role" class="form-control" />
+                                <span asp-validation-for="Teachers[i].Role" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <a class="btn btn-outline-danger" onclick="RemoveTeacher('teacher-' + @i)">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.RemoveTeacher</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="ScheduleId" />
+                    <input type="submit" value="@Resources.Views.Common.Save" class="btn light-blue-button" />
+                    <a asp-controller="ScheduleAndEvents" asp-action="Index" class="btn dark-blue-outline-button" style="margin-left: 20px;">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        var dateFormat = 'Y-m-d H:i';
+        let locale = '@CultureInfo.CurrentCulture.Name';
+        if (locale === "et-EE") {
+            flatpickr.localize(flatpickr.l10ns.et);
+            dateFormat = 'd.m.Y H:i';
+        } else {
+            flatpickr.localize(flatpickr.l10ns.en);
+
+        }
+        flatpickr($(".flatpickrcontainer"),
+            {
+                minDate: "today",
+                maxDate: "today",
+                wrap: true,
+                weekNumbers: true,
+                enableTime: true, // enables timepicker default is false
+                time_24hr: true, // set to false for AM PM default is false
+                dateFormat: dateFormat,
+                onChange: function(selectedDates, dateStr, instance) {
+                    console.log("changed");
+                }
+            });
+    };
+
+    function AddNewTeacher(count) {
+        const teacherName = '@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherName';
+        const teacherRole = '@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherRole';
+        const removeTeacher = '@Resources.Domain.SubjectInSchedule.SubjectInSchedule.RemoveTeacher';
+        loadTeacherClickEventsForSubjectView(count, teacherName, teacherRole, removeTeacher);
+    }
+</script>

@@ -1,0 +1,46 @@
+﻿@model BLL.DTO.Screen
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>@Resources.Domain.ScreenView.Screen.CreateNew</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="ShowScheduleSeconds" />
+            <div class="form-group">
+                <label asp-for="Prefix" class="control-label">@Resources.Domain.ScreenView.Screen.Prefix</label>
+                <input id="screen-prefix" asp-for="Prefix" class="form-control" value="ICO" />
+                <span asp-validation-for="Prefix" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input id="screen-active-checkbox" class="form-check-input" asp-for="IsActive" /> @Resources.Domain.ScreenView.Screen.IsActive
+                </label>
+            </div>
+            <div class="form-group " style="margin-top: 20px">
+                <input id="save-button" type="submit" value="@Resources.Views.Common.Save" class="btn light-blue-button" />
+                <button id="loading-button" class="btn light-blue-button disabled" style="display: none">
+                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                    @Resources.Domain.ScreenView.Screen.Loading
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Disable inputs!
+    $('#save-button').on('click',
+        function () {
+            $('#screen-active-checkbox').attr("disabled", true);
+            $('#screen-prefix').attr('readonly', true);
+            $('#save-button').css('display', 'none');
+            $('#loading-button').css('display', "inline");
+        });
+</script>
+

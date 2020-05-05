@@ -1,0 +1,40 @@
+﻿@using System.Runtime.Versioning
+@model Domain.Identity.AppUser
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<h1>@Resources.Views.Common.Delete</h1>
+
+<h3>@Resources.Domain.AppUsersView.AppUser.DeleteConfirmationText</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Resources.Domain.AppUsersView.AppUser.FirstName
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Resources.Domain.AppUsersView.AppUser.LastName
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Resources.Domain.AppUsersView.AppUser.EMail
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="@Resources.Views.Common.Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn dark-blue-outline-button" style="margin-left: 20px;">@Resources.Domain.AppUsersView.AppUser.Back</a>
+    </form>
+</div>
