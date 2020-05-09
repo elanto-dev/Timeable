@@ -21,39 +21,39 @@
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Subject.SubjectName" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Name</label>
+                    <label asp-for="Subject.SubjectName" class="control-label">@Html.DisplayNameFor(m => m.Subject.SubjectName)</label>
                     <input asp-for="Subject.SubjectName" class="form-control" />
                     <span asp-validation-for="Subject.SubjectName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Subject.SubjectCode" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Code</label>
+                    <label asp-for="Subject.SubjectCode" class="control-label">@Html.DisplayNameFor(m => m.Subject.SubjectCode)</label>
                     <input asp-for="Subject.SubjectCode" class="form-control" />
                     <span asp-validation-for="Subject.SubjectCode" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SubjectInSchedule.Groups" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Groups</label>
+                    <label asp-for="SubjectInSchedule.Groups" class="control-label">@Html.DisplayNameFor(m => m.SubjectInSchedule.Groups)</label>
                     <input asp-for="SubjectInSchedule.Groups" class="form-control" />
                     <span asp-validation-for="SubjectInSchedule.Groups" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SubjectInSchedule.Rooms" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.Rooms</label>
+                    <label asp-for="SubjectInSchedule.Rooms" class="control-label">@Html.DisplayNameFor(m => m.SubjectInSchedule.Rooms)</label>
                     <input asp-for="SubjectInSchedule.Rooms" class="form-control" />
                     <span asp-validation-for="SubjectInSchedule.Rooms" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SelectedSubjectType" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.SubjectType</label>
+                    <label asp-for="SelectedSubjectType" class="control-label">@Html.DisplayNameFor(m => m.SubjectInSchedule.SubjectType)</label>
                     @Html.DropDownListFor(m => m.SelectedSubjectType, Model.SelectList, new { @class = "form-control" })
                     <span asp-validation-for="SelectedSubjectType" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SubjectInSchedule.StartDateTime" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.StartTime</label>
+                    <label asp-for="SubjectInSchedule.StartDateTime" class="control-label">@Html.DisplayNameFor(m => m.SubjectInSchedule.StartDateTime)</label>
                     <div class="flatpickrcontainer">
                         <input asp-for="SubjectInSchedule.StartDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
                     </div>
                     <span asp-validation-for="SubjectInSchedule.StartDateTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SubjectInSchedule.EndDateTime" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.EndTime</label>
+                    <label asp-for="SubjectInSchedule.EndDateTime" class="control-label">@Html.DisplayNameFor(m => m.SubjectInSchedule.EndDateTime)</label>
                     <div class="flatpickrcontainer">
                         <input asp-for="SubjectInSchedule.EndDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
                     </div>
@@ -69,14 +69,14 @@
                     {
                         <div id="teacher-@i">
                             <div class="form-group">
-                                <label asp-for="Teachers[i].FullName" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherName</label>
-                                <input asp-for="Teachers[i].FullName" class="form-control" />
-                                <span asp-validation-for="Teachers[i].FullName" class="text-danger"></span>
+                                <label asp-for="Teachers[i].TeacherName" class="control-label">@Html.DisplayNameFor(m => m.Teachers[i].TeacherName)</label>
+                                <input asp-for="Teachers[i].TeacherName" class="form-control" />
+                                <span asp-validation-for="Teachers[i].TeacherName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Teachers[i].Role" class="control-label">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherRole</label>
-                                <input asp-for="Teachers[i].Role" class="form-control" />
-                                <span asp-validation-for="Teachers[i].Role" class="text-danger"></span>
+                                <label asp-for="Teachers[i].TeacherRole" class="control-label">@Html.DisplayNameFor(m => m.Teachers[i].TeacherRole)</label>
+                                <input asp-for="Teachers[i].TeacherRole" class="form-control" />
+                                <span asp-validation-for="Teachers[i].TeacherRole" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <a class="btn btn-outline-danger" onclick="RemoveTeacher('teacher-' + @i)">@Resources.Domain.SubjectInSchedule.SubjectInSchedule.RemoveTeacher</a>
@@ -114,6 +114,7 @@
                 enableTime: true, // enables timepicker default is false
                 time_24hr: true, // set to false for AM PM default is false
                 dateFormat: dateFormat,
+                noCalendar: true,
                 onChange: function(selectedDates, dateStr, instance) {
                     console.log("changed");
                 }

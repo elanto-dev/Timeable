@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Domain.Identity;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using TimeableAppWeb.Models;
+using TimeableAppWeb.ViewModels;
 
 namespace TimeableAppWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<HomeController> _logger;
 
@@ -25,7 +22,6 @@ namespace TimeableAppWeb.Controllers
         {
             _logger = logger;
             _signInManager = signInManager;
-            _userManager = userManager;
         }
 
 
@@ -33,7 +29,7 @@ namespace TimeableAppWeb.Controllers
 
         public class InputModel
         {
-            public bool NoActiveScreen { get; set; }
+            public bool NoActiveScreen { get; set; } 
             [Required]
             [EmailAddress]
             public string Email { get; set; } = default!;
@@ -70,12 +66,12 @@ namespace TimeableAppWeb.Controllers
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return View();
+                var im = new InputModel { NoActiveScreen = false };
+                return View(im);
             }
-            var inputModel = new InputModel();
 
-            inputModel.Email = input.Email;
-            inputModel.Password = input.Password;
+            var inputModel = new InputModel {NoActiveScreen = false, Email = input.Email, Password = input.Password};
+
 
             // If we got this far, something failed, redisplay form
             return View(inputModel);

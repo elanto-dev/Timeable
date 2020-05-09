@@ -9,7 +9,7 @@ using Contracts.DAL.App;
 
 namespace BLL.App.Services
 {
-    public class TeacherInSubjectEventService : BaseEntityService<DTO.TeacherInSubjectEvent, DAL.DTO.TeacherInSubjectEvent, IAppUnitOfWork>, ITeacherInSubjectEventService
+    public class TeacherInSubjectEventService : BaseEntityService<TeacherInSubjectEvent, DAL.DTO.TeacherInSubjectEvent, IAppUnitOfWork>, ITeacherInSubjectEventService
     {
         public TeacherInSubjectEventService(IAppUnitOfWork uow) : base(uow, new TeacherInSubjectEventMapper())
         {

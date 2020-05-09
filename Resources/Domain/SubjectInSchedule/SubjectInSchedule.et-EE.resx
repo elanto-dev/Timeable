@@ -123,9 +123,6 @@
   <data name="Back" xml:space="preserve">
     <value>Tagasi tunniplaani juurde</value>
   </data>
-  <data name="Code" xml:space="preserve">
-    <value>Loengu kood</value>
-  </data>
   <data name="CreateNew" xml:space="preserve">
     <value>Loo uus loeng</value>
   </data>
@@ -138,14 +135,11 @@
   <data name="Edit" xml:space="preserve">
     <value>Editeeri loeng</value>
   </data>
-  <data name="EndTime" xml:space="preserve">
+  <data name="EndDateTime" xml:space="preserve">
     <value>Loengu lõpp</value>
   </data>
   <data name="Groups" xml:space="preserve">
     <value>Gruppid</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Loengu nimi</value>
   </data>
   <data name="RemoveTeacher" xml:space="preserve">
     <value>Kustuta õppejõud</value>
@@ -153,8 +147,14 @@
   <data name="Rooms" xml:space="preserve">
     <value>Ruumid</value>
   </data>
-  <data name="StartTime" xml:space="preserve">
+  <data name="StartDateTime" xml:space="preserve">
     <value>Loengu algus</value>
+  </data>
+  <data name="SubjectCode" xml:space="preserve">
+    <value>Loengu kood</value>
+  </data>
+  <data name="SubjectName" xml:space="preserve">
+    <value>Loengu nimi</value>
   </data>
   <data name="SubjectType" xml:space="preserve">
     <value>Loengu tüüp</value>

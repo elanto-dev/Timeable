@@ -11,12 +11,12 @@ namespace BLL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(BllDto.Teacher))
             {
-                return MapFromInternal((DalDto.Teacher)inObject) as TOutObject;
+                return MapFromInternal((DalDto.Teacher)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(DalDto.Teacher))
             {
-                return MapFromExternal((BllDto.Teacher)inObject) as TOutObject;
+                return MapFromExternal((BllDto.Teacher)inObject) as TOutObject ?? default!;
             }
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
         }
@@ -30,11 +30,11 @@ namespace BLL.App.Mappers
                 ChangedAt = teacher.ChangedAt,
                 CreatedBy = teacher.CreatedBy,
                 ChangedBy = teacher.ChangedBy,
-                FullName = teacher.FullName,
-                Role = teacher.Role
+                TeacherName = teacher.FullName,
+                TeacherRole = teacher.Role
             };
 
-            return res;
+            return res ?? default!;
         }
 
         public static DalDto.Teacher MapFromExternal(BllDto.Teacher teacher)
@@ -46,10 +46,10 @@ namespace BLL.App.Mappers
                 ChangedAt = teacher.ChangedAt,
                 CreatedBy = teacher.CreatedBy,
                 ChangedBy = teacher.ChangedBy,
-                FullName = teacher.FullName,
-                Role = teacher.Role
+                FullName = teacher.TeacherName,
+                Role = teacher.TeacherRole
             };
-            return res;
+            return res ?? default!;
         }
     }
 }

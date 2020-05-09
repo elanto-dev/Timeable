@@ -19,12 +19,12 @@ namespace BLL.App.Mappers
             var res = eventToMap == null ? null : new DTO.EventForSettings
             {
                 Id = eventToMap.Id,
-                EventName = eventToMap.Name,
+                Name = eventToMap.Name,
                 Place = eventToMap.Place,
-                StartDateTimeString = eventToMap.StartDateTime.ToString(),
-                EndDateTimeString = eventToMap.EndDateTime.ToString(),
-                ShowFromDateTimeString = eventToMap.ShowStartDateTime.ToString(),
-                ShowToDateTimeString = eventToMap.ShowEndDateTime.ToString(),
+                StartDateTime = eventToMap.StartDateTime.ToString(),
+                EndDateTime = eventToMap.EndDateTime.ToString(),
+                ShowStartDateTime = eventToMap.ShowStartDateTime.ToString(),
+                ShowEndDateTime = eventToMap.ShowEndDateTime.ToString(),
             };
 
             return res ?? default!;

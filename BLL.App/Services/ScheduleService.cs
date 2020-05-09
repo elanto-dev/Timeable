@@ -13,10 +13,5 @@ namespace BLL.App.Services
         {
             ServiceRepository = Uow.Schedules;
         }
-
-        public Task<bool> ScheduleForDayExistsAsync(DateTime date)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

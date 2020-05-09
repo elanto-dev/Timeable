@@ -12,7 +12,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group row">
                 <div class="col-sm-5">
-                    <label asp-for="FirstName" class="control-label">@Resources.Domain.AppUsersView.AppUser.FirstName</label>
+                    <label asp-for="FirstName" class="control-label">@Html.DisplayNameFor(m => m.FirstName)</label>
                 </div>
                 <div class="col-sm-7">
                     <input asp-for="FirstName" class="form-control" />
@@ -21,7 +21,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-5">
-                    <label asp-for="LastName" class="control-label">@Resources.Domain.AppUsersView.AppUser.LastName</label>
+                    <label asp-for="LastName" class="control-label">@Html.DisplayNameFor(m => m.LastName)</label>
                 </div>
                 <div class="col-sm-7">
                     <input asp-for="LastName" class="form-control" />
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-5">
-                    <label asp-for="Email" class="control-label">@Resources.Domain.AppUsersView.AppUser.EMail</label>
+                    <label asp-for="Email" class="control-label">@Html.DisplayNameFor(m => m.Email)</label>
                 </div>
                 <div class="col-sm-7">
                     <input asp-for="Email" class="form-control" />
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-5">
-                    <label asp-for="Password">@Resources.Domain.AppUsersView.AppUser.Password</label>
+                    <label asp-for="Password">@Html.DisplayNameFor(m => m.Password)</label>
                 </div>
                 <div class="col-sm-7">
                     <input asp-for="Password" class="form-control" />
@@ -48,7 +48,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-5">
-                    <label asp-for="ConfirmPassword">@Resources.Domain.AppUsersView.AppUser.PasswordConfirmation</label>
+                    <label asp-for="ConfirmPassword">@Html.DisplayNameFor(m => m.ConfirmPassword)</label>
                 </div>
                 <div class="col-sm-7">
 
@@ -58,17 +58,17 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ScheduleManagement" /> @Resources.Domain.AppUsersView.AppUser.ScheduleManagement
+                    <input class="form-check-input" asp-for="ScheduleManagement" /> @Html.DisplayNameFor(m => m.ScheduleManagement)
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EventsManagement" /> @Resources.Domain.AppUsersView.AppUser.EventManagement
+                    <input class="form-check-input" asp-for="EventsManagement" /> @Html.DisplayNameFor(m => m.EventsManagement)
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ScreenManagement" /> @Resources.Domain.AppUsersView.AppUser.ScreenManagement
+                    <input class="form-check-input" asp-for="ScreenManagement" /> @Html.DisplayNameFor(m => m.ScreenManagement)
                 </label>
             </div>
             <div class="form-group row" style="margin-top: 20px">

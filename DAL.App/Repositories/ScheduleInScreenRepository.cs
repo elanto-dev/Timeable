@@ -24,5 +24,11 @@ namespace DAL.App.Repositories
                 .Select(s => ScheduleInScreenMapper.MapFromDomain(s)).ToListAsync();
             return schedulesInScreen.LastOrDefault();
         }
+
+        public async Task<ScheduleInScreen> FindByScheduleIdAsync(int scheduleId)
+        {
+            return ScheduleInScreenMapper.MapFromDomain(await RepositoryDbSet.Include(s => s.Screen).AsNoTracking()
+                .FirstOrDefaultAsync(s => s.ScheduleId == scheduleId));
+        }
     }
 }

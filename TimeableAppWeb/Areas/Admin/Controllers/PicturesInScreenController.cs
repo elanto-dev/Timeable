@@ -93,7 +93,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             if (file == null || file.Length < 0)
             {
                 ModelState.Clear();
-                ModelState.AddModelError(string.Empty, "File is missing!");
+                ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileMissing);
                 if (!vm.IsBackgroundPicture)
                 {
                     vm.PromotionSecondsSelectList = new SelectList(

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTO
@@ -12,12 +11,14 @@ namespace BLL.DTO
         public string? ChangedBy { get; set; }
         public DateTime ChangedAt { get; set; }
 
-        [MaxLength(30, ErrorMessage = "Subject code must be maximum 30 symbols long.")]
-        [DisplayName("Subject code")]
+        [Required(ErrorMessageResourceName = "ErrorMessage_Required", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [MaxLength(30, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(SubjectCode), Prompt = nameof(SubjectCode), ResourceType = typeof(Resources.Domain.SubjectInSchedule.SubjectInSchedule))]
         public string SubjectCode { get; set; } = default!;
 
-        [MaxLength(200)]
-        [DisplayName("Subject name")]
+        [Required(ErrorMessageResourceName = "ErrorMessage_Required", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [MaxLength(200, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(SubjectName), Prompt = nameof(SubjectName), ResourceType = typeof(Resources.Domain.SubjectInSchedule.SubjectInSchedule))]
         public string SubjectName { get; set; } = default!;
     }
 }

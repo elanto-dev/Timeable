@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.DTO;
@@ -31,6 +30,13 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // GET: Admin/AppUsers
         public async Task<IActionResult> Index()
         {
+            var currentUserScreen = (await _bll.AppUsersScreens.GetScreenForUserAsync(_userManager.GetUserId(User))).Screen;
+
+            if (currentUserScreen == null)
+            {
+                return RedirectToAction("Create", "ScreenSettings");
+            }
+
             var users = new List<AppUserIndexViewModelDtos>();
 
             var loggedInUserId = _userManager.GetUserId(User);
@@ -50,6 +56,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                     ScheduleManagement = roles.Contains(nameof(RoleNamesEnum.ScheduleSettingsAdmin)),
                     EventsManagement = roles.Contains(nameof(RoleNamesEnum.EventSettingsAdmin)),
                     ScreenManagement = roles.Contains(nameof(RoleNamesEnum.ScreenSettingsAdmin)),
+                    UserIsHeadAdmin = roles.Contains(nameof(RoleNamesEnum.HeadAdmin)),
                     UserHasScreen = userScreen != null
                 });
             }
@@ -104,17 +111,20 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                     {
                         var screen = await _bll.Screens.AllAsync();
                         // If there is only one screen!
-                        if (screen.Count() == 1)
+                        var screens = screen.ToList();
+
+                        if (screens.Count == 1)
                         {
                             await _bll.AppUsersScreens.AddAsync(new AppUsersScreen
                             {
                                 CreatedAt = DateTime.Now,
                                 CreatedBy = _userManager.GetUserId(User),
                                 AppUserId = user.Id,
-                                ScreenId = screen.First().Id
+                                ScreenId = screens.First().Id
                             });
                             await _bll.SaveChangesAsync();
                         }
+
                         return RedirectToAction("Index");
                     }
 
@@ -148,6 +158,12 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             }
 
             var roles = await _userManager.GetRolesAsync(appUser);
+
+            // Disable head admin editing!
+            if (roles.Contains(nameof(RoleNamesEnum.HeadAdmin)))
+            {
+                return RedirectToAction("Index");
+            }
 
             var vm = new AppUserEditViewModel
             {
@@ -285,7 +301,8 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         {
             var screen = await _bll.Screens.AllAsync();
 
-            if (!screen.Any())
+            var screens = screen.ToList();
+            if (!screens.Any())
             {
                 return RedirectToAction("Create", "ScreenSettings");
             }
@@ -295,7 +312,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 CreatedAt = DateTime.Now,
                 CreatedBy = _userManager.GetUserId(User),
                 AppUserId = id,
-                ScreenId = screen.First().Id
+                ScreenId = screens.First().Id
             });
             await _bll.SaveChangesAsync();
 

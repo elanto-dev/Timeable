@@ -1,30 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TimeableAppWeb.Areas.Admin.ViewModels.AppUserViewModels
 {
     public class AppUserEditViewModel
     {
         public Guid AppUserId { get; set; }
-        [Required]
+
         [EmailAddress]
-        [DisplayName("Email")]
+        [Display(Name = nameof(Email), Prompt = nameof(Email), ResourceType = typeof(Resources.Domain.AppUsersView.AppUser))]
         public string Email { get; set; } = default!;
 
-        [DisplayName("Full name")]
+        [Display(Name = nameof(FullName), Prompt = nameof(FullName), ResourceType = typeof(Resources.Domain.AppUsersView.AppUser))]
         public string FullName { get; set; } = default!;
 
-        [DisplayName("Schedule management")]
+        [Display(Name = nameof(ScheduleManagement), Prompt = nameof(ScheduleManagement), ResourceType = typeof(Resources.Domain.AppUsersView.AppUser))]
         public bool ScheduleManagement { get; set; }
 
-        [DisplayName("Events management")]
+        [Display(Name = nameof(EventsManagement), Prompt = nameof(EventsManagement), ResourceType = typeof(Resources.Domain.AppUsersView.AppUser))]
         public bool EventsManagement { get; set; }
 
-        [DisplayName("Screen management")]
+        [Display(Name = nameof(ScreenManagement), Prompt = nameof(ScreenManagement), ResourceType = typeof(Resources.Domain.AppUsersView.AppUser))]
         public bool ScreenManagement { get; set; }
     }
 }

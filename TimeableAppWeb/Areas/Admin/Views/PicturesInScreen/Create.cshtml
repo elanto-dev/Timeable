@@ -26,7 +26,7 @@ else
             @if (!Model.IsBackgroundPicture)
             {
                 <div class="form-group">
-                    <label asp-for="@Model.ShowPromotionSecondsString">@Resources.Domain.PictureView.Picture.ShowPromo:</label>
+                    <label asp-for="@Model.ShowPromotionSecondsString">@Resources.Domain.PictureView.Picture.ShowAddSeconds:</label>
                     @Html.DropDownListFor(m => m.ShowPromotionSecondsString, Model.PromotionSecondsSelectList, new { @class = "form-control" })
                 </div>
                 <div class="form-group">
@@ -35,7 +35,7 @@ else
                 </div>
             }
             <div class="form-group">
-                <label asp-for="@Model.Picture.Comment">@Resources.Domain.PictureView.Picture.Comment</label>
+                <label asp-for="@Model.Picture.Comment">@Html.DisplayNameFor(m => m.Picture.Comment)</label>
                 <textarea asp-for="@Model.Picture.Comment" class="form-control"></textarea>
                 <span asp-validation-for="@Model.Picture.Comment" class="text-danger"></span>
             </div>

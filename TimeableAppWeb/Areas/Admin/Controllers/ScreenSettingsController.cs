@@ -4,11 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.App.Helpers;
-using BLL.App.Mappers;
 using BLL.DTO;
 using Contracts.BLL.App;
 using Domain.Identity;
-using HTMLParser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
@@ -131,7 +129,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 });
 
                 await _bll.SaveChangesAsync();
-                await GetAndSaveScheduleForScreen(updatedScreen);
+                await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User), updatedScreen);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -247,7 +245,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
 
                 if (vm.ScreenOldPrefix != vm.Screen.Prefix)
                 {
-                    await GetAndSaveScheduleForScreen(vm.Screen);
+                    await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User), vm.Screen);
                 }
             }
             catch (DbUpdateConcurrencyException)
@@ -354,146 +352,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task GetAndSaveScheduleForScreen(Screen updatedScreen)
-        {
-            var timeplanGettingSystem = new GetTimePlanFromInformationSystem(updatedScreen.Prefix);
-            var schedule = timeplanGettingSystem.GetScheduleForToday();
-
-            var bllSchedule =
-                ScheduleMapper.MapFromInternal(DAL.App.Mappers.ScheduleMapper.MapFromDomain(schedule));
-
-            bllSchedule.Prefix = updatedScreen.Prefix;
-
-            var scheduleGuid = await _bll.Schedules.AddAsync(bllSchedule);
-            await _bll.SaveChangesAsync();
-
-            var scheduleIdAfterSaveChanges = _bll.Schedules.GetUpdatesAfterUowSaveChanges(scheduleGuid).Id;
-
-            var subjects = schedule.SubjectsInSchedules;
-
-            if (subjects != null)
-            {
-                foreach (var subjectInSchedule in subjects)
-                {
-                    var subjectInScheduleThatAlreadyExists =
-                        await _bll.SubjectInSchedules.FindByUniqueIdentifierAsync(subjectInSchedule.UniqueIdentifier);
-                    if (subjectInScheduleThatAlreadyExists != null)
-                    {
-                        subjectInScheduleThatAlreadyExists.ScheduleId = scheduleIdAfterSaveChanges;
-                        _bll.SubjectInSchedules.Update(subjectInScheduleThatAlreadyExists);
-                        await _bll.SaveChangesAsync();
-                        continue;
-                    }
-
-                    var bllSubjectInSchedule = new SubjectInSchedule
-                    {
-                        CreatedAt = DateTime.Now,
-                        ChangedAt = DateTime.Now,
-                        ChangedBy = _userManager.GetUserId(User),
-                        CreatedBy = _userManager.GetUserId(User),
-                        Rooms = subjectInSchedule.Rooms,
-                        Groups = subjectInSchedule.Groups,
-                        UniqueIdentifier = subjectInSchedule.UniqueIdentifier,
-                        StartDateTime = subjectInSchedule.StartDateTime,
-                        EndDateTime = subjectInSchedule.EndDateTime,
-                        SubjectType = subjectInSchedule.SubjectType,
-                        ScheduleId = scheduleIdAfterSaveChanges
-                    };
-
-                    var subject = await _bll.Subjects
-                        .FindBySubjectNameAndCodeAsync(subjectInSchedule.Subject.SubjectName,
-                            subjectInSchedule.Subject.SubjectCode);
-                    if (subject != null)
-                    {
-                        bllSubjectInSchedule.SubjectId = subject.Id;
-                        bllSubjectInSchedule.Subject = null;
-                    }
-                    else
-                    {
-                        var bllSubject = new Subject
-                        {
-                            CreatedAt = DateTime.Now,
-                            ChangedAt = DateTime.Now,
-                            SubjectCode = subjectInSchedule.Subject.SubjectCode,
-                            SubjectName = subjectInSchedule.Subject.SubjectName
-                        };
-                        var subjectGuid = await _bll.Subjects.AddAsync(bllSubject);
-                        await _bll.SaveChangesAsync();
-                        bllSubjectInSchedule.SubjectId = _bll.Subjects.GetUpdatesAfterUowSaveChanges(subjectGuid).Id;
-                    }
-
-                    var teachers = new List<Teacher>();
-
-                    if (subjectInSchedule.TeacherInSubjectEvents != null)
-                    {
-                        foreach (var teacherInSubjectEvent in subjectInSchedule.TeacherInSubjectEvents)
-                        {
-                            var teacher = await _bll.Teachers
-                                .FindTeacherByNameAndRoleAsync(teacherInSubjectEvent.Teacher.FullName,
-                                    teacherInSubjectEvent.Teacher.Role);
-
-                            if (teacher != null)
-                            {
-                                teachers.Add(teacher);
-                            }
-                            else
-                            {
-                                var newTeacher = new Teacher
-                                {
-                                    CreatedAt = DateTime.Now,
-                                    ChangedAt = DateTime.Now,
-                                    FullName = teacherInSubjectEvent.Teacher.FullName,
-                                    Role = teacherInSubjectEvent.Teacher.Role
-                                };
-                                var teacherGuid = await _bll.Teachers.AddAsync(newTeacher);
-                                await _bll.SaveChangesAsync();
-                                teachers.Add(_bll.Teachers.GetUpdatesAfterUowSaveChanges(teacherGuid));
-                            }
-                        }
-                    }
-
-                    var subjInScheduleGuid = await _bll.SubjectInSchedules.AddAsync(bllSubjectInSchedule);
-                    await _bll.SaveChangesAsync();
-                    var subjectInScheduleAfterUpdate =
-                        _bll.SubjectInSchedules.GetUpdatesAfterUowSaveChanges(subjInScheduleGuid);
-                    foreach (var teacher in teachers)
-                    {
-                        _bll.TeacherInSubjectEvents.Add(new TeacherInSubjectEvent
-                        {
-                            CreatedAt = DateTime.Now,
-                            ChangedAt = DateTime.Now,
-                            TeacherId = teacher.Id,
-                            SubjectInScheduleId = subjectInScheduleAfterUpdate.Id
-                        });
-                    }
-                    await _bll.SaveChangesAsync();
-                }
-            }
-
-            await _bll.ScheduleInScreens.AddAsync(new ScheduleInScreen
-            {
-                CreatedAt = DateTime.Now,
-                ChangedAt = DateTime.Now,
-                ScreenId = updatedScreen.Id,
-                ScheduleId = scheduleIdAfterSaveChanges
-            });
-
-            var futureEvents = await _bll.Events.GetAllFutureEventsAsync(DateTime.Now);
-
-            foreach (var futureEvent in futureEvents)
-            {
-                if (futureEvent.ShowStartDateTime <= DateTime.Now && futureEvent.ShowEndDateTime > DateTime.Now)
-                {
-                    await _bll.EventInSchedules.AddAsync(new EventInSchedule
-                    {
-                        CreatedAt = DateTime.Now,
-                        ScheduleId = schedule.Id,
-                        EventId = futureEvent.Id
-                    });
-                }
-            }
-
-            await _bll.SaveChangesAsync();
-        }
+        
     }
 }

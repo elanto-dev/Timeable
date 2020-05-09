@@ -8,7 +8,6 @@ using Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using TimeableAppWeb.Areas.Admin.Helpers;
-using TimeableAppWeb.Areas.Admin.ViewModels;
 
 namespace TimeableAppWeb.Areas.Admin.Controllers
 {
@@ -110,7 +109,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Event updatedEvent)
         {
-            if (updatedEvent.Id == null || id != updatedEvent.Id)
+            if (id != updatedEvent.Id)
             {
                 return NotFound();
             }
@@ -137,7 +136,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists((int) updatedEvent.Id))
+                    if (!EventExists(updatedEvent.Id))
                     {
                         return NotFound();
                     }

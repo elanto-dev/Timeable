@@ -45,7 +45,7 @@ namespace TimeableAppWeb.Controllers
                 foreach (var lectureForTimetable in lecturesForTimetable)
                 {
                     var teacherNames = new List<string>();
-                    (await _bll.TeacherInSubjectEvents.GetAllTeachersForSubjectEventWithoutSubjInclude(lectureForTimetable.SubjectInScheduleId)).ToList().ForEach(e => teacherNames.Add(e.Teacher.FullName));
+                    (await _bll.TeacherInSubjectEvents.GetAllTeachersForSubjectEventWithoutSubjInclude(lectureForTimetable.SubjectInScheduleId)).ToList().ForEach(e => teacherNames.Add(e.Teacher.TeacherName));
                     lectureForTimetable.Lecturers = string.Join(", ", teacherNames);
                 }
                 vm.LecturesForTimetable = lecturesForTimetable;

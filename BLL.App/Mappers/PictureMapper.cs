@@ -11,12 +11,12 @@ namespace BLL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(BllDto.Picture))
             {
-                return MapFromInternal((DalDto.Picture)inObject) as TOutObject;
+                return MapFromInternal((DalDto.Picture)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(DalDto.Picture))
             {
-                return MapFromExternal((BllDto.Picture)inObject) as TOutObject;
+                return MapFromExternal((BllDto.Picture)inObject) as TOutObject ?? default!;
             }
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
         }
@@ -34,7 +34,7 @@ namespace BLL.App.Mappers
                 Comment = picture.Comment
             };
 
-            return res;
+            return res ?? default!;
         }
 
         public static DalDto.Picture MapFromExternal(BllDto.Picture picture)
@@ -49,7 +49,7 @@ namespace BLL.App.Mappers
                 Path = picture.Path,
                 Comment = picture.Comment
             };
-            return res;
+            return res ?? default!;
         }
     }
 }

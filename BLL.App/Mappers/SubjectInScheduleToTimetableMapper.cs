@@ -32,7 +32,7 @@ namespace BLL.App.Mappers
             if (res == null) return default!;
 
             // Rooms mapping is relevant for TalTech room mapping. Please change this for your application!
-            var rooms = subjectInSchedule.Rooms.Split(",");
+            var rooms = subjectInSchedule!.Rooms.Split(",");
 
             for (var i = 0; i < rooms.Length; i++)
             {

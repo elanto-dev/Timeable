@@ -177,6 +177,9 @@
   <data name="ScheduleStatus" xml:space="preserve">
     <value>Tunniplaani staatus</value>
   </data>
+  <data name="ScheduleUpdateMessage" xml:space="preserve">
+    <value>Tunniplaani uuendatakse. See kestab umbes 20 sekundit. </value>
+  </data>
   <data name="SearchPrefix" xml:space="preserve">
     <value>Tunniplaani otsimise eesliide</value>
   </data>
@@ -192,10 +195,13 @@
   <data name="Shown" xml:space="preserve">
     <value>Näidatud</value>
   </data>
-  <data name="ShowSchedule" xml:space="preserve">
+  <data name="ShowScheduleSeconds" xml:space="preserve">
     <value>Näita tunniplaani</value>
   </data>
   <data name="UseDefault" xml:space="preserve">
     <value>Kasuta vaikimisi</value>
+  </data>
+  <data name="Wait" xml:space="preserve">
+    <value>Palun oodake...</value>
   </data>
 </root>

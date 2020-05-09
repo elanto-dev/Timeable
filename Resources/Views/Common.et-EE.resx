@@ -132,6 +132,27 @@
   <data name="Edit" xml:space="preserve">
     <value>Editeeri</value>
   </data>
+  <data name="ErrorMessage_MaxLength" xml:space="preserve">
+    <value>Väli {0} ei saa olla pikem kui '{1}'.</value>
+  </data>
+  <data name="ErrorMessage_MinLength" xml:space="preserve">
+    <value>Väli {0} ei saa olla lühem kui '{1}'.</value>
+  </data>
+  <data name="ErrorMessage_PasswordDontMatch" xml:space="preserve">
+    <value>Parool ja kinnitusparool ei kattu.</value>
+  </data>
+  <data name="ErrorMessage_Range" xml:space="preserve">
+    <value>Väli {0} peab olema vahemikus {1} kuni {2}.</value>
+  </data>
+  <data name="ErrorMessage_Required" xml:space="preserve">
+    <value>Väli {0} on kohustuslik.</value>
+  </data>
+  <data name="ErrorMessage_StringLengthMax" xml:space="preserve">
+    <value>Väli {0} peab olema tekst, mille pikkus on lühem kui {1}.</value>
+  </data>
+  <data name="ErrorMessage_StringLengthMinMax" xml:space="preserve">
+    <value>Väli {0} peab olema tekst, mis on pikkem kui {2} ja lühem, kui {1}.</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Keel</value>
   </data>

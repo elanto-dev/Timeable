@@ -9,7 +9,7 @@ using Contracts.DAL.App;
 
 namespace BLL.App.Services
 {
-    public class PictureInScreenService : BaseEntityService<DTO.PictureInScreen, DAL.DTO.PictureInScreen, IAppUnitOfWork>, IPictureInScreenService
+    public class PictureInScreenService : BaseEntityService<PictureInScreen, DAL.DTO.PictureInScreen, IAppUnitOfWork>, IPictureInScreenService
     {
         public PictureInScreenService(IAppUnitOfWork uow) : base(uow, new PictureInScreenMapper())
         {

@@ -6,7 +6,6 @@ namespace Domain
     {
         public int SubjectInScheduleId { get; set; }
         public SubjectInSchedule SubjectInSchedule { get; set; } = default!;
-
         public int TeacherId { get; set; }
         public Teacher Teacher { get; set; } = default!;
     }

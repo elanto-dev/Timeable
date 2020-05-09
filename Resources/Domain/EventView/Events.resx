@@ -120,23 +120,14 @@
   <data name="BackToSchedule" xml:space="preserve">
     <value>Back to schedule</value>
   </data>
+  <data name="EndDateTime" xml:space="preserve">
+    <value>Event End</value>
+  </data>
   <data name="Event" xml:space="preserve">
     <value>Event</value>
   </data>
-  <data name="EventEnd" xml:space="preserve">
-    <value>Event End</value>
-  </data>
-  <data name="EventShowEnd" xml:space="preserve">
-    <value>Show event to</value>
-  </data>
-  <data name="EventShowStart" xml:space="preserve">
-    <value>Show event from</value>
-  </data>
   <data name="EventShowTimeDifferenceError" xml:space="preserve">
     <value>Event show start must be before its end!</value>
-  </data>
-  <data name="EventStart" xml:space="preserve">
-    <value>Event start</value>
   </data>
   <data name="EventTimeDifferenceError" xml:space="preserve">
     <value>End date and time cannot be before start date and time!</value>
@@ -149,5 +140,14 @@
   </data>
   <data name="SelectDate" xml:space="preserve">
     <value>Select date...</value>
+  </data>
+  <data name="ShowEndDateTime" xml:space="preserve">
+    <value>Show event to</value>
+  </data>
+  <data name="ShowStartDateTime" xml:space="preserve">
+    <value>Show event from</value>
+  </data>
+  <data name="StartDateTime" xml:space="preserve">
+    <value>Event start</value>
   </data>
 </root>

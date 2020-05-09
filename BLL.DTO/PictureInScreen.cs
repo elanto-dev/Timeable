@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTO
 {
@@ -14,9 +14,9 @@ namespace BLL.DTO
         public Picture Picture { get; set; } = default!;
         public int ScreenId { get; set; }
         public Screen Screen { get; set; } = default!;
-        [DisplayName("This picture is schedule background")]
         public bool IsBackgroundPicture { get; set; }
-        [DisplayName("Show promotion")]
+
+        [Display(Name = nameof(ShowAddSeconds), Prompt = nameof(ShowAddSeconds), ResourceType = typeof(Resources.Domain.PictureView.Picture))]
         public string ShowAddSeconds { get; set; } = default!;
     }
 }

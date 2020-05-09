@@ -13,13 +13,16 @@ namespace BLL.DTO
         public DateTime CreatedAt { get; set; }
         public string? ChangedBy { get; set; }
         public DateTime ChangedAt { get; set; }
-        [MaxLength(20)]
+
+        [Required(ErrorMessageResourceName = "ErrorMessage_Required", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [MaxLength(20, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(Prefix), Prompt = nameof(Prefix), ResourceType = typeof(Resources.Domain.ScreenView.Screen))]
         public string Prefix { get; set; } = default!;
 
-        [DisplayName("Screen is active")]
+        [Display(Name = nameof(IsActive), Prompt = nameof(IsActive), ResourceType = typeof(Resources.Domain.ScreenView.Screen))]
         public bool IsActive { get; set; }
 
-        [DisplayName("Show schedule")]
+        [Display(Name = nameof(ShowScheduleSeconds), Prompt = nameof(ShowScheduleSeconds), ResourceType = typeof(Resources.Domain.ScreenView.Screen))]
         public string ShowScheduleSeconds { get; set; } = default!;
     }
 }

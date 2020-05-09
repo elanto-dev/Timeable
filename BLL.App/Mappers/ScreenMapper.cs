@@ -12,12 +12,12 @@ namespace BLL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(BllDto.Screen))
             {
-                return MapFromInternal((DalDto.Screen)inObject) as TOutObject;
+                return MapFromInternal((DalDto.Screen)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(DalDto.Screen))
             {
-                return MapFromExternal((BllDto.Screen)inObject) as TOutObject;
+                return MapFromExternal((BllDto.Screen)inObject) as TOutObject ?? default!;
             }
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
         }
@@ -37,7 +37,7 @@ namespace BLL.App.Mappers
                 ShowScheduleSeconds = SecondsValueManager.GetSelectedValue(screen.ShowScheduleSeconds, true)
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static DalDto.Screen MapFromExternal(BllDto.Screen screen)
@@ -54,7 +54,7 @@ namespace BLL.App.Mappers
                 IsActive = screen.IsActive,
                 ShowScheduleSeconds = SecondsValueManager.GetIntValue(screen.ShowScheduleSeconds)
             };
-            return res!;
+            return res ?? default!;
         }
     }
 }

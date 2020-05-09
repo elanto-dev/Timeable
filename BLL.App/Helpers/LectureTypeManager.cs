@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Domain.Enums;
 
 namespace BLL.App.Helpers
 {
     public class LectureTypeManager
     {
-        private static readonly Dictionary<SubjectType, string> _lectureTypeDictionary = new Dictionary<SubjectType, string>
+        private static readonly Dictionary<SubjectType, string> LectureTypeDictionary = new Dictionary<SubjectType, string>
         {
             {SubjectType.Unknown, ""},
             {SubjectType.Lecture, "L"},
@@ -20,7 +19,7 @@ namespace BLL.App.Helpers
 
         public static string GetLectureTypeShortString(int subjectTypeInt)
         {
-            return _lectureTypeDictionary[(SubjectType) subjectTypeInt];
+            return LectureTypeDictionary[(SubjectType) subjectTypeInt];
         }
     }
 }

@@ -11,12 +11,12 @@ namespace DAL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(DTO.TeacherInSubjectEvent))
             {
-                return MapFromDomain((TeacherInSubjectEvent)inObject) as TOutObject;
+                return MapFromDomain((TeacherInSubjectEvent)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(TeacherInSubjectEvent))
             {
-                return MapFromDal((DTO.TeacherInSubjectEvent)inObject) as TOutObject;
+                return MapFromDal((DTO.TeacherInSubjectEvent)inObject) as TOutObject ?? default!;
             }
 
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");

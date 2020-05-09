@@ -79,15 +79,6 @@ namespace Resources.Domain.SubjectInSchedule {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Subject code.
-        /// </summary>
-        public static string Code {
-            get {
-                return ResourceManager.GetString("Code", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create new lecture.
         /// </summary>
         public static string CreateNew {
@@ -126,9 +117,9 @@ namespace Resources.Domain.SubjectInSchedule {
         /// <summary>
         ///   Looks up a localized string similar to End time.
         /// </summary>
-        public static string EndTime {
+        public static string EndDateTime {
             get {
-                return ResourceManager.GetString("EndTime", resourceCulture);
+                return ResourceManager.GetString("EndDateTime", resourceCulture);
             }
         }
         
@@ -138,15 +129,6 @@ namespace Resources.Domain.SubjectInSchedule {
         public static string Groups {
             get {
                 return ResourceManager.GetString("Groups", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Subject name.
-        /// </summary>
-        public static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
@@ -171,9 +153,27 @@ namespace Resources.Domain.SubjectInSchedule {
         /// <summary>
         ///   Looks up a localized string similar to Start time.
         /// </summary>
-        public static string StartTime {
+        public static string StartDateTime {
             get {
-                return ResourceManager.GetString("StartTime", resourceCulture);
+                return ResourceManager.GetString("StartDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject code.
+        /// </summary>
+        public static string SubjectCode {
+            get {
+                return ResourceManager.GetString("SubjectCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject name.
+        /// </summary>
+        public static string SubjectName {
+            get {
+                return ResourceManager.GetString("SubjectName", resourceCulture);
             }
         }
         

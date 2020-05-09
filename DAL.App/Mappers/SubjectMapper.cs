@@ -11,12 +11,12 @@ namespace DAL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(DTO.Subject))
             {
-                return MapFromDomain((Subject)inObject) as TOutObject;
+                return MapFromDomain((Subject)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(Subject))
             {
-                return MapFromDal((DTO.Subject)inObject) as TOutObject;
+                return MapFromDal((DTO.Subject)inObject) as TOutObject ?? default!;
             }
 
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
@@ -35,7 +35,7 @@ namespace DAL.App.Mappers
                 SubjectName = subject.SubjectName
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static Subject MapFromDal(DTO.Subject subject)
@@ -51,7 +51,7 @@ namespace DAL.App.Mappers
                 SubjectName = subject.SubjectName
             };
 
-            return res!;
+            return res ?? default!;
         }
     }
 }

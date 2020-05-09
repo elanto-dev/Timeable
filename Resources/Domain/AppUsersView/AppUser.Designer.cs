@@ -79,6 +79,15 @@ namespace Resources.Domain.AppUsersView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password confirmation.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this user?.
         /// </summary>
         public static string DeleteConfirmationText {
@@ -99,18 +108,18 @@ namespace Resources.Domain.AppUsersView {
         /// <summary>
         ///   Looks up a localized string similar to E-mail.
         /// </summary>
-        public static string EMail {
+        public static string Email {
             get {
-                return ResourceManager.GetString("EMail", resourceCulture);
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Events management.
         /// </summary>
-        public static string EventManagement {
+        public static string EventsManagement {
             get {
-                return ResourceManager.GetString("EventManagement", resourceCulture);
+                return ResourceManager.GetString("EventsManagement", resourceCulture);
             }
         }
         
@@ -151,15 +160,6 @@ namespace Resources.Domain.AppUsersView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password confirmation.
-        /// </summary>
-        public static string PasswordConfirmation {
-            get {
-                return ResourceManager.GetString("PasswordConfirmation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Schedule management.
         /// </summary>
         public static string ScheduleManagement {
@@ -174,6 +174,15 @@ namespace Resources.Domain.AppUsersView {
         public static string ScreenManagement {
             get {
                 return ResourceManager.GetString("ScreenManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User is head admin.
+        /// </summary>
+        public static string UserIsHeadAdmin {
+            get {
+                return ResourceManager.GetString("UserIsHeadAdmin", resourceCulture);
             }
         }
         

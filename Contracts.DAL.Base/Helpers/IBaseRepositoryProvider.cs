@@ -6,8 +6,8 @@ namespace Contracts.DAL.Base.Helpers
     {
         TRepository GetRepository<TRepository>();
 
-        IBaseRepository<TDALEntity> GetEntityRepository<TDALEntity, TDomainEntity>()
-            where TDALEntity : class, new()
+        IBaseRepository<TDalEntity> GetEntityRepository<TDalEntity, TDomainEntity>()
+            where TDalEntity : class, new()
             where TDomainEntity : class, IDomainEntity, new();
     }
 }

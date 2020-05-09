@@ -123,16 +123,19 @@
   <data name="Back" xml:space="preserve">
     <value>Tagasi kasutajate juurde</value>
   </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Korda parool</value>
+  </data>
   <data name="DeleteConfirmationText" xml:space="preserve">
     <value>Kas te olete kindel, et soovite kustutada seda kasutajat?</value>
   </data>
   <data name="EditUser" xml:space="preserve">
     <value>Muuda kasutaja</value>
   </data>
-  <data name="EMail" xml:space="preserve">
+  <data name="Email" xml:space="preserve">
     <value>E-meil</value>
   </data>
-  <data name="EventManagement" xml:space="preserve">
+  <data name="EventsManagement" xml:space="preserve">
     <value>Sündmuste haldus</value>
   </data>
   <data name="FirstName" xml:space="preserve">
@@ -147,14 +150,14 @@
   <data name="Password" xml:space="preserve">
     <value>Parool</value>
   </data>
-  <data name="PasswordConfirmation" xml:space="preserve">
-    <value>Korda parool</value>
-  </data>
   <data name="ScheduleManagement" xml:space="preserve">
     <value>Tunniplaani haldus</value>
   </data>
   <data name="ScreenManagement" xml:space="preserve">
     <value>Ekraani haldus</value>
+  </data>
+  <data name="UserIsHeadAdmin" xml:space="preserve">
+    <value>Kasutaja on peaadministraator</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>Kasutajad</value>

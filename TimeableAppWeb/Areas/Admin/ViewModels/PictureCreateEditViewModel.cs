@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BLL.DTO;
+﻿using BLL.DTO;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TimeableAppWeb.Areas.Admin.ViewModels

@@ -17,7 +17,8 @@
         <label asp-for="Screen.IsActive" class="col-sm-3 col-form-label">@Resources.Domain.ScreenView.Screen.ScheduleStatus:</label>
         <div class="col-sm-3">
             <label class="form-check-label green-text ">
-                <input id="screen-active-checkbox" class="form-check-input" asp-for="Screen.IsActive" /> @Resources.Domain.ScreenView.Screen.IsActive
+                <input id="screen-active-checkbox" class="form-check-input" asp-for="Screen.IsActive" /> @Html.DisplayNameFor(m => m.Screen.IsActive)
+                <input id="screen-is-active" type="hidden" asp-for="Screen.IsActive" />
             </label>
         </div>
     </div>
@@ -36,7 +37,7 @@
         </div>
     </div>
     <div class="form-group row" style="margin-top: 20px">
-        <label asp-for="Screen.Prefix" class="col-sm-3 col-form-label">@Resources.Domain.ScreenView.Screen.SearchPrefix:</label>
+        <label asp-for="Screen.Prefix" class="col-sm-3 col-form-label">@Html.DisplayNameFor(m => m.Screen.Prefix):</label>
         <div class="col-sm-3">
             <input id="screen-prefix" asp-for="Screen.Prefix" class="form-control" maxlength="20" />
             <span asp-validation-for="Screen.Prefix" class="text-danger"></span>
@@ -50,7 +51,7 @@
                 <div class="col-lg-3 col-md-4 mb-3" style="margin-top: 20px">
                     <div class="card h-100">
                         <img class="card-img-top" src="@Model.PictureInScreens[i].Picture.Path" alt="">
-                        <div class="card-body custom-class">
+                        <div class="card-body">
                             @Html.DropDownListFor(m => m.ShowPromotionSecondsStringDictionary[Model.PictureInScreens[i].Id],
                                 Model.PromotionSecondsSelectListDictionary[Model.PictureInScreens[i].Id],
                                 new { @class = "form-control  promotion-dropdown"})
@@ -70,6 +71,16 @@
         <a id="back-to-screen-btn" asp-controller="ScreenSettings" asp-action="Index" class="btn dark-blue-outline-button" style="margin-left: 20px;">@Resources.Domain.ScreenView.Screen.BackToScreen</a>
     </div>
 </form>
+
+<div class="modal fade blue-text" id="refreshingModal" tabindex="-1" role="dialog" aria-labelledby="refreshingModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>@Resources.Domain.ScreenView.Screen.ScheduleUpdateMessage</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     // When page is loaded and show always checked - disable all dropdowns
@@ -123,16 +134,7 @@
                 $(this).prop("disabled", true);
             });
             if ('@Model.ScreenOldPrefix' !== $("#screen-prefix").val()) {
-                $('#back-to-screen-btn').addClass("disabled");
-                var alwaysShownChecked = $('#show-always-checkbox').val();
-                $('#show-always-checkbox').attr("disabled", true);
-                $('#show-always-checkbox').attr("checked", alwaysShownChecked);
-                var screenActiveIsChecked = $('#screen-active-checkbox').val();
-                $('#screen-active-checkbox').attr("disabled", true);
-                $('#screen-active-checkbox').attr("checked", screenActiveIsChecked);
-                $('#screen-prefix').attr('readonly', true);
-                $('#save-button').css('display', 'none');
-                $('#loading-button').css('display', "inline");
+                $('#refreshingModal').modal('show');
             }
         });
 </script>

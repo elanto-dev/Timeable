@@ -59,7 +59,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 foreach (var lectureForTimetable in subjectsInSchedule)
                 {
                     var teacherNames = new List<string>();
-                    (await _bll.TeacherInSubjectEvents.GetAllTeachersForSubjectEventWithoutSubjInclude(lectureForTimetable.SubjectInScheduleId)).ToList().ForEach(e => teacherNames.Add(e.Teacher.FullName));
+                    (await _bll.TeacherInSubjectEvents.GetAllTeachersForSubjectEventWithoutSubjInclude(lectureForTimetable.SubjectInScheduleId)).ToList().ForEach(e => teacherNames.Add(e.Teacher.TeacherName));
                     lectureForTimetable.Lecturers = string.Join(", ", teacherNames);
                 }
                 vm.Subjects = subjectsInSchedule;
@@ -87,7 +87,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         }
 
 
-        [Authorize(Roles = nameof(RoleNamesEnum.HeadAdmin) + "," + nameof(RoleNamesEnum.EventSettingsAdmin) + "," + nameof(RoleNamesEnum.EventSettingsAdmin))]
+        [Authorize(Roles = nameof(RoleNamesEnum.HeadAdmin) + "," + nameof(RoleNamesEnum.ScheduleSettingsAdmin) + "," + nameof(RoleNamesEnum.EventSettingsAdmin))]
         public async Task<IActionResult> DeleteEventOrSubject(int id, bool isSubject)
         {
             if (isSubject)
@@ -99,6 +99,18 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 _bll.Events.Remove(id);
             }
             await _bll.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = nameof(RoleNamesEnum.HeadAdmin) + "," + nameof(RoleNamesEnum.ScheduleSettingsAdmin))]
+        public async Task<IActionResult> RefreshSchedule(int scheduleId)
+        {
+            var scheduleInScreen = await _bll.ScheduleInScreens.FindByScheduleIdAsync(scheduleId);
+            if (scheduleInScreen != null)
+            {
+                await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User),
+                    scheduleInScreen.Screen);
+            }
             return RedirectToAction("Index");
         }
     }

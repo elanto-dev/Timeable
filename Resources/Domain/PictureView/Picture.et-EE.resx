@@ -129,11 +129,14 @@
   <data name="CreateBgPicture" xml:space="preserve">
     <value>Tagaplaani pildi lisamine</value>
   </data>
+  <data name="FileMissing" xml:space="preserve">
+    <value>Fail pole lisatud!</value>
+  </data>
+  <data name="ShowAddSeconds" xml:space="preserve">
+    <value>Reklaam näidatud</value>
+  </data>
   <data name="Shown" xml:space="preserve">
     <value>Näidatud</value>
-  </data>
-  <data name="ShowPromo" xml:space="preserve">
-    <value>Reklaam näidatud</value>
   </data>
   <data name="ShowSchedule" xml:space="preserve">
     <value>Tunniplaan näidatud</value>

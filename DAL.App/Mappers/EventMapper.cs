@@ -11,12 +11,12 @@ namespace DAL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(DTO.Event))
             {
-                return MapFromDomain((Event) inObject) as TOutObject;
+                return MapFromDomain((Event) inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(Event))
             {
-                return MapFromDal((DTO.Event) inObject) as TOutObject;
+                return MapFromDal((DTO.Event) inObject) as TOutObject ?? default!;
             }
 
             throw new InvalidCastException(
@@ -40,7 +40,7 @@ namespace DAL.App.Mappers
                 ShowEndDateTime = currentEvent.ShowEndDateTime
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static Event MapFromDal(DTO.Event currentEvent)
@@ -60,7 +60,7 @@ namespace DAL.App.Mappers
                 ShowEndDateTime = currentEvent.ShowEndDateTime
             };
 
-            return res!;
+            return res ?? default!;
         }
     }
 }

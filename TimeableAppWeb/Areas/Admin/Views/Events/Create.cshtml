@@ -14,38 +14,38 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label">@Resources.Domain.EventView.Events.Name</label>
+                <label asp-for="Name" class="control-label">@Html.DisplayNameFor(m => m.Name)</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Place" class="control-label">@Resources.Domain.EventView.Events.Place</label>
+                <label asp-for="Place" class="control-label">@Html.DisplayNameFor(m => m.Place)</label>
                 <input asp-for="Place" class="form-control" />
                 <span asp-validation-for="Place" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartDateTime" class="control-label">@Resources.Domain.EventView.Events.EventStart</label>
+                <label asp-for="StartDateTime" class="control-label">@Html.DisplayNameFor(m => m.StartDateTime)</label>
                 <div class="flatpickrcontainer">
                     <input asp-for="StartDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>    
                 </div>
                 <span asp-validation-for="StartDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDateTime" class="control-label">@Resources.Domain.EventView.Events.EventEnd</label>
+                <label asp-for="EndDateTime" class="control-label">@Html.DisplayNameFor(m => m.EndDateTime)</label>
                 <div class="flatpickrcontainer">
                     <input asp-for="EndDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
                 </div>
                 <span asp-validation-for="EndDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ShowStartDateTime" class="control-label">@Resources.Domain.EventView.Events.EventShowStart</label>
+                <label asp-for="ShowStartDateTime" class="control-label">@Html.DisplayNameFor(m => m.ShowStartDateTime)</label>
                 <div class="flatpickrcontainer">
                     <input asp-for="ShowStartDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
                 </div>
                 <span asp-validation-for="ShowStartDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ShowEndDateTime" class="control-label">@Resources.Domain.EventView.Events.EventShowEnd</label>
+                <label asp-for="ShowEndDateTime" class="control-label">@Html.DisplayNameFor(m => m.ShowEndDateTime)</label>
                 <div class="flatpickrcontainer">
                     <input asp-for="ShowEndDateTime" type="text" class="form-control" id="time" placeholder="@Resources.Domain.EventView.Events.SelectDate" data-input>
                 </div>

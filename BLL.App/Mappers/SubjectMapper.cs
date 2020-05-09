@@ -11,12 +11,12 @@ namespace BLL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(BllDto.Subject))
             {
-                return MapFromInternal((DalDto.Subject)inObject) as TOutObject;
+                return MapFromInternal((DalDto.Subject)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(DalDto.Subject))
             {
-                return MapFromExternal((BllDto.Subject)inObject) as TOutObject;
+                return MapFromExternal((BllDto.Subject)inObject) as TOutObject ?? default!;
             }
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
         }
@@ -34,7 +34,7 @@ namespace BLL.App.Mappers
                 SubjectName = subject.SubjectName
             };
 
-            return res;
+            return res ?? default!;
         }
 
         public static DalDto.Subject MapFromExternal(BllDto.Subject subject)
@@ -49,7 +49,7 @@ namespace BLL.App.Mappers
                 SubjectCode = subject.SubjectCode,
                 SubjectName = subject.SubjectName
             };
-            return res;
+            return res ?? default!;
         }
     }
 }

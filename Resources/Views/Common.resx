@@ -132,6 +132,27 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="ErrorMessage_MaxLength" xml:space="preserve">
+    <value>The field {0} must be a string or array type with a maximum length of '{1}'.</value>
+  </data>
+  <data name="ErrorMessage_MinLength" xml:space="preserve">
+    <value>The field {0} must be a string or array type with a minimum length of '{1}'.</value>
+  </data>
+  <data name="ErrorMessage_PasswordDontMatch" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
+  </data>
+  <data name="ErrorMessage_Range" xml:space="preserve">
+    <value>The field {0} must be between {1} and {2}.</value>
+  </data>
+  <data name="ErrorMessage_Required" xml:space="preserve">
+    <value>The {0} field is required.</value>
+  </data>
+  <data name="ErrorMessage_StringLengthMax" xml:space="preserve">
+    <value>The field {0} must be a string with a maximum length of {1}.</value>
+  </data>
+  <data name="ErrorMessage_StringLengthMinMax" xml:space="preserve">
+    <value>The field {0} must be a string with a minimum length of {2} and a maximum length of {1}.</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>

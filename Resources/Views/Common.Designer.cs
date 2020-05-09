@@ -106,6 +106,69 @@ namespace Resources.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be a string or array type with a maximum length of &apos;{1}&apos;..
+        /// </summary>
+        public static string ErrorMessage_MaxLength {
+            get {
+                return ResourceManager.GetString("ErrorMessage_MaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be a string or array type with a minimum length of &apos;{1}&apos;..
+        /// </summary>
+        public static string ErrorMessage_MinLength {
+            get {
+                return ResourceManager.GetString("ErrorMessage_MinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password and confirmation password do not match..
+        /// </summary>
+        public static string ErrorMessage_PasswordDontMatch {
+            get {
+                return ResourceManager.GetString("ErrorMessage_PasswordDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be between {1} and {2}..
+        /// </summary>
+        public static string ErrorMessage_Range {
+            get {
+                return ResourceManager.GetString("ErrorMessage_Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The {0} field is required..
+        /// </summary>
+        public static string ErrorMessage_Required {
+            get {
+                return ResourceManager.GetString("ErrorMessage_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be a string with a maximum length of {1}..
+        /// </summary>
+        public static string ErrorMessage_StringLengthMax {
+            get {
+                return ResourceManager.GetString("ErrorMessage_StringLengthMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field {0} must be a string with a minimum length of {2} and a maximum length of {1}..
+        /// </summary>
+        public static string ErrorMessage_StringLengthMinMax {
+            get {
+                return ResourceManager.GetString("ErrorMessage_StringLengthMinMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {

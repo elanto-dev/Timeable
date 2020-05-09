@@ -241,6 +241,15 @@ namespace Resources.Domain.ScreenView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Schedule is being updated. It will take about 20 seconds..
+        /// </summary>
+        public static string ScheduleUpdateMessage {
+            get {
+                return ResourceManager.GetString("ScheduleUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schedule search prefix.
         /// </summary>
         public static string SearchPrefix {
@@ -288,9 +297,9 @@ namespace Resources.Domain.ScreenView {
         /// <summary>
         ///   Looks up a localized string similar to Show schedule.
         /// </summary>
-        public static string ShowSchedule {
+        public static string ShowScheduleSeconds {
             get {
-                return ResourceManager.GetString("ShowSchedule", resourceCulture);
+                return ResourceManager.GetString("ShowScheduleSeconds", resourceCulture);
             }
         }
         
@@ -300,6 +309,15 @@ namespace Resources.Domain.ScreenView {
         public static string UseDefault {
             get {
                 return ResourceManager.GetString("UseDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait....
+        /// </summary>
+        public static string Wait {
+            get {
+                return ResourceManager.GetString("Wait", resourceCulture);
             }
         }
     }

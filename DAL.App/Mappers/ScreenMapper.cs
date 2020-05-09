@@ -11,12 +11,12 @@ namespace DAL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(DTO.Screen))
             {
-                return MapFromDomain((Screen)inObject) as TOutObject;
+                return MapFromDomain((Screen)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(Screen))
             {
-                return MapFromDal((DTO.Screen)inObject) as TOutObject;
+                return MapFromDal((DTO.Screen)inObject) as TOutObject ?? default!;
             }
 
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
@@ -37,7 +37,7 @@ namespace DAL.App.Mappers
                 ShowScheduleSeconds = screen.ShowScheduleSeconds
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static Screen MapFromDal(DTO.Screen screen)
@@ -55,7 +55,7 @@ namespace DAL.App.Mappers
                 ShowScheduleSeconds = screen.ShowScheduleSeconds
             };
 
-            return res!;
+            return res ?? default!;
         }
     }
 }

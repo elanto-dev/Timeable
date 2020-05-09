@@ -13,13 +13,13 @@
                 @Resources.Domain.AppUsersView.AppUser.FullName
             </th>
             <th>
-                @Resources.Domain.AppUsersView.AppUser.EMail
+                @Resources.Domain.AppUsersView.AppUser.Email
             </th>
             <th>
                 @Resources.Domain.AppUsersView.AppUser.ScheduleManagement
             </th>
             <th>
-                @Resources.Domain.AppUsersView.AppUser.EventManagement
+                @Resources.Domain.AppUsersView.AppUser.EventsManagement
             </th>
             <th>
                 @Resources.Domain.AppUsersView.AppUser.ScreenManagement
@@ -47,15 +47,22 @@
                     @Html.DisplayFor(modelItem => item.ScreenManagement)
                 </td>
                 <td>
-                    <div class="btn-group">
-                        @if (!item.UserHasScreen)
-                        {
-                            <a class="btn btn-outline-success" asp-controller="AppUsers" asp-action="AddScreenToUser" asp-route-id="@item.Id">@Resources.Domain.AppUsersView.AppUser.AddScreenToUser</a>
+                    @if (item.UserIsHeadAdmin)
+                    {
+                        @Html.DisplayNameFor(modelItem => modelItem.UserIsHeadAdmin)
+                    }
+                    else
+                    {
+                        <div class="btn-group">
+                            @if (!item.UserHasScreen)
+                            {
+                                <a class="btn btn-outline-success" asp-controller="AppUsers" asp-action="AddScreenToUser" asp-route-id="@item.Id">@Resources.Domain.AppUsersView.AppUser.AddScreenToUser</a>
 
-                        }
-                        <a class="btn light-blue-button" asp-controller="AppUsers" asp-action="Edit" asp-route-id="@item.Id">@Resources.Views.Common.Edit</a>
-                        <a class="btn btn-outline-danger" asp-controller="AppUsers" asp-action="Delete" asp-route-id="@item.Id">@Resources.Views.Common.Delete</a>
-                    </div>
+                            }
+                            <a class="btn light-blue-button" asp-controller="AppUsers" asp-action="Edit" asp-route-id="@item.Id">@Resources.Views.Common.Edit</a>
+                            <a class="btn btn-outline-danger" asp-controller="AppUsers" asp-action="Delete" asp-route-id="@item.Id">@Resources.Views.Common.Delete</a>
+                        </div>
+                    }
                 </td>
             </tr>
         }

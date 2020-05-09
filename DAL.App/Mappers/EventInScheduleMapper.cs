@@ -11,12 +11,12 @@ namespace DAL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(DTO.EventInSchedule))
             {
-                return MapFromDomain((Domain.EventInSchedule)inObject) as TOutObject;
+                return MapFromDomain((EventInSchedule)inObject) as TOutObject ?? default!;
             }
 
-            if (typeof(TOutObject) == typeof(Domain.EventInSchedule))
+            if (typeof(TOutObject) == typeof(EventInSchedule))
             {
-                return MapFromDal((DTO.EventInSchedule)inObject) as TOutObject;
+                return MapFromDal((DTO.EventInSchedule)inObject) as TOutObject ?? default!;
             }
 
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
@@ -37,12 +37,12 @@ namespace DAL.App.Mappers
                 EventId = eventInSchedule.EventId
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static EventInSchedule MapFromDal(DTO.EventInSchedule eventInSchedule)
         {
-            var res = eventInSchedule == null ? null : new Domain.EventInSchedule
+            var res = eventInSchedule == null ? null : new EventInSchedule
             {
                 Id = eventInSchedule.Id,
                 CreatedAt = eventInSchedule.CreatedAt,
@@ -55,7 +55,7 @@ namespace DAL.App.Mappers
                 EventId = eventInSchedule.EventId
             };
 
-            return res!;
+            return res ?? default!;
         }
     }
 }

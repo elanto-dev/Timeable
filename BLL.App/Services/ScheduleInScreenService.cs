@@ -8,7 +8,7 @@ using Contracts.DAL.App;
 
 namespace BLL.App.Services
 {
-    public class ScheduleInScreenService : BaseEntityService<DTO.ScheduleInScreen, DAL.DTO.ScheduleInScreen, IAppUnitOfWork>, IScheduleInScreenService
+    public class ScheduleInScreenService : BaseEntityService<ScheduleInScreen, DAL.DTO.ScheduleInScreen, IAppUnitOfWork>, IScheduleInScreenService
     {
         public ScheduleInScreenService(IAppUnitOfWork uow) : base(uow, new ScheduleInScreenMapper())
         {
@@ -19,6 +19,12 @@ namespace BLL.App.Services
         {
             return ScheduleInScreenMapper.MapFromInternal(
                 await Uow.ScheduleInScreens.FindForScreenForDateWithoutIncludesAsync(screenId, prefix, date));
+        }
+
+        public async Task<ScheduleInScreen> FindByScheduleIdAsync(int scheduleId)
+        {
+            return ScheduleInScreenMapper.MapFromInternal(
+                await Uow.ScheduleInScreens.FindByScheduleIdAsync(scheduleId));
         }
     }
 }

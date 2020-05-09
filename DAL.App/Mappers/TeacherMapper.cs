@@ -11,12 +11,12 @@ namespace DAL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(DTO.Teacher))
             {
-                return MapFromDomain((Teacher)inObject) as TOutObject;
+                return MapFromDomain((Teacher)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(Teacher))
             {
-                return MapFromDal((DTO.Teacher)inObject) as TOutObject;
+                return MapFromDal((DTO.Teacher)inObject) as TOutObject ?? default!;
             }
 
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
@@ -35,7 +35,7 @@ namespace DAL.App.Mappers
                 Role = teacher.Role
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static Teacher MapFromDal(DTO.Teacher teacher)
@@ -51,7 +51,7 @@ namespace DAL.App.Mappers
                 Role = teacher.Role
             };
 
-            return res!;
+            return res ?? default!;
         }
     }
 }

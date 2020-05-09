@@ -147,11 +147,8 @@
   <data name="From" xml:space="preserve">
     <value>Alates</value>
   </data>
-  <data name="LectureName" xml:space="preserve">
+  <data name="LectureNameWithCode" xml:space="preserve">
     <value>Nimetus</value>
-  </data>
-  <data name="LectureRooms" xml:space="preserve">
-    <value>Ruumid</value>
   </data>
   <data name="Lecturers" xml:space="preserve">
     <value>Õppejõud</value>
@@ -159,14 +156,29 @@
   <data name="Lectures" xml:space="preserve">
     <value>Loengud</value>
   </data>
-  <data name="LectureTime" xml:space="preserve">
-    <value>Loengu aeg</value>
-  </data>
-  <data name="LectureTypes" xml:space="preserve">
+  <data name="LectureType" xml:space="preserve">
     <value>Tüüp</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Uuenda tunniplaan</value>
+  </data>
+  <data name="RefreshQuestion" xml:space="preserve">
+    <value>Uuendus kirjutab üle kõik salvestatud muutused. Kas te olete kindel, et soovite uuendada?</value>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Ruumid</value>
+  </data>
+  <data name="ScheduleUpdateMessage" xml:space="preserve">
+    <value>Tunniplaani uuendatakse. See kestab umbes 20 sekundit.</value>
+  </data>
+  <data name="StartToEndString" xml:space="preserve">
+    <value>Loengu aeg</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>kuni</value>
+  </data>
+  <data name="Wait" xml:space="preserve">
+    <value>Palun oodake...</value>
   </data>
   <data name="Week" xml:space="preserve">
     <value>nädal</value>

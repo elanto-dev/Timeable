@@ -13,5 +13,6 @@ namespace Contracts.DAL.App.Repositories
         where TDalEntity : class, new()
     {
         Task<TDalEntity> FindForScreenForDateWithoutIncludesAsync(int screenId, string screenPrefix, DateTime date);
+        Task<TDalEntity> FindByScheduleIdAsync(int scheduleId);
     }
 }

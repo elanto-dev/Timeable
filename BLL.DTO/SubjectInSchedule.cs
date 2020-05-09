@@ -16,22 +16,27 @@ namespace BLL.DTO
         public int ScheduleId { get; set; }
         public Schedule Schedule { get; set; } = default!;
 
-        [DisplayName("Unique key")]
         public string UniqueIdentifier { get; set; } = default!;
 
-        [DisplayName("Subject type")]
+        [Display(Name = nameof(SubjectType), Prompt = nameof(SubjectType), ResourceType = typeof(Resources.Domain.SubjectInSchedule.SubjectInSchedule))]
         public int SubjectType { get; set; } = default!;
 
-        [MaxLength(150)]
+        [Required(ErrorMessageResourceName = "ErrorMessage_Required", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [MaxLength(150, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(Rooms), Prompt = nameof(Rooms), ResourceType = typeof(Resources.Domain.SubjectInSchedule.SubjectInSchedule))]
         public string Rooms { get; set; } = default!;
 
-        [MaxLength(500)]
+        [Required(ErrorMessageResourceName = "ErrorMessage_Required", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [MaxLength(500, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(Groups), Prompt = nameof(Groups), ResourceType = typeof(Resources.Domain.SubjectInSchedule.SubjectInSchedule))]
         public string Groups { get; set; } = default!;
 
-        [DisplayName("Starts")]
+        [Required(ErrorMessageResourceName = "ErrorMessage_Required", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(StartDateTime), Prompt = nameof(StartDateTime), ResourceType = typeof(Resources.Domain.SubjectInSchedule.SubjectInSchedule))]
         public DateTime StartDateTime { get; set; }
 
-        [DisplayName("Ends")]
+        [Required(ErrorMessageResourceName = "ErrorMessage_Required", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(EndDateTime), Prompt = nameof(EndDateTime), ResourceType = typeof(Resources.Domain.SubjectInSchedule.SubjectInSchedule))]
         public DateTime EndDateTime { get; set; }
     }
 }

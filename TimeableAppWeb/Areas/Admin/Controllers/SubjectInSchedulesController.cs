@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using TimeableAppWeb.Areas.Admin.Helpers;
 using TimeableAppWeb.Areas.Admin.ViewModels;
 
@@ -72,14 +71,14 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 if (vm.SubjectInSchedule.StartDateTime == DateTime.MinValue ||
                     vm.SubjectInSchedule.EndDateTime == DateTime.MinValue)
                 {
-                    ModelState.AddModelError(string.Empty, "Dates should be chosen!");
+                    ModelState.AddModelError(string.Empty, Resources.Domain.SubjectInSchedule.SubjectInSchedule.DatesChooseError);
                     vm.SubjectInSchedule.StartDateTime = vm.SubjectInSchedule.EndDateTime = DateTime.Today;
                     return View(vm);
                 }
 
                 if (vm.SubjectInSchedule.StartDateTime >= vm.SubjectInSchedule.EndDateTime)
                 {
-                    ModelState.AddModelError(string.Empty, "Start time should be before end time!");
+                    ModelState.AddModelError(string.Empty, Resources.Domain.SubjectInSchedule.SubjectInSchedule.DatesDifferenceError);
                     return View(vm);
                 }
 
@@ -132,14 +131,14 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             if (vm.SubjectInSchedule.StartDateTime == DateTime.MinValue ||
                 vm.SubjectInSchedule.EndDateTime == DateTime.MinValue)
             {
-                ModelState.AddModelError(string.Empty, "Dates should be chosen!");
+                ModelState.AddModelError(string.Empty, Resources.Domain.SubjectInSchedule.SubjectInSchedule.DatesChooseError);
                 vm.SubjectInSchedule.StartDateTime = vm.SubjectInSchedule.EndDateTime = DateTime.Today;
                 return View(vm);
             }
 
             if (vm.SubjectInSchedule.StartDateTime >= vm.SubjectInSchedule.EndDateTime)
             {
-                ModelState.AddModelError(string.Empty, "Start time should be before end time!");
+                ModelState.AddModelError(string.Empty, Resources.Domain.SubjectInSchedule.SubjectInSchedule.DatesDifferenceError);
                 return View(vm);
             }
 
@@ -323,7 +322,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         private async Task<Teacher> AddTeacherIfDontExistAsync(Teacher teacher)
         {
             var teacherInDb =
-                await _bll.Teachers.FindTeacherByNameAndRoleAsync(teacher.FullName, teacher.Role);
+                await _bll.Teachers.FindTeacherByNameAndRoleAsync(teacher.TeacherName, teacher.TeacherRole);
             if (teacherInDb != null)
             {
                 return teacherInDb;

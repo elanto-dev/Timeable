@@ -7,7 +7,7 @@ using Contracts.DAL.App;
 
 namespace BLL.App.Services
 {
-    public class TeacherService : BaseEntityService<DTO.Teacher, DAL.DTO.Teacher, IAppUnitOfWork>, ITeacherService
+    public class TeacherService : BaseEntityService<Teacher, DAL.DTO.Teacher, IAppUnitOfWork>, ITeacherService
     {
         public TeacherService(IAppUnitOfWork uow) : base(uow, new TeacherMapper())
         {

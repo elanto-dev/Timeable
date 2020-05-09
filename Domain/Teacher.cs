@@ -10,8 +10,7 @@ namespace Domain
         public string FullName { get; set; } = default!;
 
         [MaxLength(100)]
-        public string? Role { get; set; } 
-
+        public string? Role { get; set; }
         public ICollection<TeacherInSubjectEvent>? TeacherInSubjectEvents { get; set; }
     }
 }

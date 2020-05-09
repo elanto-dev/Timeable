@@ -12,12 +12,12 @@ namespace BLL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(BllDto.PictureInScreen))
             {
-                return MapFromInternal((DalDto.PictureInScreen)inObject) as TOutObject;
+                return MapFromInternal((DalDto.PictureInScreen)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(DalDto.PictureInScreen))
             {
-                return MapFromExternal((BllDto.PictureInScreen)inObject) as TOutObject;
+                return MapFromExternal((BllDto.PictureInScreen)inObject) as TOutObject ?? default!;
             }
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
         }
@@ -39,7 +39,7 @@ namespace BLL.App.Mappers
                 ShowAddSeconds = SecondsValueManager.GetSelectedValue(pictureInScreen.ShowAddSeconds, false)
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static DalDto.PictureInScreen MapFromExternal(BllDto.PictureInScreen pictureInScreen)
@@ -58,7 +58,7 @@ namespace BLL.App.Mappers
                 IsBackgroundPicture = pictureInScreen.IsBackgroundPicture,
                 ShowAddSeconds = SecondsValueManager.GetIntValue(pictureInScreen.ShowAddSeconds)
             };
-            return res!;
+            return res ?? default!;
         }
     }
 }

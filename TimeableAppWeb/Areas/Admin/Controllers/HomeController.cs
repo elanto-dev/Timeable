@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using TimeableAppWeb.Models;
+using TimeableAppWeb.ViewModels;
 
 namespace TimeableAppWeb.Areas.Admin.Controllers
 {
@@ -13,13 +12,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return RedirectToAction("Index", "ScreenSettings");

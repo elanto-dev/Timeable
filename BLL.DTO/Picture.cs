@@ -11,10 +11,11 @@ namespace BLL.DTO
         public string? ChangedBy { get; set; }
         public DateTime ChangedAt { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(255, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
         public string Path { get; set; } = default!;
 
-        [MaxLength(200)]
+        [MaxLength(200, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(Comment), Prompt = nameof(Comment), ResourceType = typeof(Resources.Domain.PictureView.Picture))]
         public string? Comment { get; set; } = default!;
     }
 }

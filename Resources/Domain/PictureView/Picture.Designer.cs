@@ -97,20 +97,29 @@ namespace Resources.Domain.PictureView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shown.
+        ///   Looks up a localized string similar to File is missing!.
         /// </summary>
-        public static string Shown {
+        public static string FileMissing {
             get {
-                return ResourceManager.GetString("Shown", resourceCulture);
+                return ResourceManager.GetString("FileMissing", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Show promotion.
         /// </summary>
-        public static string ShowPromo {
+        public static string ShowAddSeconds {
             get {
-                return ResourceManager.GetString("ShowPromo", resourceCulture);
+                return ResourceManager.GetString("ShowAddSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shown.
+        /// </summary>
+        public static string Shown {
+            get {
+                return ResourceManager.GetString("Shown", resourceCulture);
             }
         }
         

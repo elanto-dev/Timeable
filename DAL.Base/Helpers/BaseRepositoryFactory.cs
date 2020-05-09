@@ -39,13 +39,13 @@ namespace DAL.Base.Helpers
         throw new NullReferenceException("No repo creation method found for " + typeof(TRepository).FullName);
     }
 
-    public Func<TDbContext, object> GetEntityRepositoryFactory<TDALEntity, TDomainEntity>()
-        where TDALEntity : class, new()
+    public Func<TDbContext, object> GetEntityRepositoryFactory<TDalEntity, TDomainEntity>()
+        where TDalEntity : class, new()
         where TDomainEntity : class, IDomainEntity, new()
     {
         return dataContext =>
-            new BaseRepository<TDALEntity, TDomainEntity, TDbContext>(dataContext,
-                new BaseDalMapper<TDALEntity, TDomainEntity>());
+            new BaseRepository<TDalEntity, TDomainEntity, TDbContext>(dataContext,
+                new BaseDalMapper<TDalEntity, TDomainEntity>());
     }
 }
 }

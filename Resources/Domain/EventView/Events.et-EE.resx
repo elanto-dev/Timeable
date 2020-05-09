@@ -120,23 +120,14 @@
   <data name="BackToSchedule" xml:space="preserve">
     <value>Tagasi tunniplaani juurde</value>
   </data>
+  <data name="EndDateTime" xml:space="preserve">
+    <value>Sündmuse lõpp</value>
+  </data>
   <data name="Event" xml:space="preserve">
     <value>Sündmus</value>
   </data>
-  <data name="EventEnd" xml:space="preserve">
-    <value>Sündmuse lõpp</value>
-  </data>
-  <data name="EventShowEnd" xml:space="preserve">
-    <value>Näita kuni</value>
-  </data>
-  <data name="EventShowStart" xml:space="preserve">
-    <value>Näita alates</value>
-  </data>
   <data name="EventShowTimeDifferenceError" xml:space="preserve">
     <value>Ürituse kuvamise algus peab olema enne selle lõppu!</value>
-  </data>
-  <data name="EventStart" xml:space="preserve">
-    <value>Sündmuse algus</value>
   </data>
   <data name="EventTimeDifferenceError" xml:space="preserve">
     <value>Ürituse algus peab olema enne selle lõppu!</value>
@@ -149,5 +140,14 @@
   </data>
   <data name="SelectDate" xml:space="preserve">
     <value>Vali kuupäev...</value>
+  </data>
+  <data name="ShowEndDateTime" xml:space="preserve">
+    <value>Näita kuni</value>
+  </data>
+  <data name="ShowStartDateTime" xml:space="preserve">
+    <value>Näita alates</value>
+  </data>
+  <data name="StartDateTime" xml:space="preserve">
+    <value>Sündmuse algus</value>
   </data>
 </root>

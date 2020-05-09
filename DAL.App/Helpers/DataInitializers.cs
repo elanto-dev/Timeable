@@ -36,8 +36,8 @@ namespace DAL.App.Helpers
                 {
                     role = new AppRole();
                     role.Name = roleName;
-                    role.CreatedAt = role.ChangedAt = DateTime.Now;
-                    role.CreatedBy = role.ChangedBy = null;
+                    role.CreatedAt = DateTime.Now;
+                    role.CreatedBy = null;
                     var result = roleManager.CreateAsync(role).Result;
                     if (!result.Succeeded)
                     {
@@ -53,7 +53,7 @@ namespace DAL.App.Helpers
                 user = new AppUser { UserName = UserName, Email = UserName };
                 user.FirstName = FirstName;
                 user.LastName = LastName;
-                user.ChangedAt = user.CreatedAt = DateTime.Now;
+                user.CreatedAt = DateTime.Now;
                 user.Activated = false;
                 var userResult = userManager.CreateAsync(user, Password).Result;
                 if (!userResult.Succeeded)
@@ -78,16 +78,29 @@ namespace DAL.App.Helpers
             {
                 screen = context.Screens.First();
                 prefix = screen.Prefix;
+                var user = userManager.FindByNameAsync(UserName).Result;
+                if (user == null)
+                    return;
+
+                if (!context.AppUsersScreens.Any(s => s.ScreenId == screen.Id && s.AppUserId == user.Id))
+                {
+                    context.AppUsersScreens.Add(new AppUsersScreen
+                    {
+                        CreatedAt = DateTime.Now,
+                        AppUserId = userManager.FindByNameAsync(UserName).Result.Id,
+                        ScreenId = screen.Id
+                    });
+                    context.SaveChanges();
+                }
             }
             else
             {
                 if(userManager.FindByNameAsync(UserName).Result == null)
                     return;
 
-                screen = new Screen()
+                screen = new Screen
                 {
                     CreatedAt = DateTime.Now,
-                    ChangedAt = DateTime.Now,
                     Prefix = prefix,
                     IsActive = false,
                     UniqueIdentifier = Guid.NewGuid().ToString()
@@ -102,7 +115,6 @@ namespace DAL.App.Helpers
                     context.AppUsersScreens.Add(new AppUsersScreen()
                     {
                         CreatedAt = DateTime.Now,
-                        ChangedAt = DateTime.Now,
                         AppUserId = userManager.FindByNameAsync(UserName).Result.Id,
                         ScreenId = screen.Id
                     });
@@ -124,7 +136,6 @@ namespace DAL.App.Helpers
                 context.ScheduleInScreens.Add(new ScheduleInScreen
                 {
                     CreatedAt = DateTime.Now,
-                    ChangedAt = DateTime.Now,
                     ScreenId = screen.Id,
                     ScheduleId = scheduleFromDb.Id
                 });
@@ -192,10 +203,25 @@ namespace DAL.App.Helpers
             context.ScheduleInScreens.Add(new ScheduleInScreen
             {
                 CreatedAt = DateTime.Now,
-                ChangedAt = DateTime.Now,
                 ScreenId = screen.Id,
                 ScheduleId = schedule.Id
             });
+
+            var futureEvents =
+                context.Events.Where(e => e.ShowStartDateTime >= DateTime.Now && e.ShowEndDateTime > DateTime.Now);
+
+            if (futureEvents != null && futureEvents.Any())
+            {
+                foreach (var futureEvent in futureEvents)
+                {
+                    context.EventInSchedules.Add(new EventInSchedule
+                    {
+                        CreatedAt = DateTime.Now,
+                        EventId = futureEvent.Id,
+                        ScheduleId = schedule.Id
+                    });
+                }
+            }
 
             context.SaveChanges();
         }

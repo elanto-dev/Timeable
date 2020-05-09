@@ -8,7 +8,6 @@ namespace TimeableAppWeb.Areas.Admin.ViewModels
         public Screen Screen { get; set; } = default!;
         public List<PictureInScreen>? Promotions { get; set; }
         public Picture? BackgroundPicture { get; set; }
-        public string SubjectType { get; set; } = default!;
         public bool ShowPrefixError { get; set; }
         public string PrefixError => Resources.Domain.ScreenView.Screen.PrefixError;
         public bool UserHasRightsToEdit { get; set; }

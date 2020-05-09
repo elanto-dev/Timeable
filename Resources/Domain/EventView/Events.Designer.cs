@@ -70,6 +70,15 @@ namespace Resources.Domain.EventView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event End.
+        /// </summary>
+        public static string EndDateTime {
+            get {
+                return ResourceManager.GetString("EndDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event.
         /// </summary>
         public static string Event {
@@ -79,47 +88,11 @@ namespace Resources.Domain.EventView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Event End.
-        /// </summary>
-        public static string EventEnd {
-            get {
-                return ResourceManager.GetString("EventEnd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show event to.
-        /// </summary>
-        public static string EventShowEnd {
-            get {
-                return ResourceManager.GetString("EventShowEnd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show event from.
-        /// </summary>
-        public static string EventShowStart {
-            get {
-                return ResourceManager.GetString("EventShowStart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Event show start must be before its end!.
         /// </summary>
         public static string EventShowTimeDifferenceError {
             get {
                 return ResourceManager.GetString("EventShowTimeDifferenceError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Event start.
-        /// </summary>
-        public static string EventStart {
-            get {
-                return ResourceManager.GetString("EventStart", resourceCulture);
             }
         }
         
@@ -156,6 +129,33 @@ namespace Resources.Domain.EventView {
         public static string SelectDate {
             get {
                 return ResourceManager.GetString("SelectDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show event to.
+        /// </summary>
+        public static string ShowEndDateTime {
+            get {
+                return ResourceManager.GetString("ShowEndDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show event from.
+        /// </summary>
+        public static string ShowStartDateTime {
+            get {
+                return ResourceManager.GetString("ShowStartDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event start.
+        /// </summary>
+        public static string StartDateTime {
+            get {
+                return ResourceManager.GetString("StartDateTime", resourceCulture);
             }
         }
     }

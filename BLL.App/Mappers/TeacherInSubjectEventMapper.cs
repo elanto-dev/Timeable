@@ -11,12 +11,12 @@ namespace BLL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(BllDto.TeacherInSubjectEvent))
             {
-                return MapFromInternal((DalDto.TeacherInSubjectEvent)inObject) as TOutObject;
+                return MapFromInternal((DalDto.TeacherInSubjectEvent) inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(DalDto.TeacherInSubjectEvent))
             {
-                return MapFromExternal((BllDto.TeacherInSubjectEvent)inObject) as TOutObject;
+                return MapFromExternal((BllDto.TeacherInSubjectEvent)inObject) as TOutObject ?? default!;
             }
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
         }
@@ -36,7 +36,7 @@ namespace BLL.App.Mappers
                 SubjectInSchedule = SubjectInScheduleMapper.MapFromInternal(teacherInSubjectEvent.SubjectInSchedule)
             };
 
-            return res;
+            return res ?? default!;
         }
 
         public static DalDto.TeacherInSubjectEvent MapFromExternal(BllDto.TeacherInSubjectEvent teacherInSubjectEvent)
@@ -53,7 +53,7 @@ namespace BLL.App.Mappers
                 SubjectInScheduleId = teacherInSubjectEvent.SubjectInScheduleId,
                 SubjectInSchedule = SubjectInScheduleMapper.MapFromExternal(teacherInSubjectEvent.SubjectInSchedule)
             };
-            return res;
+            return res ?? default!;
         }
     }
 }

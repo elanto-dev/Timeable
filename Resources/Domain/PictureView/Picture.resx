@@ -129,11 +129,14 @@
   <data name="CreateBgPicture" xml:space="preserve">
     <value>Create background picture</value>
   </data>
+  <data name="FileMissing" xml:space="preserve">
+    <value>File is missing!</value>
+  </data>
+  <data name="ShowAddSeconds" xml:space="preserve">
+    <value>Show promotion</value>
+  </data>
   <data name="Shown" xml:space="preserve">
     <value>Shown</value>
-  </data>
-  <data name="ShowPromo" xml:space="preserve">
-    <value>Show promotion</value>
   </data>
   <data name="ShowSchedule" xml:space="preserve">
     <value>Show schedule</value>

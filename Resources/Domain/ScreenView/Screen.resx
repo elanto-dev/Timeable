@@ -183,7 +183,7 @@
   <data name="Shown" xml:space="preserve">
     <value>Shown</value>
   </data>
-  <data name="ShowSchedule" xml:space="preserve">
+  <data name="ShowScheduleSeconds" xml:space="preserve">
     <value>Show schedule</value>
   </data>
   <data name="UseDefault" xml:space="preserve">
@@ -197,5 +197,11 @@
   </data>
   <data name="NoPromoFound" xml:space="preserve">
     <value>No promotions found! You do not have rights to add the promotion!</value>
+  </data>
+  <data name="ScheduleUpdateMessage" xml:space="preserve">
+    <value>Schedule is being updated. It will take about 20 seconds.</value>
+  </data>
+  <data name="Wait" xml:space="preserve">
+    <value>Please wait...</value>
   </data>
 </root>

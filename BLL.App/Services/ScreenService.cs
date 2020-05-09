@@ -7,7 +7,7 @@ using Contracts.DAL.App;
 
 namespace BLL.App.Services
 {
-    public class ScreenService : BaseEntityService<DTO.Screen, DAL.DTO.Screen, IAppUnitOfWork>, IScreenService
+    public class ScreenService : BaseEntityService<Screen, DAL.DTO.Screen, IAppUnitOfWork>, IScreenService
     {
         public ScreenService(IAppUnitOfWork uow) : base(uow, new ScreenMapper())
         {

@@ -13,13 +13,13 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="ShowScheduleSeconds" />
             <div class="form-group">
-                <label asp-for="Prefix" class="control-label">@Resources.Domain.ScreenView.Screen.Prefix</label>
+                <label asp-for="Prefix" class="control-label">@Html.DisplayNameFor(m => m.Prefix)</label>
                 <input id="screen-prefix" asp-for="Prefix" class="form-control" value="ICO" />
                 <span asp-validation-for="Prefix" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input id="screen-active-checkbox" class="form-check-input" asp-for="IsActive" /> @Resources.Domain.ScreenView.Screen.IsActive
+                    <input id="screen-active-checkbox" class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(m => m.IsActive)
                 </label>
             </div>
             <div class="form-group " style="margin-top: 20px">

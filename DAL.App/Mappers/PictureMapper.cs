@@ -11,12 +11,12 @@ namespace DAL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(DTO.Picture))
             {
-                return MapFromDomain((Picture)inObject) as TOutObject;
+                return MapFromDomain((Picture)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(Picture))
             {
-                return MapFromDal((DTO.Picture)inObject) as TOutObject;
+                return MapFromDal((DTO.Picture)inObject) as TOutObject ?? default!;
             }
 
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
@@ -35,7 +35,7 @@ namespace DAL.App.Mappers
                 Comment = picture.Comment
             };
 
-            return res!;
+            return res ?? default!;
         }
 
         public static Picture MapFromDal(DTO.Picture picture)
@@ -51,7 +51,7 @@ namespace DAL.App.Mappers
                 Comment = picture.Comment
             };
 
-            return res!;
+            return res ?? default!;
         }
     }
 }

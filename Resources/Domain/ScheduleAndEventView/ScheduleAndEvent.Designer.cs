@@ -153,18 +153,9 @@ namespace Resources.Domain.ScheduleAndEventView {
         /// <summary>
         ///   Looks up a localized string similar to Lecture name .
         /// </summary>
-        public static string LectureName {
+        public static string LectureNameWithCode {
             get {
-                return ResourceManager.GetString("LectureName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rooms.
-        /// </summary>
-        public static string LectureRooms {
-            get {
-                return ResourceManager.GetString("LectureRooms", resourceCulture);
+                return ResourceManager.GetString("LectureNameWithCode", resourceCulture);
             }
         }
         
@@ -187,20 +178,56 @@ namespace Resources.Domain.ScheduleAndEventView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time.
+        ///   Looks up a localized string similar to Types.
         /// </summary>
-        public static string LectureTime {
+        public static string LectureType {
             get {
-                return ResourceManager.GetString("LectureTime", resourceCulture);
+                return ResourceManager.GetString("LectureType", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Types.
+        ///   Looks up a localized string similar to Refresh schedule.
         /// </summary>
-        public static string LectureTypes {
+        public static string Refresh {
             get {
-                return ResourceManager.GetString("LectureTypes", resourceCulture);
+                return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All saved changes will be overwritten! Are you sure you want to continue?.
+        /// </summary>
+        public static string RefreshQuestion {
+            get {
+                return ResourceManager.GetString("RefreshQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rooms.
+        /// </summary>
+        public static string Rooms {
+            get {
+                return ResourceManager.GetString("Rooms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schedule is being updated. It will take about 20 seconds..
+        /// </summary>
+        public static string ScheduleUpdateMessage {
+            get {
+                return ResourceManager.GetString("ScheduleUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string StartToEndString {
+            get {
+                return ResourceManager.GetString("StartToEndString", resourceCulture);
             }
         }
         
@@ -210,6 +237,15 @@ namespace Resources.Domain.ScheduleAndEventView {
         public static string to {
             get {
                 return ResourceManager.GetString("to", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait....
+        /// </summary>
+        public static string Wait {
+            get {
+                return ResourceManager.GetString("Wait", resourceCulture);
             }
         }
         

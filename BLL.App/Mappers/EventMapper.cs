@@ -11,12 +11,12 @@ namespace BLL.App.Mappers
         {
             if (typeof(TOutObject) == typeof(BllDto.Event))
             {
-                return MapFromInternal((DalDto.Event)inObject) as TOutObject;
+                return MapFromInternal((DalDto.Event)inObject) as TOutObject ?? default!;
             }
 
             if (typeof(TOutObject) == typeof(DalDto.Event))
             {
-                return MapFromExternal((BllDto.Event)inObject) as TOutObject;
+                return MapFromExternal((BllDto.Event)inObject) as TOutObject ?? default!;
             }
             throw new InvalidCastException($"No conversion from {inObject.GetType().FullName} to {typeof(TOutObject).FullName}");
         }
@@ -38,7 +38,7 @@ namespace BLL.App.Mappers
                 ShowEndDateTime = currentEvent.ShowEndDateTime
             };
 
-            return res;
+            return res ?? default!;
         }
 
         public static DalDto.Event MapFromExternal(BllDto.Event currentEvent)
@@ -57,7 +57,7 @@ namespace BLL.App.Mappers
                 ShowStartDateTime = currentEvent.ShowStartDateTime,
                 ShowEndDateTime = currentEvent.ShowEndDateTime
             };
-            return res;
+            return res ?? default!;
         }
     }
 }

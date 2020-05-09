@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper.Configuration;
 using DAL.App;
 using DAL.App.Helpers;
 using Microsoft.Extensions.DependencyInjection;

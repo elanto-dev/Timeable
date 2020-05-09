@@ -4,9 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
-    <head>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    </head>
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
 
 <div class="row">
     <div class="col-6">
@@ -17,11 +17,23 @@
     </div>
 
     <div class="col-6">
-        <a class="btn dark-blue-button" asp-controller="Events" asp-action="Create">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.AddEvent</a>
+        @if (Model.UserHasRightsToEditEvents)
+        {
+            <a class="btn dark-blue-button" asp-controller="Events" asp-action="Create">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.AddEvent</a>
+        }
     </div>
-    <div class="col-6" style="position: relative">
-        <h4 style="position: absolute;bottom: 0; right: 0;">@Model.WeekNumber. @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Week</h4>
-    </div>
+    @if (Model.UserHasRightsToEditEvents)
+    {
+        <div class="col-6" style="position: relative">
+            <h4 style="position: absolute;bottom: 0; right: 0;">@Model.WeekNumber. @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Week</h4>
+        </div>
+    }
+    else
+    {
+        <div class="col-6">
+            <h4 align="right">@Model.WeekNumber. @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Week</h4>
+        </div>
+    }
 </div>
 <hr />
 <table class="table blue-text">
@@ -39,7 +51,10 @@
             <th>
                 @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.EventShowFromTo
             </th>
-            <th></th>
+            @if (Model.UserHasRightsToEditEvents)
+            {
+                <th></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -47,25 +62,29 @@
         {
             <tr>
                 <td>
-                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.From</b> @Html.DisplayFor(modelItem => item.StartDateTimeString)
-                <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.to</b> @Html.DisplayFor(modelItem => item.EndDateTimeString)
+                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.From</b> @Html.DisplayFor(modelItem => item.StartDateTime)
+                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.to</b> @Html.DisplayFor(modelItem => item.EndDateTime)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EventName)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Place)
                 </td>
                 <td>
-                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.From</b> @Html.DisplayFor(modelItem => item.ShowFromDateTimeString)
-                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.to</b> @Html.DisplayFor(modelItem => item.ShowToDateTimeString)
+                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.From</b> @Html.DisplayFor(modelItem => item.ShowStartDateTime)
+                    <b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.to</b> @Html.DisplayFor(modelItem => item.ShowEndDateTime)
                 </td>
-                <td>
-                    <div class="btn-group">
-                        <a class="btn light-blue-button" asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">@Resources.Views.Common.Edit</a>
-                        <a class="modalEventLink btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="@item.Id">@Resources.Views.Common.Delete</a>
-                    </div>
-                </td>
+                @if (Model.UserHasRightsToEditEvents)
+                {
+                    
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn light-blue-button" asp-controller="Events" asp-action="Edit" asp-route-id="@item.Id">@Resources.Views.Common.Edit</a>
+                            <a class="modalEventLink btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="@item.Id">@Resources.Views.Common.Delete</a>
+                        </div>
+                    </td>
+                }
             </tr>
         }
     </tbody>
@@ -76,30 +95,37 @@
     <div class="col-12">
         <h1>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Lectures</h1>
     </div>
-    <div class="col-12">
-        <a class="btn dark-blue-button" asp-controller="SubjectInSchedules" asp-action="Create" asp-route-scheduleId="@Model.ScheduleId">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.AddLecture</a>
-    </div>
+    @if (Model.UserHasRightsToEditSchedule)
+    {
+        <div class="col-sm-6 col-md-5 col-lg-4 btn-group">
+            <a class="btn dark-blue-button" asp-controller="SubjectInSchedules" asp-action="Create" asp-route-scheduleId="@Model.ScheduleId">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.AddLecture</a>
+            <a class="refreshModalLink btn light-blue-button" data-toggle="modal" data-target="#refreshModal" data-id="@Model.ScheduleId">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Refresh</a>
+        </div>
+    }
 </div>
 <hr />
 <table class="table blue-text">
     <thead>
         <tr>
             <th>
-                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureTime
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.StartToEndString
             </th>
             <th>
-                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureName
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureNameWithCode
             </th>
             <th>
                 @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Lecturers
             </th>
             <th>
-                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureTypes
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureType
             </th>
             <th>
-                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.LectureRooms
+                @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Rooms
             </th>
-            <th></th>
+            @if (Model.UserHasRightsToEditSchedule)
+            {
+                <th></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -121,12 +147,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Rooms)
                 </td>
-                <td>
-                    <div class="btn-group">
-                        <a class="btn light-blue-button" asp-controller="SubjectInSchedules" asp-action="Edit" asp-route-id="@item.SubjectInScheduleId">@Resources.Views.Common.Edit</a>
-                        <a class="modalSubjectLink btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="@item.SubjectInScheduleId">@Resources.Views.Common.Delete</a>
-                    </div>
-                </td>
+                @if (Model.UserHasRightsToEditSchedule)
+                {
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn light-blue-button" asp-controller="SubjectInSchedules" asp-action="Edit" asp-route-id="@item.SubjectInScheduleId">@Resources.Views.Common.Edit</a>
+                            <a class="modalSubjectLink btn btn-outline-danger" data-toggle="modal" data-target="#deleteModal" data-id="@item.SubjectInScheduleId">@Resources.Views.Common.Delete</a>
+                        </div>
+                    </td>
+                }
             </tr>
         }
     </tbody>
@@ -139,7 +168,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">@Resources.Views.Common.Delete</h5>
+                    <h5 class="modal-title">@Resources.Views.Common.Delete</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -160,6 +189,47 @@
     </div>
 }
 
+@using (Html.BeginForm("RefreshSchedule", "ScheduleAndEvents", FormMethod.Post))
+{
+
+    <div class="modal fade blue-text" id="refreshModal" tabindex="-1" role="dialog" aria-labelledby="refreshModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Refresh</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="refresh-body">
+                        <p id="refresh-message">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.RefreshQuestion</p>
+                        @Html.Hidden("scheduleId", "", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark-blue-outline-button" data-dismiss="modal">@Resources.Views.Common.Close</button>
+                    <button id="refresh-submit" type="Submit" class="btn btn-danger" data-toggle="modal" data-target="#refreshingModal">@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade blue-text" id="refreshingModal" tabindex="-1" role="dialog" aria-labelledby="refreshingModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p><b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Wait</b></p>
+                <p>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.ScheduleUpdateMessage</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $('.modalSubjectLink').click(function () {
         var subjectId = $(this).data('id');//get Id from data-id
@@ -172,5 +242,12 @@
         $('.modal-body .form-control').val(eventId); // load Edit page to modal content
         $('.for-is-subject .form-control .for-is-subject').val(false); // load Edit page to modal content
         $('#delete-message').text('@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.DeleteEventMessage');
+    });
+    $('.refreshModalLink').click(function () {
+        var scheduleId = $(this).data('id');//get Id from data-id
+        $('.modal-body .refresh-body .form-control').val(scheduleId); // load Edit page to modal content
+    });
+    $('#refresh-submit').click(function () {
+        $('#refreshModal').modal('hide');
     });
 </script>

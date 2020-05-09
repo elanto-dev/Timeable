@@ -147,11 +147,8 @@
   <data name="From" xml:space="preserve">
     <value>From</value>
   </data>
-  <data name="LectureName" xml:space="preserve">
+  <data name="LectureNameWithCode" xml:space="preserve">
     <value>Lecture name </value>
-  </data>
-  <data name="LectureRooms" xml:space="preserve">
-    <value>Rooms</value>
   </data>
   <data name="Lecturers" xml:space="preserve">
     <value>Lecturers</value>
@@ -159,14 +156,29 @@
   <data name="Lectures" xml:space="preserve">
     <value>Lectures</value>
   </data>
-  <data name="LectureTime" xml:space="preserve">
-    <value>Time</value>
-  </data>
-  <data name="LectureTypes" xml:space="preserve">
+  <data name="LectureType" xml:space="preserve">
     <value>Types</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh schedule</value>
+  </data>
+  <data name="RefreshQuestion" xml:space="preserve">
+    <value>All saved changes will be overwritten! Are you sure you want to continue?</value>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Rooms</value>
+  </data>
+  <data name="ScheduleUpdateMessage" xml:space="preserve">
+    <value>Schedule is being updated. It will take about 20 seconds.</value>
+  </data>
+  <data name="StartToEndString" xml:space="preserve">
+    <value>Time</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>to</value>
+  </data>
+  <data name="Wait" xml:space="preserve">
+    <value>Please wait...</value>
   </data>
   <data name="Week" xml:space="preserve">
     <value>week</value>

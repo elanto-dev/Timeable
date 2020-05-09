@@ -123,16 +123,19 @@
   <data name="Back" xml:space="preserve">
     <value>Back to users</value>
   </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Password confirmation</value>
+  </data>
   <data name="DeleteConfirmationText" xml:space="preserve">
     <value>Are you sure you want to delete this user?</value>
   </data>
   <data name="EditUser" xml:space="preserve">
     <value>Edit user</value>
   </data>
-  <data name="EMail" xml:space="preserve">
+  <data name="Email" xml:space="preserve">
     <value>E-mail</value>
   </data>
-  <data name="EventManagement" xml:space="preserve">
+  <data name="EventsManagement" xml:space="preserve">
     <value>Events management</value>
   </data>
   <data name="FirstName" xml:space="preserve">
@@ -147,14 +150,14 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="PasswordConfirmation" xml:space="preserve">
-    <value>Password confirmation</value>
-  </data>
   <data name="ScheduleManagement" xml:space="preserve">
     <value>Schedule management</value>
   </data>
   <data name="ScreenManagement" xml:space="preserve">
     <value>Screen management</value>
+  </data>
+  <data name="UserIsHeadAdmin" xml:space="preserve">
+    <value>User is head admin</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>
