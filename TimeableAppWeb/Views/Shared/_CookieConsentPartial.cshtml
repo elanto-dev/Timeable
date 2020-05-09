@@ -8,8 +8,8 @@
 
 @if (showBanner)
 {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        @Resources.Views.Common.Cookie <a asp-area="Admin" asp-controller="Home" asp-action="Privacy">@Resources.Views.Common.LearnMore</a>.
+    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert"  style="position: absolute; left: 50%; transform: translateX(-50%); margin-top: 1em;">
+        @Resources.Views.Common.Cookie <a asp-area="" asp-controller="Home" asp-action="Privacy">@Resources.Views.Common.LearnMore</a>.
         <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
             <span aria-hidden="true">@Resources.Views.Common.Accept</span>
         </button>

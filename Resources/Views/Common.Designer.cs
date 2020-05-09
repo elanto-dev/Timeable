@@ -61,6 +61,15 @@ namespace Resources.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -75,6 +84,15 @@ namespace Resources.Views {
         public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This website uses cookies. By continuing to use the website, you agree to the use of cookies..
+        /// </summary>
+        public static string Cookie {
+            get {
+                return ResourceManager.GetString("Cookie", resourceCulture);
             }
         }
         
@@ -174,6 +192,15 @@ namespace Resources.Views {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learn More.
+        /// </summary>
+        public static string LearnMore {
+            get {
+                return ResourceManager.GetString("LearnMore", resourceCulture);
             }
         }
         

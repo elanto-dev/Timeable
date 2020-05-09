@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Nõustu</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Katkesta</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Sulge</value>
+  </data>
+  <data name="Cookie" xml:space="preserve">
+    <value>See veebileht kasutab küpsiseid. Jätkates veebilehe kasutamist, nõustute küpsiste kasutamisega.</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>Loo uus</value>
@@ -155,6 +161,9 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>Keel</value>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>Vaata lähemalt</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Salvesta</value>

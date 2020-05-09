@@ -49,6 +49,11 @@ namespace TimeableAppWeb.Controllers
             return View(inputModel);
         }
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(InputModel input)

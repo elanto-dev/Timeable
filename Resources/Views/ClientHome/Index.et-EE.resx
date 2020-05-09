@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Back" xml:space="preserve">
+    <value>Tagasi pealehele</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-meil</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Unustasin parooli</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Logi sisse</value>
