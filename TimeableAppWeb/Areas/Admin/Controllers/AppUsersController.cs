@@ -30,7 +30,13 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // GET: Admin/AppUsers
         public async Task<IActionResult> Index()
         {
-            var currentUserScreen = (await _bll.AppUsersScreens.GetScreenForUserAsync(_userManager.GetUserId(User))).Screen;
+            var loggedInUser = await _userManager.GetUserAsync(User);
+            if (!loggedInUser.Activated)
+            {
+                return RedirectToAction("Activate", "Home");
+            }
+
+            var currentUserScreen = (await _bll.AppUsersScreens.GetScreenForUserAsync(loggedInUser.Id.ToString())).Screen;
 
             if (currentUserScreen == null)
             {
@@ -39,11 +45,9 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
 
             var users = new List<AppUserIndexViewModelDtos>();
 
-            var loggedInUserId = _userManager.GetUserId(User);
-
             foreach (var user in _userManager.Users)
             {
-                if(user.Id.ToString() == loggedInUserId)
+                if(user.Id == loggedInUser.Id)
                     continue;
 
                 var roles = await _userManager.GetRolesAsync(user);

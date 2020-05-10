@@ -36,9 +36,15 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // GET: Admin/Screens
         public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (!user.Activated)
+            {
+                return RedirectToAction("Activate", "Home");
+            }
+
             var vm = new ScreenIndexViewModel();
 
-            var userScreen = await _bll.AppUsersScreens.GetScreenForUserAsync(_userManager.GetUserId(User));
+            var userScreen = await _bll.AppUsersScreens.GetScreenForUserAsync(user.Id.ToString());
             var screen = userScreen?.Screen;
 
             if (screen == null)
@@ -71,7 +77,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             }
 
             // Check user rights
-            var user = await _userManager.GetUserAsync(User);
             var userRoles = await _userManager.GetRolesAsync(user);
             vm.UserHasRightsToEdit = userRoles.Contains(nameof(RoleNamesEnum.ScreenSettingsAdmin))
                                      || userRoles.Contains(nameof(RoleNamesEnum.HeadAdmin));
@@ -233,30 +238,39 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 }
             }
 
-            try
-            {
-                foreach (var pictureInScreen in vm.PictureInScreens)
-                {
-                    _bll.PictureInScreens.Update(pictureInScreen);
-                }
+            // Before model validation set values to the following parameters to pass model validation.
+            vm.ShowPromotionSecondsStringDictionary ??= new Dictionary<int, string>();
+            vm.ShowScheduleSecondsString ??= SecondsValueManager.GetSelectedValue(null, true);
 
-                _bll.Screens.Update(vm.Screen);
-                await _bll.SaveChangesAsync();
-
-                if (vm.ScreenOldPrefix != vm.Screen.Prefix)
-                {
-                    await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User), vm.Screen);
-                }
-            }
-            catch (DbUpdateConcurrencyException)
+            ModelState.Clear();
+            TryValidateModel(vm);
+            if (ModelState.IsValid)
             {
-                if (!ScreenExists(vm.Screen.Id))
+                try
                 {
-                    return NotFound();
+                    foreach (var pictureInScreen in vm.PictureInScreens)
+                    {
+                        _bll.PictureInScreens.Update(pictureInScreen);
+                    }
+
+                    _bll.Screens.Update(vm.Screen);
+                    await _bll.SaveChangesAsync();
+
+                    if (vm.ScreenOldPrefix != vm.Screen.Prefix)
+                    {
+                        await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User), vm.Screen);
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!ScreenExists(vm.Screen.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 

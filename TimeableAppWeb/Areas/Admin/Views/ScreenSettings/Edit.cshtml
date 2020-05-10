@@ -75,7 +75,11 @@
 <div class="modal fade blue-text" id="refreshingModal" tabindex="-1" role="dialog" aria-labelledby="refreshingModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p><b>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Wait</b></p>
                 <p>@Resources.Domain.ScreenView.Screen.ScheduleUpdateMessage</p>
             </div>
         </div>
@@ -134,6 +138,14 @@
                 $(this).prop("disabled", true);
             });
             if ('@Model.ScreenOldPrefix' !== $("#screen-prefix").val()) {
+                $('#back-to-screen-btn').addClass("disabled");
+                $('#show-always-checkbox').attr("disabled", true);
+                var screenActive = $('#screen-active-checkbox').val();
+                $('#screen-active-checkbox').attr("disabled", true);
+                $('#screen-is-active').val(screenActive);
+                $('#screen-prefix').attr('readonly', true);
+                $('#save-button').css('display', 'none');
+                $('#loading-button').css('display', "inline");
                 $('#refreshingModal').modal('show');
             }
         });

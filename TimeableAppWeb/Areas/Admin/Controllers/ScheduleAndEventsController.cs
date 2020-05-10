@@ -29,7 +29,13 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // GET: Admin/Schedules
         public async Task<IActionResult> Index()
         {
-            var userScreen = (await _bll.AppUsersScreens.GetScreenForUserAsync(_userManager.GetUserId(User))).Screen;
+            var user = await _userManager.GetUserAsync(User);
+            if (!user.Activated)
+            {
+                return RedirectToAction("Activate", "Home");
+            }
+
+            var userScreen = (await _bll.AppUsersScreens.GetScreenForUserAsync(user.Id.ToString())).Screen;
 
             if (userScreen == null)
             {
@@ -76,7 +82,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             }
 
             // Check user rights
-            var user = await _userManager.GetUserAsync(User);
             var userRoles = await _userManager.GetRolesAsync(user);
             vm.UserHasRightsToEditEvents = userRoles.Contains(nameof(RoleNamesEnum.EventSettingsAdmin))
                                      || userRoles.Contains(nameof(RoleNamesEnum.HeadAdmin));
