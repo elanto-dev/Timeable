@@ -123,21 +123,23 @@
     // This is small fake to set dropdown values!
     $('#save-button').on('click',
         function () {
-            let scheduleDropDowns = $('.schedule-dropdown');
-            scheduleDropDowns.each(function () {
-                $(this).prop("disabled", false);
-            });
-            let promotionDropDowns = $('.promotion-dropdown');
-            promotionDropDowns.each(function () {
-                $(this).prop("disabled", false);
-            });
-            scheduleDropDowns.each(function () {
-                $(this).prop("disabled", true);
-            });
-            promotionDropDowns.each(function () {
-                $(this).prop("disabled", true);
-            });
             if ('@Model.ScreenOldPrefix' !== $("#screen-prefix").val()) {
+                let scheduleDropDowns = $('.schedule-dropdown');
+                scheduleDropDowns.each(function () {
+                    $(this).prop("disabled", false);
+                });
+                let promotionDropDowns = $('.promotion-dropdown');
+                promotionDropDowns.each(function () {
+                    $(this).prop("disabled", false);
+                });
+                scheduleDropDowns.each(function () {
+                    $(this).prop("disabled", true);
+                });
+                promotionDropDowns.each(function () {
+                    $(this).prop("disabled", true);
+                });
+
+                //alert("Updated value: " + scheduleDropDowns[0].val());
                 $('#back-to-screen-btn').addClass("disabled");
                 $('#show-always-checkbox').attr("disabled", true);
                 var screenActive = $('#screen-active-checkbox').val();

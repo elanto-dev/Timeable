@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.App.Helpers;
 using BLL.DTO;
 using Contracts.BLL.App;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +33,19 @@ namespace TimeableAppWeb.Controllers
             var vm = new TimetableIndexViewModel
             {
                 Events = new List<EventForTimetable>(),
+                Promotions = new List<PromotionsForTimetable>(),
                 BackgroundPicture = (await _bll.PictureInScreens.GetBackgroundPictureForScreen(screen.Id))?.Picture,
+                ShowScheduleSeconds = SecondsValueManager.GetIntValue(screen.ShowScheduleSeconds),
                 WeekNumber = 0
             };
 
+            // Get all promotions
+            var pictureInScreens = await _bll.PictureInScreens.GetAllPromotionsForTimetableAsync(screen.Id);
+            var promotions = pictureInScreens.ToList();
+            if (promotions.Any())
+            {
+                vm.Promotions = promotions.ToList();
+            }
 
             if (scheduleInScreen != null)
             {

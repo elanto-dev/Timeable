@@ -129,8 +129,20 @@
   <data name="CreateBgPicture" xml:space="preserve">
     <value>Create background picture</value>
   </data>
+  <data name="FileFormatError" xml:space="preserve">
+    <value>File is not an image! File formats supported:</value>
+  </data>
   <data name="FileMissing" xml:space="preserve">
     <value>File is missing!</value>
+  </data>
+  <data name="FileTooBigError" xml:space="preserve">
+    <value>File is too big! Maximum is 4 MB.</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Picture URL</value>
+  </data>
+  <data name="PictureFromUrl" xml:space="preserve">
+    <value>Add picture from URL</value>
   </data>
   <data name="ShowAddSeconds" xml:space="preserve">
     <value>Show promotion</value>

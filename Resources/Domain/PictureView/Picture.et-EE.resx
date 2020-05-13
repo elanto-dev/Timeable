@@ -129,19 +129,31 @@
   <data name="CreateBgPicture" xml:space="preserve">
     <value>Tagaplaani pildi lisamine</value>
   </data>
+  <data name="FileFormatError" xml:space="preserve">
+    <value>Fail pole pilt! Toetatud faili laiendid:</value>
+  </data>
   <data name="FileMissing" xml:space="preserve">
     <value>Fail pole lisatud!</value>
   </data>
+  <data name="FileTooBigError" xml:space="preserve">
+    <value>Fail on liiga suur! Maksimum on 4 MB.</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Pildi URL</value>
+  </data>
+  <data name="PictureFromUrl" xml:space="preserve">
+    <value>Lisa pilt URL-iga</value>
+  </data>
   <data name="ShowAddSeconds" xml:space="preserve">
-    <value>Reklaam näidatud</value>
+    <value>Reklaam näidatakse</value>
   </data>
   <data name="Shown" xml:space="preserve">
     <value>Näidatud</value>
   </data>
   <data name="ShowSchedule" xml:space="preserve">
-    <value>Tunniplaan näidatud</value>
+    <value>Tunniplaan näidatakse</value>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Laadi üles üks fail kasutades selle vormi</value>
+    <value>Laadige üles üks pildi-fail kasutades seda vormi</value>
   </data>
 </root>

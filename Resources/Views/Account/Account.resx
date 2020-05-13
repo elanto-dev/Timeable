@@ -124,7 +124,7 @@
     <value>Change password</value>
   </data>
   <data name="ChangeUserInfo" xml:space="preserve">
-    <value>Change user information</value>
+    <value>Change information</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>

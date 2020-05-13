@@ -16,9 +16,9 @@ namespace BLL.App.Services
             ServiceRepository = Uow.PictureInScreens;
         }
 
-        public async Task<IEnumerable<PictureInScreen>> GetAllPromotionsForScreen(int screenId)
+        public async Task<IEnumerable<PictureInScreen>> GetAllPromotionsForScreenAsync(int screenId)
         {
-            return (await Uow.PictureInScreens.GetAllPromotionsForScreen(screenId))
+            return (await Uow.PictureInScreens.GetAllPromotionsForScreenAsync(screenId))
                 .Select(PictureInScreenMapper.MapFromInternal)
                 .ToList();
         }
@@ -26,6 +26,13 @@ namespace BLL.App.Services
         public async Task<PictureInScreen> GetBackgroundPictureForScreen(int screenId)
         {
             return PictureInScreenMapper.MapFromInternal(await Uow.PictureInScreens.GetBackgroundPictureForScreen(screenId));
+        }
+
+        public async Task<IEnumerable<PromotionsForTimetable>> GetAllPromotionsForTimetableAsync(int screenId)
+        {
+            return (await Uow.PictureInScreens.GetAllPromotionsForScreenAsync(screenId))
+                .Select(PictureInScreenToPromotionMapper.MapFromInternal)
+                .ToList();
         }
     }
 }

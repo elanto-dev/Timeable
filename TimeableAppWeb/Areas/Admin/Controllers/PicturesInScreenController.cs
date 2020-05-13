@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using BLL.App.Helpers;
@@ -23,6 +24,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
     {
         private readonly string PromotionsDirectory = "Promotions";
         private readonly string BackgroundDirectory = "Background.Pictures";
+        private readonly List<string> _imageExtensions = new List<string> { ".JPG", ".JPEG", ".BMP", ".GIF", ".PNG" };
 
         private readonly IBLLApp _bll;
         private readonly IHostEnvironment _appEnvironment;
@@ -56,7 +58,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // GET: Admin/Pictures/Create
         public async Task<IActionResult> Create(int screenId, bool isBackgroundImage)
         {
-            var vm = new PictureCreateEditViewModel
+            var vm = new PictureCreateViewModel
             {
                 IsBackgroundPicture = isBackgroundImage,
                 ScreenId = screenId
@@ -88,55 +90,76 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PictureCreateEditViewModel vm, IFormFile file)
+        public async Task<IActionResult> Create(PictureCreateViewModel vm, IFormFile file)
         {
-            if (file == null || file.Length < 0)
+            if (!vm.PictureFromUrl || (vm.PictureFromUrl && string.IsNullOrEmpty(vm.Picture.Path) && file != null && file.Length > 0))
             {
+                vm.Picture.Path = "";
                 ModelState.Clear();
-                ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileMissing);
-                if (!vm.IsBackgroundPicture)
+                TryValidateModel(vm.Picture);
+                if (file == null || file.Length < 0)
                 {
-                    vm.PromotionSecondsSelectList = new SelectList(
-                        SecondsValueManager.GetDictionaryKeysList(false),
-                        vm.ShowPromotionSecondsString);
-                    var screen = await _bll.Screens.FindAsync(vm.ScreenId);
-                    await _bll.SaveChangesAsync();
-                    if (screen.ShowScheduleSeconds != null)
+                    ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileMissing);
+                }
+                else
+                {
+                    if (file.Length > 4194304)
                     {
-                        vm.ScheduleSecondsSelectList = new SelectList(
-                            SecondsValueManager.GetDictionaryKeysList(true),
-                            screen.ShowScheduleSeconds
-                        );
-                    }
-                    else
-                    {
-                        vm.ScheduleSecondsSelectList = new SelectList(SecondsValueManager.GetDictionaryKeysList(true));
+                        ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileTooBigError);
                     }
 
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    if (!_imageExtensions.Contains(fileExtension.ToUpper()))
+                    {
+                        ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileFormatError + string.Join(',', _imageExtensions) + ".");
+                    }
                 }
-                return View(vm);
+
+                if (ModelState.ErrorCount > 0)
+                {
+                    if (!vm.IsBackgroundPicture)
+                    {
+                        vm.PromotionSecondsSelectList = new SelectList(
+                            SecondsValueManager.GetDictionaryKeysList(false),
+                            vm.ShowPromotionSecondsString);
+                        var screen = await _bll.Screens.FindAsync(vm.ScreenId);
+                        await _bll.SaveChangesAsync();
+                        if (screen.ShowScheduleSeconds != null)
+                        {
+                            vm.ScheduleSecondsSelectList = new SelectList(
+                                SecondsValueManager.GetDictionaryKeysList(true),
+                                screen.ShowScheduleSeconds
+                            );
+                        }
+                        else
+                        {
+                            vm.ScheduleSecondsSelectList =
+                                new SelectList(SecondsValueManager.GetDictionaryKeysList(true));
+                        }
+                    }
+
+                    return View(vm);
+                }
+
+                var innerDirName = vm.IsBackgroundPicture ? BackgroundDirectory : PromotionsDirectory;
+                var directoryPath = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", "Images", innerDirName);
+                if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+                var path = Path.Combine(directoryPath, file.FileName);
+                vm.Picture.Path = path.Substring(path.IndexOf("Images", StringComparison.Ordinal) - 1).Replace("\\", "/");
+                try
+                {
+                    await using var fileStream = new FileStream(path, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
             }
 
             var userId = _userManager.GetUserId(User);
             vm.Picture.CreatedAt = vm.Picture.ChangedAt = DateTime.Now;
             vm.Picture.CreatedBy = vm.Picture.ChangedBy = userId;
-
-            var innerDirName = vm.IsBackgroundPicture ? BackgroundDirectory : PromotionsDirectory;
-            var directoryPath = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", "Images", innerDirName);
-            if (!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
-            var path = Path.Combine(directoryPath, file.FileName);
-            vm.Picture.Path = path.Substring(path.IndexOf("Images", StringComparison.Ordinal) - 1).Replace("\\", "/");
-
-            try
-            {
-                await using var fileStream = new FileStream(path, FileMode.Create);
-                await file.CopyToAsync(fileStream);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-
 
             var guid = await _bll.Pictures.AddAsync(vm.Picture);
             await _bll.SaveChangesAsync();
@@ -183,7 +206,14 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(picture);
+
+            var vm = new PictureEditViewModel
+            {
+                Picture = picture,
+                OldFileName = Path.GetFileName(picture.Path),
+                OldPicturePath = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", Path.Combine(picture.Path.Split("/")))
+            };
+            return View(vm);
         }
 
         // POST: Admin/Pictures/Edit/5
@@ -191,48 +221,72 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Picture picture, IFormFile file)
+        public async Task<IActionResult> Edit(int id, PictureEditViewModel vm, IFormFile file)
         {
-            if (id != picture.Id)
+            if (id != vm.Picture.Id)
             {
                 return NotFound();
             }
 
-            picture.ChangedAt = DateTime.Now;
-            picture.ChangedBy = _userManager.GetUserId(User);
-
-            // Delete old image
-            var oldImagePathArray = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", Path.Combine(picture.Path.Split("/")));
-            if (System.IO.File.Exists(oldImagePathArray))
+            if (!vm.PictureFromUrl && file != null && file.Length > 0)
             {
-                System.IO.File.Delete(oldImagePathArray);
+                if (file.Length > 4194304)
+                {
+                    ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileTooBigError);
+                }
+
+                var fileExtension = Path.GetExtension(file.FileName);
+                if (!_imageExtensions.Contains(fileExtension.ToUpper()))
+                {
+                    ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileFormatError + string.Join(',', _imageExtensions) + ".");
+                }
+
+                if (ModelState.ErrorCount > 0)
+                {
+                    return View(vm);
+                }
+
+
+                if (vm.OldFileName != file.FileName)
+                {
+                    // Delete old image
+                    if (System.IO.File.Exists(vm.OldPicturePath))
+                    {
+                        System.IO.File.Delete(vm.OldPicturePath);
+                    }
+                }
+
+                // Create new picture path
+                var newImagePath = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", "Images", BackgroundDirectory, file.FileName);
+                vm.Picture.Path = newImagePath.Substring(newImagePath.IndexOf("Images", StringComparison.Ordinal) - 1).Replace("\\", "/");
+
+                try
+                {
+                    // Copy picture to path
+                    await using var fileStream = new FileStream(newImagePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
             }
 
-            // Create new picture path
-            var newImagePath = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", "Images", BackgroundDirectory, file.FileName);
-            picture.Path = newImagePath.Substring(newImagePath.IndexOf("Images", StringComparison.Ordinal) - 1).Replace("\\", "/");
+            vm.Picture.ChangedAt = DateTime.Now;
+            vm.Picture.ChangedBy = _userManager.GetUserId(User);
 
-            try
-            {
-                // Copy picture to path
-                await using var fileStream = new FileStream(newImagePath, FileMode.Create);
-                await file.CopyToAsync(fileStream);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-
+            ModelState.Clear();
+            TryValidateModel(vm.Picture);
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _bll.Pictures.Update(picture);
+                    _bll.Pictures.Update(vm.Picture);
                     await _bll.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PictureExists(picture.Id))
+                    if (!PictureExists(vm.Picture.Id))
                     {
                         return NotFound();
                     }
@@ -244,7 +298,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 return RedirectToAction("Index", "ScreenSettings");
             }
 
-            return View(picture);
+            return View(vm);
         }
 
         private bool PictureExists(int id)

@@ -22,6 +22,7 @@ namespace DAL.App.Repositories
                 .Include(s => s.Schedule)
                 .Include(s => s.Subject)
                 .Where(s => s.ScheduleId == scheduleId)
+                .OrderBy(s => s.StartDateTime)
                 .Select(s => SubjectInScheduleMapper.MapFromDomain(s))
                 .ToListAsync();
         }

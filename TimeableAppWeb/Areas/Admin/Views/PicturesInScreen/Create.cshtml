@@ -1,4 +1,4 @@
-﻿@model TimeableAppWeb.Areas.Admin.ViewModels.PictureCreateEditViewModel
+﻿@model TimeableAppWeb.Areas.Admin.ViewModels.PictureCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -18,9 +18,19 @@ else
     <div class="col-md-6">
         <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="col-md-10">
-                <p>@Resources.Domain.PictureView.Picture.Upload:</p>
-                <input type="file" name="file" />
+            <p>@Resources.Domain.PictureView.Picture.Upload:</p>
+            <div class="row" style="margin-left: 20px;">
+                <input type="file" name="file" id="file-input" />
+            </div>
+            <div class="row" style="margin-top: 20px;margin-left: 20px;">
+                <label class="form-check-label">
+                    <input id="picture-from-url-checkbox" class="form-check-input" asp-for="PictureFromUrl" /> @Html.DisplayNameFor(model => model.PictureFromUrl)
+                </label>
+            </div>
+            <div class="form-group" style="display: none" id="url-div">
+                <label asp-for="@Model.Picture.Path">@Html.DisplayNameFor(m => m.Picture.Path)</label>
+                <input asp-for="@Model.Picture.Path" class="form-control" id="url-input"/>
+                <span asp-validation-for="@Model.Picture.Path" class="text-danger"></span>
             </div>
             <hr style="margin-top: 20px" />
             @if (!Model.IsBackgroundPicture)
@@ -48,3 +58,17 @@ else
         </form>
     </div>
 </div>
+
+<script>
+    $('#picture-from-url-checkbox').on('click',
+        function () {
+            if ($(this).prop('checked') === true) {
+                $('#url-div').css('display', 'contents');
+                $('#url-input').val('');
+                $('#file-input').prop('disabled', true);
+            } else {
+                $('#url-div').css('display', 'none');
+                $('#file-input').prop('disabled', false);
+            }
+        });
+</script>

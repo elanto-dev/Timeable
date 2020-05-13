@@ -11,8 +11,7 @@ namespace Contracts.DAL.App.Repositories
     public interface IPictureInScreenRepository<TDalEntity> : IBaseRepository<TDalEntity>
         where TDalEntity : class, new()
     {
-        Task<IEnumerable<TDalEntity>> GetAllPromotionsForScreen(int screenId);
-
+        Task<IEnumerable<TDalEntity>> GetAllPromotionsForScreenAsync(int screenId);
         Task<TDalEntity> GetBackgroundPictureForScreen(int screenId);
     }
 }

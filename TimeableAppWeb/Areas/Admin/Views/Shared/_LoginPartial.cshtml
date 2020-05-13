@@ -13,8 +13,8 @@
                 @Resources.Views.Shared._LoginPartial.Hello, @Html.Raw(user.FirstName + " " + user.LastName)!
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword">Change password</a>
-                <a class="dropdown-item" asp-controller="Account" asp-action="ChangeUserInformation">Change information</a>
+                <a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword">@Resources.Views.Account.Account.ChangePassword</a>
+                <a class="dropdown-item" asp-controller="Account" asp-action="ChangeUserInformation">@Resources.Views.Account.Account.ChangeUserInfo</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" asp-controller="Account" asp-action="Logout">@Resources.Views.Shared._LoginPartial.LogOut</a>
             </div>

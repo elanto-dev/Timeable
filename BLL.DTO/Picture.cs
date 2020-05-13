@@ -12,6 +12,7 @@ namespace BLL.DTO
         public DateTime ChangedAt { get; set; }
 
         [MaxLength(255, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]
+        [Display(Name = nameof(Path), Prompt = nameof(Path), ResourceType = typeof(Resources.Domain.PictureView.Picture))]
         public string Path { get; set; } = default!;
 
         [MaxLength(200, ErrorMessageResourceName = "ErrorMessage_MaxLength", ErrorMessageResourceType = typeof(Resources.Views.Common))]

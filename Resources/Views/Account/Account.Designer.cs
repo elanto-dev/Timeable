@@ -79,7 +79,7 @@ namespace Resources.Views.Account {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change user information.
+        ///   Looks up a localized string similar to Change information.
         /// </summary>
         public static string ChangeUserInfo {
             get {

@@ -3,9 +3,6 @@ using Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TimeableAppWeb.Areas.Admin.Helpers;
-using TimeableAppWeb.Areas.Admin.ViewModels;
 using TimeableAppWeb.Areas.Admin.ViewModels.Account;
 
 namespace TimeableAppWeb.Areas.Admin.Controllers

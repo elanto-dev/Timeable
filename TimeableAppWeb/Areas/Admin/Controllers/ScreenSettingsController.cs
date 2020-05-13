@@ -70,7 +70,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 vm.Promotions = new List<PictureInScreen>();
             }
 
-            var screenPromotions = (await _bll.PictureInScreens.GetAllPromotionsForScreen(vm.Screen.Id));
+            var screenPromotions = (await _bll.PictureInScreens.GetAllPromotionsForScreenAsync(vm.Screen.Id));
             foreach (var screenPromotion in screenPromotions)
             {
                 vm.Promotions.Add(screenPromotion);
@@ -172,7 +172,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 ShowPromotionSecondsStringDictionary = new Dictionary<int, string>()
             };
 
-            var promotions = (await _bll.PictureInScreens.GetAllPromotionsForScreen((int) id)).ToList();
+            var promotions = (await _bll.PictureInScreens.GetAllPromotionsForScreenAsync((int) id)).ToList();
             await _bll.SaveChangesAsync();
 
             foreach (var promotion in promotions)
@@ -243,7 +243,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             vm.ShowScheduleSecondsString ??= SecondsValueManager.GetSelectedValue(null, true);
 
             ModelState.Clear();
-            TryValidateModel(vm);
+            TryValidateModel(vm.Screen);
             if (ModelState.IsValid)
             {
                 try
@@ -260,6 +260,8 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                     {
                         await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User), vm.Screen);
                     }
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -274,7 +276,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit));
         }
 
         // GET: Admin/Screens/Delete/5
@@ -324,9 +326,16 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var path = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot",
-                Path.Combine(bgPicture.Path.Split("/")));
-            System.IO.File.Delete(path);
+            var picturesWithSamePath = await _bll.Pictures.FindPicturesByPathAsync(bgPicture.Path);
+
+            if (picturesWithSamePath == null || !picturesWithSamePath.Any() || (picturesWithSamePath.Count() == 1 && picturesWithSamePath.First().Id == bgPicture.Id))
+            {
+                var path = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot",
+                    Path.Combine(bgPicture.Path.Split("/")));
+
+                if (System.IO.File.Exists(path))
+                    System.IO.File.Delete(path);
+            }
 
             _bll.Pictures.Remove(bgPicture);
 
@@ -341,12 +350,14 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         public async Task<IActionResult> DeletePromotionFromScreen(int promotionId)
         {
             var picture = await _bll.Pictures.FindAsync(promotionId);
-
-            var path = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", Path.Combine(picture.Path.Split("/")));
-
-            if (System.IO.File.Exists(path))
+            var picturesWithSamePath = await _bll.Pictures.FindPicturesByPathAsync(picture.Path);
+            if (picturesWithSamePath == null || !picturesWithSamePath.Any() || (picturesWithSamePath.Count() == 1 && picturesWithSamePath.First().Id == promotionId))
             {
-                System.IO.File.Delete(path);
+                var path = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", 
+                    Path.Combine(picture.Path.Split("/")));
+
+                if (System.IO.File.Exists(path))
+                    System.IO.File.Delete(path);
             }
 
             _bll.Pictures.Remove(picture);

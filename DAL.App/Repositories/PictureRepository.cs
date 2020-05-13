@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Contracts.DAL.App.Repositories;
 using DAL.App.Mappers;
 using DAL.Base.Repositories;
@@ -20,6 +22,12 @@ namespace DAL.App.Repositories
                 return null;
             }
             return PictureMapper.MapFromDomain(await RepositoryDbSet.AsNoTracking().FirstOrDefaultAsync(pic => pic.Id == (int)id[0]));
+        }
+
+        public async Task<IEnumerable<Picture>> FindPicturesByPathAsync(string path)
+        {
+            return await RepositoryDbSet.Where(pic => pic.Path == path).AsNoTracking()
+                .Select(p => PictureMapper.MapFromDomain(p)).ToListAsync();
         }
     }
 }

@@ -97,11 +97,47 @@ namespace Resources.Domain.PictureView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File is not an image! File formats supported:.
+        /// </summary>
+        public static string FileFormatError {
+            get {
+                return ResourceManager.GetString("FileFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File is missing!.
         /// </summary>
         public static string FileMissing {
             get {
                 return ResourceManager.GetString("FileMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File is too big! Maximum is 4 MB..
+        /// </summary>
+        public static string FileTooBigError {
+            get {
+                return ResourceManager.GetString("FileTooBigError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture URL.
+        /// </summary>
+        public static string Path {
+            get {
+                return ResourceManager.GetString("Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add picture from URL.
+        /// </summary>
+        public static string PictureFromUrl {
+            get {
+                return ResourceManager.GetString("PictureFromUrl", resourceCulture);
             }
         }
         

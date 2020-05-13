@@ -17,7 +17,7 @@ namespace DAL.App.Repositories
         }
 
         // Screen include removed due to tracking problem
-        public async Task<IEnumerable<PictureInScreen>> GetAllPromotionsForScreen(int screenId)
+        public async Task<IEnumerable<PictureInScreen>> GetAllPromotionsForScreenAsync(int screenId)
         {
             return await RepositoryDbSet
                 .Where(p => p.ScreenId == screenId && p.IsBackgroundPicture == false)
