@@ -199,14 +199,29 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+
             vm.SelectList = new SelectList(MapSubjectTypes.GetSubjectTypes(), vm.SelectedSubjectType);
-            vm.SubjectInSchedule.SubjectType = (int)MapSubjectTypes.GetResultSubjectTypeByString(vm.SelectedSubjectType);
-            vm.SubjectInSchedule.UniqueIdentifier = $"{vm.Subject.SubjectCode}-{vm.SubjectInSchedule.StartDateTime:yyyyMMddHHmmss}-{vm.SubjectInSchedule.EndDateTime:yyyyMMddHHmmss}";
-            vm.SubjectInSchedule.Schedule = await _bll.Schedules.FindAsync(vm.SubjectInSchedule.ScheduleId); // used to pass through model state check
+            vm.SubjectInSchedule.SubjectType =
+                (int) MapSubjectTypes.GetResultSubjectTypeByString(vm.SelectedSubjectType);
+            vm.SubjectInSchedule.UniqueIdentifier =
+                $"{vm.Subject.SubjectCode}-{vm.SubjectInSchedule.StartDateTime:yyyyMMddHHmmss}-{vm.SubjectInSchedule.EndDateTime:yyyyMMddHHmmss}";
+            vm.SubjectInSchedule.Schedule =
+                await _bll.Schedules.FindAsync(vm.SubjectInSchedule
+                    .ScheduleId); // used to pass through model state check
             if (vm.Teachers == null)
             {
                 vm.Teachers = new List<Teacher>();
             }
+
+            // Remove teacher function creates teachers with empty names. Delete them from the list!
+            for (int i = 0; i < vm.Teachers.Count; i++)
+            {
+                if (string.IsNullOrWhiteSpace(vm.Teachers[i].TeacherName))
+                {
+                    vm.Teachers.Remove(vm.Teachers[i]);
+                }
+            }
+
             ModelState.Clear();
 
             if (!string.IsNullOrWhiteSpace(vm.SubjectInSchedule.Groups) && !string.IsNullOrWhiteSpace(vm.SubjectInSchedule.Rooms)
@@ -349,8 +364,8 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                         teacherInSubjectEvent.ChangedAt = DateTime.Now;
                         teacherInSubjectEvent.ChangedBy = _userManager.GetUserId(User);
                         _bll.TeacherInSubjectEvents.Update(teacherInSubjectEvent);
+                        continue;
                     }
-                    continue;
                 }
 
                 await _bll.TeacherInSubjectEvents.AddAsync(new TeacherInSubjectEvent
@@ -360,6 +375,15 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                     SubjectInScheduleId = subjectEventId,
                     TeacherId = teacher.Id
                 });
+            }
+
+            foreach (var teacherInDb in teachersInSubjects)
+            {
+                if (teachers.FirstOrDefault(entity => entity.Id == teacherInDb.TeacherId) == null)
+                {
+                    _bll.TeacherInSubjectEvents.RemoveBySubjectEventAndTeacherIds(subjectEventId,
+                        teacherInDb.TeacherId);
+                }
             }
 
             await _bll.SaveChangesAsync();

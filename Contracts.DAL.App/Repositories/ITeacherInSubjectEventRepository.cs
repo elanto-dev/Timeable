@@ -13,5 +13,6 @@ namespace Contracts.DAL.App.Repositories
         where TDalEntity : class, new()
     {
         Task<IEnumerable<TDalEntity>> GetAllTeachersForSubjectEventWithoutSubjInclude(int subjectEventId);
+        void RemoveBySubjectEventAndTeacherIds(int subjectEventId, int teacherId);
     }
 }

@@ -21,5 +21,10 @@ namespace BLL.App.Services
             return (await Uow.TeacherInSubjectEvents.GetAllTeachersForSubjectEventWithoutSubjInclude(subjectEventId))
                 .Select(TeacherInSubjectEventMapper.MapFromInternal).ToList();
         }
+
+        public void RemoveBySubjectEventAndTeacherIds(int subjectEventId, int teacherId)
+        {
+            Uow.TeacherInSubjectEvents.RemoveBySubjectEventAndTeacherIds(subjectEventId, teacherId);
+        }
     }
 }

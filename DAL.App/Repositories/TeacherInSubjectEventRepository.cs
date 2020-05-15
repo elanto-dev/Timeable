@@ -25,5 +25,11 @@ namespace DAL.App.Repositories
                 .Select(t => TeacherInSubjectEventMapper.MapFromDomain(t))
                 .ToListAsync();
         }
+
+        public void RemoveBySubjectEventAndTeacherIds(int subjectEventId, int teacherId)
+        {
+            RepositoryDbSet.Remove(RepositoryDbSet.First(entity =>
+                entity.TeacherId == teacherId && entity.SubjectInScheduleId == subjectEventId));
+        }
     }
 }

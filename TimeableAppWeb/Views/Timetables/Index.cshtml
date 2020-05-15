@@ -1,7 +1,7 @@
 ﻿@model TimeableAppWeb.ViewModels.TimetableIndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Timetable";
 }
 
 @{ var backGroundPicturePath = Model.BackgroundPicture?.Path ?? "/Images/BackgroundPicture.jpg"; }
@@ -146,12 +146,18 @@
 
     var lastUpdated = new Date();
     var currentPromotionCount = '@Model.Promotions.Count';
+    var dateSizeStyle = 1;
+    var timeSizeStyle = 2;
+    var weekSizeStyle = 2;
+    var weekPosition;
+    var heighToAddToDateTime;
+
 
     window.onload = function () {
-        setWeekNumberContent();
-        startTime();
+        setWeekNumberContent(true);
+        startTime(true);
         if ('@Model.Promotions.Count' > 0) {
-            //changePromotions();
+            changePromotions();
         }
         reloadWhenTimeElapses();
         $('#content-table > tbody  > tr').each(function() {
@@ -163,19 +169,38 @@
     };
 
     window.onresize = function () {
-        setWeekNumberContent();
+        setWeekNumberContent(true);
+        startTime(true);
     };
 
-    function setWeekNumberContent() {
+    function setWeekNumberContent(overwrite) {
         var weekNumber = @Model.WeekNumber === 0 ? "" : '@Model.WeekNumber' + '. nädal';
-        var heightToAdd = $('#week-number-div').outerHeight() / 2;
-        var innerHtml = '<h4 style="margin: 0;position: absolute;left: 50%;top:' +
-            heightToAdd +
-            'px;transform: translate(-50%, -50%);">' +
-            weekNumber +
-            '</h4>';
-        $('#week-number-div').empty();
-        $('#week-number-div').append(innerHtml);
+        if (overwrite === true) {
+            var heightToAdd = $('#week-number-div').outerHeight() / 2;
+
+            // Set style according to the window width
+            var elementStyle = 2;
+            if ($(window).width() < 1560 && $(window).width() > 1370) {
+                elementStyle = 3;
+            } else if ($(window).width() <= 1370 && $(window).width() > 1170) {
+                elementStyle = 4;
+            } else if ($(window).width() <= 1170 && $(window).width() > 970) {
+                elementStyle = 5;
+            } else if ($(window).width() <= 970) {
+                elementStyle = 6;
+            }
+            var innerHtml = `<h${elementStyle} style="margin: 0;position: absolute;left: 50%;top:${heightToAdd}px;transform: translate(-50%, -50%);">${weekNumber}</h${elementStyle}>`;
+            $('#week-number-div').empty();
+            $('#week-number-div').append(innerHtml);
+            weekSizeStyle = elementStyle;
+            weekPosition = $('#week-number-div').offset();
+        } else {
+            var innerHtmlNoOverwrite = '<h' + weekSizeStyle + '>' + weekNumber + '</h' + weekSizeStyle + '>';
+            $('#week-number-div').empty();
+            $('#week-number-div').append(innerHtmlNoOverwrite);
+            $('#week-number-div').offset({ top: weekPosition.top, left: weekPosition.left });
+        }
+        
     }
 
     function reloadWhenTimeElapses() {
@@ -188,7 +213,7 @@
         setTimeout(function () { reloadWhenTimeElapses() }, 1000);
     }
 
-    function startTime() {
+    function startTime(overwrite) {
         var today = new Date();
         var hr = today.getHours();
         var min = today.getMinutes();
@@ -207,11 +232,40 @@
         var curMonth = today.getMonth() + 1;
         curMonth = (curMonth < 10) ? "0" + curMonth : curMonth;
         var curYear = today.getFullYear();
-        var heightToAdd = $('#clock').outerHeight() / 2;
-        var date = '<div style="margin: 0;position: absolute;left: 50%; top:' + heightToAdd + 'px; transform: translate(-50%, -50%);"><h3 style="display: inline;"><b>' + hr + ":" + min + ":" + sec + '</b></h3><h4 style="display: inline;padding-left:1em;">' + " " + curDay + "." + curMonth + "." + curYear + " " + curWeekDay + "</h4></div>";
-        $("#clock").empty();
-        $("#clock").append(date);
-        setTimeout(function(){ startTime() }, 500);
+        if (overwrite) {
+            var heightToAdd = $('#clock').outerHeight() / 2;
+            // Set style according to the window width
+            var dateStyle = 1;
+            var timeStyle = 2;
+            if ($(window).width() < 1560 && $(window).width() > 1350) {
+                dateStyle = 2;
+                timeStyle = 3;
+            } else if ($(window).width() <= 1350 && $(window).width() > 1150) {
+                dateStyle = 3;
+                timeStyle = 4;
+            } else if ($(window).width() <= 1150 && $(window).width() > 970) {
+                dateStyle = 4;
+                timeStyle = 5;
+            } else if ($(window).width() <= 970) {
+                dateStyle = 5;
+                timeStyle = 6;
+            }
+            var date = `<div style="margin: 0;position: absolute;left: 50%; top:${heightToAdd}px; transform: translate(-50%, -50%);"><h${dateStyle
+                } style="display: inline;"><b>${hr}:${min}:${sec}</b></h${dateStyle}><h${timeStyle} style="display: inline;padding-left:1em;"> ${curDay}.${curMonth
+                }.${curYear} ${curWeekDay}</h${timeStyle}></div>`;
+            $("#clock").empty();
+            $("#clock").append(date);
+            dateSizeStyle = dateStyle;
+            timeSizeStyle = timeStyle;
+            heighToAddToDateTime = heightToAdd;
+        } else {
+            var dateNoOverwrite = `<div style="margin: 0;position: absolute;left: 50%; top:${heighToAddToDateTime}px; transform: translate(-50%, -50%);"><h${dateSizeStyle
+                } style="display: inline;"><b>${hr}:${min}:${sec}</b></h${dateSizeStyle}><h${timeSizeStyle} style="display: inline;padding-left:1em;"> ${curDay}.${curMonth
+                }.${curYear} ${curWeekDay}</h${timeSizeStyle}></div>`;
+            $("#clock").empty();
+            $("#clock").append(dateNoOverwrite);
+        }
+        setTimeout(function () { startTime(false) }, 500);
     }
 
     function checkTime(i) {
@@ -222,59 +276,50 @@
     }
 
     function changePromotions() {
-        var currentTime = new Date();
+        const currentTime = new Date();
+        const lastUpdatedTimeCopyToAddSeconds = new Date(
+            lastUpdated.getFullYear(),
+            lastUpdated.getMonth(),
+            lastUpdated.getDate(),
+            lastUpdated.getHours(),
+            lastUpdated.getMinutes(),
+            lastUpdated.getSeconds());
+
         if (currentPromotionCount > 0) { // This is promotion
-            var index = currentPromotionCount - 1;
-            var currentPromoShownId = '#show-promo-' + index + '-seconds';
-            var id = '#promo-' + index;
-            var currentPromoShown = $(currentPromoShownId).val();
-            var promoDateTimeIfSecondsUpdated =
-                new Date(
-                    lastUpdated.getFullYear(),
-                    lastUpdated.getMonth(),
-                    lastUpdated.getDate(),
-                    lastUpdated.getHours(),
-                    lastUpdated.getMinutes(),
-                    lastUpdated.getSeconds());
-            promoDateTimeIfSecondsUpdated.setSeconds(promoDateTimeIfSecondsUpdated.getSeconds() + currentPromoShown);
-            alert("Now: " + currentTime + ", promo upd: " + promoDateTimeIfSecondsUpdated + ", last upd: " + lastUpdated + ", add seconds: " + currentPromoShown);
-            if (currentTime > promoDateTimeIfSecondsUpdated) {
+            const index = currentPromotionCount - 1;
+            const currentPromoShownId = `#show-promo-${index}-seconds`;
+            const id = `#promo-${currentPromotionCount}`;
+            const currentPromoShown = $(currentPromoShownId).val();
+            lastUpdatedTimeCopyToAddSeconds.setTime(lastUpdatedTimeCopyToAddSeconds.getTime() + (currentPromoShown * 1000));
+            if (currentTime > lastUpdatedTimeCopyToAddSeconds) {
                 $('.promotion').each(function () {
                     $(this).css('display', 'none');
                 });
                 $('#bg-image-wrap').css('display', 'none');
                 if (currentPromotionCount == '@Model.Promotions.Count') {
-                    $('#bg-image-wrap').css('display', 'contents');
+                    $('#bg-image-wrap').css('display', 'block');
                     currentPromotionCount = 0;
+                    startTime(true);
+                    setWeekNumberContent(true);
                 } else {
-                    alert("next promo!");
-                    $(id).css('display', 'contents');
+                    $(id).css('display', 'block');
                     currentPromotionCount++;
                 }
                 lastUpdated = new Date();
             }
-        } else {
-            var dateTimeIfSecondsUpdated =
-                new Date(
-                    lastUpdated.getFullYear(),
-                    lastUpdated.getMonth(),
-                    lastUpdated.getDate(),
-                    lastUpdated.getHours(),
-                    lastUpdated.getMinutes(),
-                    lastUpdated.getSeconds());
-            dateTimeIfSecondsUpdated.setSeconds(dateTimeIfSecondsUpdated.getSeconds() + '@Model.ShowScheduleSeconds');
-            alert("Now: " + currentTime + ", schedule upd: " + dateTimeIfSecondsUpdated + ", last upd: " + lastUpdated + ", add seconds: " + '@Model.ShowScheduleSeconds');
-            if (currentTime > dateTimeIfSecondsUpdated) {
+        } else { // This is schedule
+            lastUpdatedTimeCopyToAddSeconds.setTime(lastUpdatedTimeCopyToAddSeconds.getTime() + ('@Model.ShowScheduleSeconds' * 1000));
+            if (currentTime > lastUpdatedTimeCopyToAddSeconds) {
                 $('.promotion').each(function () {
                     $(this).css('display', 'none');
                 });
                 $('#bg-image-wrap').css('display', 'none');
-                $('#promo-0').css('display', 'contents');
+                $('#promo-0').css('display', 'block');
                 currentPromotionCount++;
                 lastUpdated = new Date();
             }
         }
-        setTimeout(function () { changePromotions() }, 1000);
+        setTimeout(function () { changePromotions() }, 500);
     }
 </script>
 

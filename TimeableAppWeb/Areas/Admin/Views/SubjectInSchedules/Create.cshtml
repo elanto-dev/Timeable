@@ -5,7 +5,7 @@
 @inject IOptions<RequestLocalizationOptions> LocOptions
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add subject";
 }
 
 
@@ -60,22 +60,22 @@
                     <span asp-validation-for="SubjectInSchedule.EndDateTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <a id="add-teacher" value="Add teacher" class="btn btn-outline-success" onclick="AddNewTeacher(@Model.Teachers.Count)">
+                    <a id="add-teacher" value="Add teacher" class="btn btn-outline-success" onclick="AddNewTeacher()">
                         @Resources.Domain.SubjectInSchedule.SubjectInSchedule.AddTeacher
                     </a>
                 </div>
                 <div id="teachers-list">
                     @for (int i = 0; i < Model.Teachers.Count; i++)
                     {
-                        <div id="teacher-@i">
+                        <div id="teacher-@i" class="teacher-div">
                             <div class="form-group">
-                                <label asp-for="Teachers[i].TeacherName" class="control-label">@Html.DisplayNameFor(m => m.Teachers[i].TeacherName)</label>
-                                <input asp-for="Teachers[i].TeacherName" class="form-control" />
+                                <label asp-for="Teachers[i].TeacherName" class="control-label teacher-name-label">@Html.DisplayNameFor(m => m.Teachers[i].TeacherName)</label>
+                                <input asp-for="Teachers[i].TeacherName" class="form-control teacher-name-input" />
                                 <span asp-validation-for="Teachers[i].TeacherName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Teachers[i].TeacherRole" class="control-label">@Html.DisplayNameFor(m => m.Teachers[i].TeacherRole)</label>
-                                <input asp-for="Teachers[i].TeacherRole" class="form-control" />
+                                <label asp-for="Teachers[i].TeacherRole" class="control-label teacher-role-label">@Html.DisplayNameFor(m => m.Teachers[i].TeacherRole)</label>
+                                <input asp-for="Teachers[i].TeacherRole" class="form-control teacher-role-input" />
                                 <span asp-validation-for="Teachers[i].TeacherRole" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -95,6 +95,7 @@
 </div>
 
 <script>
+    var teacherCount = 0;
     window.onload = function () {
         var dateFormat = 'Y-m-d H:i';
         let locale = '@CultureInfo.CurrentCulture.Name';
@@ -121,10 +122,11 @@
             });
     };
 
-    function AddNewTeacher(count) {
+    function AddNewTeacher() {
         const teacherName = '@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherName';
         const teacherRole = '@Resources.Domain.SubjectInSchedule.SubjectInSchedule.TeacherRole';
         const removeTeacher = '@Resources.Domain.SubjectInSchedule.SubjectInSchedule.RemoveTeacher';
-        loadTeacherClickEventsForSubjectView(count, teacherName, teacherRole, removeTeacher);
+        loadTeacherClickEventsForSubjectView(teacherCount, teacherName, teacherRole, removeTeacher);
+        teacherCount++;
     }
 </script>

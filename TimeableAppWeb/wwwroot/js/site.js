@@ -7,16 +7,18 @@
 
 function loadTeacherClickEventsForSubjectView(teacherCount, teacherName, teacherRole, removeTeacher) {
     var id = `teacher-${teacherCount}`;
-    var div = $("<div />").attr("id", id);
+    var div = $("<div />").attr("id", id).attr("class", "teacher-div");;
     var value = "";
     var innerNameDiv = $("<div />").attr("class", "form-group");
-    var fullNameLabel = $("<label />").attr("class", "control-label")
-        .attr("name", "Teachers[" + teacherCount + "].FullName");
-    var fullNameInput = $("<input />").attr("type", "text").attr("class", "form-control").attr("name", "Teachers[" + teacherCount + "].FullName");
+    var fullNameLabel = $("<label />").attr("class", "control-label teacher-name-label")
+        .attr("name", "Teachers[" + teacherCount + "].TeacherName");
+    var fullNameInput = $("<input />").attr("type", "text").attr("class", "form-control teacher-name-input")
+        .attr("name", "Teachers[" + teacherCount + "].TeacherName");
     var innerRoleDiv = $("<div />").attr("class", "form-group");
-    var roleLabel = $("<label />").attr("class", "control-label")
-        .attr("name", "Teachers[" + teacherCount + "].FullName");
-    var roleInput = $("<input />").attr("type", "text").attr("class", "form-control").attr("name", "Teachers[" + teacherCount + "].Role");
+    var roleLabel = $("<label />").attr("class", "control-label teacher-role-label")
+        .attr("name", "Teachers[" + teacherCount + "].TeacherRole");
+    var roleInput = $("<input />").attr("type", "text").attr("class", "form-control teacher-role-input")
+        .attr("name", "Teachers[" + teacherCount + "].TeacherRole");
 
     fullNameLabel.text(teacherName);
     roleLabel.text(teacherRole);
@@ -44,4 +46,33 @@ function loadTeacherClickEventsForSubjectView(teacherCount, teacherName, teacher
 
 function RemoveTeacher(id) {
     $(`#${id}`).remove();
+    var i = 0;
+    alert($(".teacher-div").length);
+    $(".teacher-div").each(function () {
+        alert($(this).attr('id'));
+        var newId = `teacher-${i}`;
+        $(this).attr("id", newId);
+        alert($(this).attr('id'));
+        i++;
+    });
+    i = 0;
+    $(".teacher-name-label").each(function () {
+        $(this).attr("name", `Teachers[${i}].TeacherName`);
+        i++;
+    });
+    i = 0;
+    $(".teacher-name-input").each(function () {
+        $(this).attr("name", `Teachers[${i}].TeacherName`);
+        i++;
+    });
+    i = 0;
+    $(".teacher-role-label").each(function () {
+        $(this).attr("name", `Teachers[${i}].TeacherRole`);
+        i++;
+    });
+    i = 0;
+    $(".teacher-input-input").each(function () {
+        $(this).attr("name", `Teachers[${i}].TeacherRole`);
+        i++;
+    });
 };
