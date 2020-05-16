@@ -12,9 +12,9 @@ namespace HTMLParser.Mappers
         /// <summary>
         /// Object mapping from HTMLParser.DTO to Domain.Schedule object.
         /// </summary>
-        /// <param name="timePlanEvents">HTMLParser.DTO object.</param>
-        /// <param name="forDate">Schedule date.</param>
-        /// <returns>Domain.Schedule object.</returns>
+        /// <param name="timePlanEvents">HTMLParser.DTO entity</param>
+        /// <param name="forDate">Schedule date</param>
+        /// <returns>Domain.Schedule entity</returns>
         public static Schedule MapFromDto(List<TimePlanEvent> timePlanEvents, DateTime forDate)
         {
             var schedule = new Schedule

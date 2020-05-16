@@ -147,7 +147,7 @@ namespace DAL.App.Helpers
 
             IGetTimePlanFromInformationSystem timeplanGettingSystem = new GetTimePlanFromInformationSystem(prefix);
             var schedule = timeplanGettingSystem.GetScheduleForToday();
-
+            
             if (schedule == null)
                 return;
 
@@ -155,28 +155,33 @@ namespace DAL.App.Helpers
 
             if (schedule.SubjectsInSchedules != null)
             {
-                foreach (var subjectInSchedule in schedule.SubjectsInSchedules)
+                var subjectsInSchedule = schedule.SubjectsInSchedules.ToList();
+                for (var i = 0; i < subjectsInSchedule.Count; i++)
                 {
-                    if (context.SubjectInSchedules.Any(s =>
-                        s.UniqueIdentifier.Equals(subjectInSchedule.UniqueIdentifier)))
+                    var subjectInScheduleFromDb = context.SubjectInSchedules.FirstOrDefault(s =>
+                        s.UniqueIdentifier.Equals(subjectsInSchedule[i].UniqueIdentifier));
+                    if (subjectInScheduleFromDb != null)
+                    {
+                        subjectsInSchedule[i] = subjectInScheduleFromDb;
                         continue;
+                    }
 
-                    var subject = context.Subjects.FirstOrDefault(t => t.SubjectCode == subjectInSchedule.Subject.SubjectCode
-                                                                       && t.SubjectName == subjectInSchedule.Subject.SubjectName);
+                    var subject = context.Subjects.FirstOrDefault(t => t.SubjectCode == subjectsInSchedule[i].Subject.SubjectCode
+                                                                       && t.SubjectName == subjectsInSchedule[i].Subject.SubjectName);
                     if (subject != null)
                     {
-                        subjectInSchedule.Subject = subject;
-                        subjectInSchedule.SubjectId = subject.Id;
+                        subjectsInSchedule[i].Subject = subject;
+                        subjectsInSchedule[i].SubjectId = subject.Id;
                     }
                     else
                     {
-                        context.Subjects.Add(subjectInSchedule.Subject);
+                        context.Subjects.Add(subjectsInSchedule[i].Subject);
 
                     }
 
-                    if (subjectInSchedule.TeacherInSubjectEvents == null) continue;
+                    if (subjectsInSchedule[i].TeacherInSubjectEvents == null) continue;
 
-                    foreach (var teacherInSubjectEvent in subjectInSchedule.TeacherInSubjectEvents)
+                    foreach (var teacherInSubjectEvent in subjectsInSchedule[i].TeacherInSubjectEvents)
                     {
                         var teacher = context.Teachers.FirstOrDefault(
                             t => t.FullName == teacherInSubjectEvent.Teacher.FullName
@@ -195,6 +200,8 @@ namespace DAL.App.Helpers
 
                     context.SaveChanges();
                 }
+
+                schedule.SubjectsInSchedules = subjectsInSchedule;
             }
 
             context.Schedules.Add(schedule);
@@ -208,7 +215,7 @@ namespace DAL.App.Helpers
             });
 
             var futureEvents =
-                context.Events.Where(e => e.ShowStartDateTime >= DateTime.Now && e.ShowEndDateTime > DateTime.Now);
+                context.Events.Where(e => e.ShowStartDateTime <= DateTime.Now && e.ShowEndDateTime > DateTime.Now);
 
             if (futureEvents != null && futureEvents.Any())
             {

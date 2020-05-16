@@ -23,15 +23,17 @@ namespace BLL.App.Helpers
             { "2 minutes", 120},
             { "2 minute and 30 seconds", 150},
             { "3 minutes", 180},
+            { "3 minute and 30 seconds", 210},
             { "4 minutes", 240},
-            { "5 minutes", 300},
-            { "6 minutes", 360},
-            { "7 minutes", 420},
-            { "8 minutes", 480},
-            { "9 minutes", 540},
-            { "10 minutes", 600}
+            { "4 minute and 30 seconds", 270},
+            { "5 minutes", 300}
         };
 
+        /// <summary>
+        /// Get list of string values of seconds to show schedule or promotion.
+        /// </summary>
+        /// <param name="schedule">Boolean whether it is schedule/promotion</param>
+        /// <returns>List of string seconds values</returns>
         public static List<string> GetDictionaryKeysList(bool schedule)
         {
             var res = new List<string>
@@ -42,6 +44,12 @@ namespace BLL.App.Helpers
             return res;
         }
 
+        /// <summary>
+        /// Returns string equivalent of the seconds chosen.
+        /// </summary>
+        /// <param name="intValue">Seconds integer</param>
+        /// <param name="schedule">Boolean whether it is schedule/promotion</param>
+        /// <returns>String of second value</returns>
         public static string GetSelectedValue(int? intValue, bool schedule)
         {
             if (intValue == null)
@@ -50,6 +58,11 @@ namespace BLL.App.Helpers
             return SecondsValuesDictionary.FirstOrDefault(x => x.Value.Equals(intValue)).Key;
         }
 
+        /// <summary>
+        /// Returns the integer seconds value by the string seconds value.
+        /// </summary>
+        /// <param name="stringValue">String of second value</param>
+        /// <returns>Seconds integer</returns>
         public static int? GetIntValue(string? stringValue)
         {
             if (stringValue == null)

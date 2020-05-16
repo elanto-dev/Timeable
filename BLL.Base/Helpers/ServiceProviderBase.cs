@@ -33,13 +33,11 @@ namespace BLL.Base.Helpers
             {
                 return (TService)ServiceCache[typeof(TService)];
             }
-            // didn't find the repo in cache, lets create it
 
+            // didn't find the repo in cache, lets create it
             var repoCreationMethod = ServiceFactory.GetServiceFactory<TService>();
 
-
-            object repo = repoCreationMethod(Uow);
-
+            var repo = repoCreationMethod(Uow);
 
             ServiceCache[typeof(TService)] = repo;
             return (TService)repo;

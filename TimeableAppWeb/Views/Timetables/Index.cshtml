@@ -1,4 +1,5 @@
 ﻿@model TimeableAppWeb.ViewModels.TimetableIndexViewModel
+@inject SignInManager<AppUser> SignInManager
 
 @{
     ViewData["Title"] = "Timetable";
@@ -9,10 +10,10 @@
 @for (int i = 0; i < Model.Promotions.Count; i++)
 {
     var id = "promo-" + i;
-    <div id="@id" class="promotion" style="display: none;" >
+    <div id="@id" class="promotion" style="display: none;">
         @{ var inputId = "show-promo-" + i + "-seconds"; }
         <input id="@inputId" type="hidden" asp-for="@Model.Promotions[i].ShowAddSeconds" />
-        <img src="@Model.Promotions[i].Picture.Path" alt="" style="object-fit: contain; max-height: 100vh; max-width: 100vw; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+        <img src="@Model.Promotions[i].Picture.Path" alt="" style="object-fit: fill; max-height: 100vh; max-width: 100vw; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
     </div>
 }
 
@@ -22,9 +23,18 @@
         <div class="card" style="height: 7vh; width: 96vw;">
             <div class="row" style="height: 100%;">
                 <div class="col-2" style="height: 100%; align-content: start; display: flex;">
-                    <a style="height: 100%; align-content: start; display: flex;" asp-controller="Home" asp-action="Index">
-                        <img src="~/Images/TalTechLogo.png" alt="" style="object-fit: contain; width: auto; max-height: 100%; padding-left: 50px;">
-                    </a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a style="height: 100%; align-content: start; display: flex;" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                            <img src="~/Images/TalTechLogo.png" alt="" style="object-fit: contain; width: auto; max-height: 100%; padding-left: 50px;">
+                        </a>
+                    }
+                    else
+                    {
+                        <a style="height: 100%; align-content: start; display: flex;" asp-controller="Home" asp-action="Index">
+                            <img src="~/Images/TalTechLogo.png" alt="" style="object-fit: contain; width: auto; max-height: 100%; padding-left: 50px;">
+                        </a>
+                    }
                 </div>
                 <div class="col-8 blue-text" id="clock" style="position: relative; height: 100%;"></div>
                 <div class="col-2" id="week-number-div" style="position: relative; height: 100%;"></div>
@@ -34,105 +44,105 @@
         <div class="card" style="height: 90vh; width: 96vw; overflow-y: hidden">
             <table class="table table-sm blue-text" id="content-table">
                 <tbody>
-                @foreach (var item in Model.Events)
-                {
-                    <tr class="event-bg">
-                        <td>
-                            <h4>@Html.DisplayFor(modelItem => item.HappeningDateTime)</h4>
-                        </td>
-                        <td></td>
-                        <td>
-                            <h4>@Html.DisplayFor(modelItem => item.EventName)</h4>
-                        </td>
-                        <td></td>
-                        <td>
-                            <h4>@Html.DisplayFor(modelItem => item.Place)</h4>
-                        </td>
-                    </tr>
-                }
-                @foreach (var lecture in Model.LecturesForTimetable)
-                {
-                    @if (lecture.StartTime < DateTime.Now)
+                    @foreach (var item in Model.Events)
                     {
-                        <tr class="started-lesson-bg">
+                        <tr class="event-bg">
                             <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
+                                <h4>@Html.DisplayFor(modelItem => item.HappeningDateTime)</h4>
                             </td>
+                            <td></td>
                             <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
+                                <h4>@Html.DisplayFor(modelItem => item.EventName)</h4>
                             </td>
+                            <td></td>
                             <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
+                                <h4>@Html.DisplayFor(modelItem => item.Place)</h4>
                             </td>
                         </tr>
                     }
-                    else if (lecture.StartTime < DateTime.Now.AddMinutes(5))
+                    @foreach (var lecture in Model.LecturesForTimetable)
                     {
-                        <tr class="starting-in-5min-lesson-bg">
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
-                            </td>
-                        </tr>
+                        @if (lecture.StartTime < DateTime.Now)
+                        {
+                            <tr class="started-lesson-bg">
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
+                                </td>
+                            </tr>
+                        }
+                        else if (lecture.StartTime < DateTime.Now.AddMinutes(5))
+                        {
+                            <tr class="starting-in-5min-lesson-bg">
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
+                                </td>
+                            </tr>
+                        }
+                        else if (lecture.StartTime < DateTime.Now.AddMinutes(15))
+                        {
+                            <tr class="starting-in-15min-lesson-bg">
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
+                                </td>
+                                <td>
+                                    <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
+                                </td>
+                            </tr>
+                        }
                     }
-                    else if (lecture.StartTime < DateTime.Now.AddMinutes(15))
-                    {
-                        <tr class="starting-in-15min-lesson-bg">
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
-                            </td>
-                        </tr>
-                    }
-                    else
-                    {
-                        <tr>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.StartToEndString)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureType)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.LectureNameWithCode)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Lecturers)</h4>
-                            </td>
-                            <td>
-                                <h4>@Html.DisplayFor(modelItem => lecture.Rooms)</h4>
-                            </td>
-                        </tr>
-                    }
-                }
                 </tbody>
             </table>
         </div>
@@ -145,6 +155,7 @@
 <script>
 
     var lastUpdated = new Date();
+    var nextUpdate;
     var currentPromotionCount = '@Model.Promotions.Count';
     var dateSizeStyle = 1;
     var timeSizeStyle = 2;
@@ -157,7 +168,7 @@
         setWeekNumberContent(true);
         startTime(true);
         if ('@Model.Promotions.Count' > 0) {
-            changePromotions();
+            changePromotions(true);
         }
         reloadWhenTimeElapses();
         $('#content-table > tbody  > tr').each(function() {
@@ -189,7 +200,9 @@
             } else if ($(window).width() <= 970) {
                 elementStyle = 6;
             }
-            var innerHtml = `<h${elementStyle} style="margin: 0;position: absolute;left: 50%;top:${heightToAdd}px;transform: translate(-50%, -50%);">${weekNumber}</h${elementStyle}>`;
+            var innerHtml =
+                `<h${elementStyle} style="margin: 0;position: absolute;left: 50%;top:${heightToAdd
+                    }px;transform: translate(-50%, -50%);">${weekNumber}</h${elementStyle}>`;
             $('#week-number-div').empty();
             $('#week-number-div').append(innerHtml);
             weekSizeStyle = elementStyle;
@@ -200,7 +213,7 @@
             $('#week-number-div').append(innerHtmlNoOverwrite);
             $('#week-number-div').offset({ top: weekPosition.top, left: weekPosition.left });
         }
-        
+
     }
 
     function reloadWhenTimeElapses() {
@@ -210,7 +223,7 @@
         if (min % 5 === 0 && sec === 0) {
             location.reload(true);
         }
-        setTimeout(function () { reloadWhenTimeElapses() }, 1000);
+        setTimeout(function() { reloadWhenTimeElapses() }, 1000);
     }
 
     function startTime(overwrite) {
@@ -250,22 +263,28 @@
                 dateStyle = 5;
                 timeStyle = 6;
             }
-            var date = `<div style="margin: 0;position: absolute;left: 50%; top:${heightToAdd}px; transform: translate(-50%, -50%);"><h${dateStyle
-                } style="display: inline;"><b>${hr}:${min}:${sec}</b></h${dateStyle}><h${timeStyle} style="display: inline;padding-left:1em;"> ${curDay}.${curMonth
-                }.${curYear} ${curWeekDay}</h${timeStyle}></div>`;
+            var date =
+                `<div style="margin: 0;position: absolute;left: 50%; top:${heightToAdd
+                    }px; transform: translate(-50%, -50%);"><h${dateStyle
+                    } style="display: inline;"><b>${hr}:${min}:${sec}</b></h${dateStyle}><h${timeStyle
+                    } style="display: inline;padding-left:1em;"> ${curDay}.${curMonth
+                    }.${curYear} ${curWeekDay}</h${timeStyle}></div>`;
             $("#clock").empty();
             $("#clock").append(date);
             dateSizeStyle = dateStyle;
             timeSizeStyle = timeStyle;
             heighToAddToDateTime = heightToAdd;
         } else {
-            var dateNoOverwrite = `<div style="margin: 0;position: absolute;left: 50%; top:${heighToAddToDateTime}px; transform: translate(-50%, -50%);"><h${dateSizeStyle
-                } style="display: inline;"><b>${hr}:${min}:${sec}</b></h${dateSizeStyle}><h${timeSizeStyle} style="display: inline;padding-left:1em;"> ${curDay}.${curMonth
-                }.${curYear} ${curWeekDay}</h${timeSizeStyle}></div>`;
+            var dateNoOverwrite =
+                `<div style="margin: 0;position: absolute;left: 50%; top:${heighToAddToDateTime
+                    }px; transform: translate(-50%, -50%);"><h${dateSizeStyle
+                    } style="display: inline;"><b>${hr}:${min}:${sec}</b></h${dateSizeStyle}><h${timeSizeStyle
+                    } style="display: inline;padding-left:1em;"> ${curDay}.${curMonth
+                    }.${curYear} ${curWeekDay}</h${timeSizeStyle}></div>`;
             $("#clock").empty();
             $("#clock").append(dateNoOverwrite);
         }
-        setTimeout(function () { startTime(false) }, 500);
+        setTimeout(function() { startTime(false) }, 500);
     }
 
     function checkTime(i) {
@@ -275,41 +294,37 @@
         return i;
     }
 
-    function changePromotions() {
+    function changePromotions(firstTime) {
         const currentTime = new Date();
-        const lastUpdatedTimeCopyToAddSeconds = new Date(
-            lastUpdated.getFullYear(),
-            lastUpdated.getMonth(),
-            lastUpdated.getDate(),
-            lastUpdated.getHours(),
-            lastUpdated.getMinutes(),
-            lastUpdated.getSeconds());
-
         if (currentPromotionCount > 0) { // This is promotion
-            const index = currentPromotionCount - 1;
-            const currentPromoShownId = `#show-promo-${index}-seconds`;
             const id = `#promo-${currentPromotionCount}`;
-            const currentPromoShown = $(currentPromoShownId).val();
-            lastUpdatedTimeCopyToAddSeconds.setTime(lastUpdatedTimeCopyToAddSeconds.getTime() + (currentPromoShown * 1000));
-            if (currentTime > lastUpdatedTimeCopyToAddSeconds) {
-                $('.promotion').each(function () {
-                    $(this).css('display', 'none');
-                });
-                $('#bg-image-wrap').css('display', 'none');
-                if (currentPromotionCount == '@Model.Promotions.Count') {
-                    $('#bg-image-wrap').css('display', 'block');
-                    currentPromotionCount = 0;
-                    startTime(true);
-                    setWeekNumberContent(true);
-                } else {
-                    $(id).css('display', 'block');
-                    currentPromotionCount++;
+            if (!firstTime) {
+                if (currentTime > nextUpdate) {
+                    $('.promotion').each(function() {
+                        $(this).css('display', 'none');
+                    });
+                    $('#bg-image-wrap').css('display', 'none');
+                    if (currentPromotionCount == '@Model.Promotions.Count') {
+                        $('#bg-image-wrap').css('display', 'block');
+                        startTime(true);
+                        setWeekNumberContent(true);
+                        nextUpdate = currentTime.setTime(currentTime.getTime() + ('@Model.ShowScheduleSeconds' * 1000));
+                    } else {
+                        $(id).css('display', 'block');
+                        nextUpdate = currentTime.setTime(currentTime.getTime() + ($(`#show-promo-${currentPromotionCount}-seconds`).val() * 1000));
+                        currentPromotionCount++;
+                    }
+                    lastUpdated = new Date();
                 }
-                lastUpdated = new Date();
+            } else {
+                $('#bg-image-wrap').css('display', 'block');
+                currentPromotionCount = 0;
+                startTime(true);
+                setWeekNumberContent(true);
+                nextUpdate = currentTime.setTime(currentTime.getTime() + ('@Model.ShowScheduleSeconds' * 1000));
             }
         } else { // This is schedule
-            lastUpdatedTimeCopyToAddSeconds.setTime(lastUpdatedTimeCopyToAddSeconds.getTime() + ('@Model.ShowScheduleSeconds' * 1000));
-            if (currentTime > lastUpdatedTimeCopyToAddSeconds) {
+            if (currentTime > nextUpdate) {
                 $('.promotion').each(function () {
                     $(this).css('display', 'none');
                 });
@@ -317,9 +332,11 @@
                 $('#promo-0').css('display', 'block');
                 currentPromotionCount++;
                 lastUpdated = new Date();
+                const firstPromo = $("#show-promo-0-seconds").val();
+                nextUpdate = currentTime.setTime(currentTime.getTime() + (firstPromo * 1000));
             }
         }
-        setTimeout(function () { changePromotions() }, 500);
+        setTimeout(function () { changePromotions(false) }, 500);
     }
 </script>
 

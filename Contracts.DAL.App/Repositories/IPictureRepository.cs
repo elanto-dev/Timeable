@@ -12,6 +12,11 @@ namespace Contracts.DAL.App.Repositories
     public interface IPictureRepository<TDalEntity> : IBaseRepository<TDalEntity>
         where TDalEntity : class, new()
     {
+        /// <summary>
+        /// Find pictures with the path specified.
+        /// </summary>
+        /// <param name="path">Path string.</param>
+        /// <returns>Picture entities</returns>
         Task<IEnumerable<TDalEntity>> FindPicturesByPathAsync(string path);
     }
 }

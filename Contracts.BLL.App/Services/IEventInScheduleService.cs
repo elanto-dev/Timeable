@@ -8,6 +8,11 @@ namespace Contracts.BLL.App.Services
 {
     public interface IEventInScheduleService : IEntityServiceBase<EventInSchedule>, IEventInScheduleRepository<EventInSchedule>
     {
+        /// <summary>
+        /// Returns all the events that were included to the current schedule.
+        /// </summary>
+        /// <param name="scheduleId">Schedule ID.</param>
+        /// <returns></returns>
         Task<IEnumerable<EventForTimetable>> GetAllEventsForCurrentScheduleAsync(int scheduleId);
     }
 }

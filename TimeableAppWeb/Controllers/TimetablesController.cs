@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using BLL.App.Helpers;
 using BLL.DTO;
 using Contracts.BLL.App;
+using Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TimeableAppWeb.ViewModels;
 
@@ -13,10 +15,12 @@ namespace TimeableAppWeb.Controllers
     public class TimetablesController : Controller
     {
         private readonly IBLLApp _bll;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public TimetablesController(IBLLApp bll)
+        public TimetablesController(IBLLApp bll, SignInManager<AppUser> signInManager)
         {
             _bll = bll;
+            _signInManager = signInManager;
         }
 
         // GET: Schedules
@@ -25,7 +29,12 @@ namespace TimeableAppWeb.Controllers
             var screen = await _bll.Screens.GetFirstAndActiveScreenAsync();
 
             if (screen == null)
+            {
+                if (User != null && _signInManager.IsSignedIn(User))
+                    return RedirectToAction("Index", "ScreenSettings", new { Area = "Admin", showNoActiveScreenAlert = true });
+
                 return RedirectToAction("Index", "Home", new { noActiveScreen = true });
+            }
 
             var scheduleInScreen =
                 await _bll.ScheduleInScreens.FindForScreenForDateWithoutIncludesAsync(screen.Id, screen.Prefix, DateTime.Today);

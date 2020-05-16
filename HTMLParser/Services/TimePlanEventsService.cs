@@ -16,6 +16,11 @@ namespace HTMLParser.Services
         private readonly DateTime _startDateTime;
         private readonly DateTime _endDateTime;
 
+        /// <summary>
+        /// </summary>
+        /// <param name="prefix">Prefix of the location to search by</param>
+        /// <param name="startDateTime">Start time of the search</param>
+        /// <param name="endDateTime">End time of the search</param>
         public TimePlanEventsService(string prefix, DateTime startDateTime, DateTime endDateTime)
         {
             _httpClient = new HttpClient();
@@ -24,6 +29,10 @@ namespace HTMLParser.Services
             _endDateTime = endDateTime;
         }
 
+        /// <summary>
+        /// Returns the full timeplan for the chosen dates and prefix and for all the study groups.
+        /// </summary>
+        /// <returns>HTMLParser.DTO.TimePlanEvent entities</returns>
         internal async Task<IEnumerable<TimePlanEvent>> GetFullTimePlan()
         {
             var result = new List<TimePlanEvent>();
@@ -39,7 +48,11 @@ namespace HTMLParser.Services
             return result.GroupBy(x => x.EventIdentifier, (k, g) => g.First()).OrderBy(x => x.StartDateTime);
         }
 
-
+        /// <summary>
+        /// Returns all the events for the chosen dates and prefix that are found using the given url.
+        /// </summary>
+        /// <param name="url">URL to search from</param>
+        /// <returns>HTMLParser.DTO.TimePlanEvent entities</returns>
         private async Task<IEnumerable<TimePlanEvent>> GetTimePlanFromUrl(string url)
         {
             var dataStringTask = await _httpClient.GetStringAsync(url);

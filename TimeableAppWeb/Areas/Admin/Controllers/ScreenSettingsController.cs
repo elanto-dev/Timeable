@@ -34,7 +34,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         }
 
         // GET: Admin/Screens
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool showNoActiveScreenAlert = false)
         {
             var user = await _userManager.GetUserAsync(User);
             if (!user.Activated)
@@ -42,7 +42,10 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 return RedirectToAction("Activate", "Home");
             }
 
-            var vm = new ScreenIndexViewModel();
+            var vm = new ScreenIndexViewModel
+            {
+                ShowScreenNotActiveAlert = showNoActiveScreenAlert
+            };
 
             var userScreen = await _bll.AppUsersScreens.GetScreenForUserAsync(user.Id.ToString());
             var screen = userScreen?.Screen;
@@ -349,20 +352,29 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         [Authorize(Roles = nameof(RoleNamesEnum.HeadAdmin) + "," + nameof(RoleNamesEnum.ScreenSettingsAdmin))]
         public async Task<IActionResult> DeletePromotionFromScreen(int promotionId)
         {
-            var picture = await _bll.Pictures.FindAsync(promotionId);
-            var picturesWithSamePath = await _bll.Pictures.FindPicturesByPathAsync(picture.Path);
+            var promotionInScreen = await _bll.PictureInScreens.FindAsync(promotionId);
+            var picturesWithSamePath = await _bll.Pictures.FindPicturesByPathAsync(promotionInScreen.Picture.Path);
             if (picturesWithSamePath == null || !picturesWithSamePath.Any() || (picturesWithSamePath.Count() == 1 && picturesWithSamePath.First().Id == promotionId))
             {
                 var path = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", 
-                    Path.Combine(picture.Path.Split("/")));
+                    Path.Combine(promotionInScreen.Picture.Path.Split("/")));
 
                 if (System.IO.File.Exists(path))
                     System.IO.File.Delete(path);
             }
 
-            _bll.Pictures.Remove(picture);
-
+            _bll.Pictures.Remove(promotionInScreen.Picture);
             await _bll.SaveChangesAsync();
+
+            var promotions = await _bll.PictureInScreens.GetAllPromotionsForTimetableAsync(promotionInScreen.ScreenId);
+
+            if (promotions == null || !promotions.Any())
+            {
+                var screen = await _bll.Screens.FindAsync(promotionInScreen.ScreenId);
+                screen.ShowScheduleSeconds = SecondsValueManager.GetSelectedValue(null, true);
+                _bll.Screens.Update(screen);
+                await _bll.SaveChangesAsync();
+            }
 
             return RedirectToAction(nameof(Index));
         }

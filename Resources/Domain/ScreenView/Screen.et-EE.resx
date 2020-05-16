@@ -180,6 +180,9 @@
   <data name="ScheduleUpdateMessage" xml:space="preserve">
     <value>Tunniplaani uuendatakse. See kestab umbes 20 sekundit. </value>
   </data>
+  <data name="ScreenNotActiveAlert" xml:space="preserve">
+    <value>Aktiivset ekraani ei leitud. Ei saa kuvada eelvaadet.</value>
+  </data>
   <data name="SearchPrefix" xml:space="preserve">
     <value>Tunniplaani otsimise eesliide</value>
   </data>

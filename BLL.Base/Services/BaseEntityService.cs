@@ -18,7 +18,7 @@ namespace BLL.Base.Services
         protected IBaseRepository<TDalEntity> ServiceRepository;
         private readonly IBLLMapperBase _mapper;
 
-        public BaseEntityService(TUnitOfWork uow, IBLLMapperBase mapper)
+        protected BaseEntityService(TUnitOfWork uow, IBLLMapperBase mapper)
         {
             Uow = uow;
             _mapper = mapper;

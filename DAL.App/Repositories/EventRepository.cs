@@ -17,11 +17,12 @@ namespace DAL.App.Repositories
         }
 
 
-        public async Task<IEnumerable<Event>> GetAllFutureEventsAsync(DateTime startDate)
+        public async Task<IEnumerable<Event>> GetAllFutureEventsAsync(DateTime currentTime)
         {
             return await RepositoryDbSet
                 .AsNoTracking()
-                .Where(e => e.StartTime.Date >= startDate || e.EndDateTime.Date > startDate.Date)
+                .Where(e => e.EndDateTime.Date >= currentTime.Date || e.ShowEndDateTime.Date >= currentTime.Date)
+                .OrderBy(e => e.StartTime).ThenBy(e => e.EndDateTime)
                 .Select(e => EventMapper.MapFromDomain(e))
                 .ToListAsync();
         }

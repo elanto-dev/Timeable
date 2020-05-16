@@ -19,10 +19,11 @@ namespace TimeableAppWeb.Services
         {
             _scopeFactory = scopeFactory;
         }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _lastRunDate = DateTime.Today; // When application starts - table update is called by DataSeed from Startup.cs. No need with one more update!
-            _time = new TimeSpan(00, 01, 00);
+            _time = new TimeSpan(03, 00, 00);
             _timer = new Timer(DownloadNewTimeplan, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
             return Task.CompletedTask;
         }

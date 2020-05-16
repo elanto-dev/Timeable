@@ -6,6 +6,10 @@ namespace HTMLParser.Services
 {
     public class GetWeekNumber
     {
+        /// <summary>
+        /// Returns week number taken from the ÕIS.
+        /// </summary>
+        /// <returns>Week number</returns>
         public static async Task<int> GetCurrentWeekNumberAsync()
         {
             var httpClient = new HttpClient();
@@ -19,12 +23,7 @@ namespace HTMLParser.Services
 
             httpClient.Dispose();
 
-            if (int.TryParse(regexMatch, out int result))
-            {
-                return result;
-            }
-
-            return 0;
+            return int.TryParse(regexMatch, out var result) ? result : 0;
         }
     }
 }

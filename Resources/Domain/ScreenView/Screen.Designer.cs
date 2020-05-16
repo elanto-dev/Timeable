@@ -250,6 +250,15 @@ namespace Resources.Domain.ScreenView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No active screen found. Cannot show the preview..
+        /// </summary>
+        public static string ScreenNotActiveAlert {
+            get {
+                return ResourceManager.GetString("ScreenNotActiveAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schedule search prefix.
         /// </summary>
         public static string SearchPrefix {

@@ -10,6 +10,8 @@ namespace TimeableAppWeb.Areas.Admin.ViewModels
         public Picture? BackgroundPicture { get; set; }
         public bool ShowPrefixError { get; set; }
         public string PrefixError => Resources.Domain.ScreenView.Screen.PrefixError;
+        public bool ShowScreenNotActiveAlert { get; set; }
+        public string ScreenNotActiveAlert => Resources.Domain.ScreenView.Screen.ScreenNotActiveAlert;
         public bool UserHasRightsToEdit { get; set; }
     }
 }

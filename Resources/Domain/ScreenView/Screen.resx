@@ -204,4 +204,7 @@
   <data name="Wait" xml:space="preserve">
     <value>Please wait...</value>
   </data>
+  <data name="ScreenNotActiveAlert" xml:space="preserve">
+    <value>No active screen found. Cannot show the preview.</value>
+  </data>
 </root>

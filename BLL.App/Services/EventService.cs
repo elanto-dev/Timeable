@@ -17,14 +17,14 @@ namespace BLL.App.Services
             ServiceRepository = Uow.Events;
         }
 
-        public async Task<IEnumerable<Event>> GetAllFutureEventsAsync(DateTime startDate)
+        public async Task<IEnumerable<Event>> GetAllFutureEventsAsync(DateTime currentTime)
         {
-            return (await Uow.Events.GetAllFutureEventsAsync(startDate)).Select(EventMapper.MapFromInternal);
+            return (await Uow.Events.GetAllFutureEventsAsync(currentTime)).Select(EventMapper.MapFromInternal);
         }
 
-        public async Task<IEnumerable<EventForSettings>> GetAllFutureEventsForSettingsAsync(DateTime startDate)
+        public async Task<IEnumerable<EventForSettings>> GetAllFutureEventsForSettingsAsync(DateTime currentDateTime)
         {
-            return (await Uow.Events.GetAllFutureEventsAsync(startDate)).Select(EventInScheduleToSettingsMapper.MapFromInternal);
+            return (await Uow.Events.GetAllFutureEventsAsync(currentDateTime)).Select(EventInScheduleToSettingsMapper.MapFromInternal);
         }
     }
 }

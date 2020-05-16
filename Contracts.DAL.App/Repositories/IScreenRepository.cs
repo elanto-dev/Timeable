@@ -11,6 +11,10 @@ namespace Contracts.DAL.App.Repositories
     public interface IScreenRepository<TDalEntity> : IBaseRepository<TDalEntity>
         where TDalEntity : class, new()
     {
+        /// <summary>
+        /// Returns first existing and active screen.
+        /// </summary>
+        /// <returns>Screen entity</returns>
         Task<TDalEntity> GetFirstAndActiveScreenAsync();
     }
 }

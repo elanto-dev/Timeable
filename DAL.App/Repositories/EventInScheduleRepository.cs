@@ -23,6 +23,7 @@ namespace DAL.App.Repositories
                 .Include(e => e.Event)
                 .AsNoTracking()
                 .Where(e => e.Event.ShowStartDateTime <= DateTime.Now && e.Event.ShowEndDateTime > DateTime.Now && e.ScheduleId == scheduleId)
+                .OrderBy(e => e.Event.StartTime).ThenBy(e => e.Event.EndDateTime)
                 .Select(e => EventInScheduleMapper.MapFromDomain(e))
                 .ToListAsync();
         }

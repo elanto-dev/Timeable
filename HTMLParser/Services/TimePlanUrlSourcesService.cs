@@ -30,6 +30,10 @@ namespace HTMLParser.Services
             _httpClient = httpClient ?? throw new ArgumentNullException($"{nameof(httpClient)} cannot be null. Cannot get URL for timetables.");
         }
 
+        /// <summary>
+        /// Returns dictionary of the URLs from where timetable can be found.
+        /// </summary>
+        /// <returns></returns>
         internal async Task<Dictionary<string, string>> GetTimeTablesUrlsDictionary()
         {
             var dayStudiesDataString = await _httpClient.GetStringAsync(GroupLinksSources[StudyTypes.DayStudies]);

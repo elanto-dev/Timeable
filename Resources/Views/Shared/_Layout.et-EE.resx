@@ -120,6 +120,9 @@
   <data name="Language" xml:space="preserve">
     <value>Keel</value>
   </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Eelvaade</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privaatsus</value>
   </data>

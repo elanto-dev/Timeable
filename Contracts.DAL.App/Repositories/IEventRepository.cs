@@ -13,6 +13,11 @@ namespace Contracts.DAL.App.Repositories
     public interface IEventRepository<TDalEntity> : IBaseRepository<TDalEntity>
         where TDalEntity : class, new()
     {
-        Task<IEnumerable<TDalEntity>> GetAllFutureEventsAsync(DateTime startDate);
+        /// <summary>
+        /// Returns all future events which end datetime or show end datetime is later that current time. 
+        /// </summary>
+        /// <param name="currentTime">Current DateTime</param>
+        /// <returns>Event entities</returns>
+        Task<IEnumerable<TDalEntity>> GetAllFutureEventsAsync(DateTime currentTime);
     }
 }
