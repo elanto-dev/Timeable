@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.App", "BLL.App\BLL.App.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeableAppWeb", "TimeableAppWeb\TimeableAppWeb.csproj", "{9B16244B-371C-43AE-92B8-993D75FCCDA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{304A8B64-AFAF-4BB7-A5D5-82A0C8CB5DAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resources", "Resources\Resources.csproj", "{304A8B64-AFAF-4BB7-A5D5-82A0C8CB5DAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

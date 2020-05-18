@@ -84,10 +84,21 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             }
 
             var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
             user.Email = vm.Email;
             user.FirstName = vm.FirstName;
             user.LastName = vm.LastName;
-            await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
+            if (result != IdentityResult.Success)
+            {
+                vm.InformationSaved = false;
+                return View(vm);
+            }
             vm.InformationSaved = true;
             return View(vm);
         }

@@ -16,6 +16,7 @@ namespace BLL.App
         {
             AppUnitOfWork = appUnitOfWork;
         }
+
         public IAppUsersScreenService AppUsersScreens => ServiceProvider.GetService<IAppUsersScreenService>();
         public IEventInScheduleService EventInSchedules => ServiceProvider.GetService<IEventInScheduleService>();
         public IEventService Events => ServiceProvider.GetService<IEventService>();
