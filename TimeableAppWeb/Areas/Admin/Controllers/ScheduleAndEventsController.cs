@@ -30,10 +30,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            if (!user.Activated)
-            {
-                return RedirectToAction("Activate", "Home");
-            }
 
             var userScreen = (await _bll.AppUsersScreens.GetScreenForUserAsync(user.Id.ToString())).Screen;
 
@@ -44,11 +40,12 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
 
             var scheduleInScreen = await 
                 _bll.ScheduleInScreens.FindForScreenForDateWithoutIncludesAsync(userScreen.Id, userScreen.Prefix, DateTime.Today);
+
             if (scheduleInScreen == null)
             {
-                // TODO!!!!!!
-                // Add Update schedule button. Do something with subject adding!
-                return RedirectToAction("Index", "ScreenSettings");
+                await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User), userScreen);
+                scheduleInScreen = await
+                    _bll.ScheduleInScreens.FindForScreenForDateWithoutIncludesAsync(userScreen.Id, userScreen.Prefix, DateTime.Today);
             }
 
             var vm = new ScheduleAndEventsIndexViewModel

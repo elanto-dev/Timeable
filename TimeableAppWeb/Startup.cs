@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +47,7 @@ namespace TimeableAppWeb
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
 
+            var conf = Configuration;
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -63,7 +65,8 @@ namespace TimeableAppWeb
                 o.TokenLifespan = TimeSpan.FromHours(3));
 
             services.AddIdentity<AppUser, AppRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -75,6 +78,11 @@ namespace TimeableAppWeb
                 options.Password.RequiredLength = 10;
                 options.Password.RequiredUniqueChars = 6;
             });
+
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+                o.TokenLifespan = TimeSpan.FromHours(3));
+            services.AddTransient<IEmailSender, EmailSender>();
+
 
             services.AddControllersWithViews();
             services.AddRazorPages();

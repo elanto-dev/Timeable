@@ -13,7 +13,7 @@
         <h1>@Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Events</h1>
     </div>
     <div class="col-6" style="position: relative">
-        <h3 style="position: absolute;bottom: 0; right: 0;">@Model.TodayDate</h3>
+        <h3 style="position: absolute;bottom: 0; right: 20px;">@Model.TodayDate</h3>
     </div>
 
     <div class="col-6">
@@ -25,7 +25,7 @@
     @if (Model.UserHasRightsToEditEvents)
     {
         <div class="col-6" style="position: relative">
-            <h4 style="position: absolute;bottom: 0; right: 0;">@Model.WeekNumber. @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Week</h4>
+            <h4 style="position: absolute;bottom: 0; right: 20px;">@Model.WeekNumber. @Resources.Domain.ScheduleAndEventView.ScheduleAndEvent.Week</h4>
         </div>
     }
     else

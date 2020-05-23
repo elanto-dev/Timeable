@@ -118,5 +118,38 @@ namespace DAL.App.Helpers
 
             context.SaveChanges();
         }
+
+        public static void DeleteScheduleRecordsOlderThan30Days(AppDbContext context)
+        {
+            var schedules = context.Schedules.Where(s => s.Date < DateTime.Today.AddDays(-30));
+            foreach (var schedule in schedules)
+            {
+                context.Schedules.Remove(schedule);
+            }
+
+            var teachers = context.Teachers.Where(t =>
+                t.CreatedAt < DateTime.Today.AddDays(-30) && t.ChangedAt == null ||
+                t.ChangedAt < DateTime.Today.AddDays(-30));
+            foreach (var teacher in teachers)
+            {
+                context.Teachers.Remove(teacher);
+            }
+
+            var subjects = context.Subjects.Where(t =>
+                t.CreatedAt < DateTime.Today.AddDays(-30) && t.ChangedAt == null ||
+                t.ChangedAt < DateTime.Today.AddDays(-30));
+            foreach (var subject in subjects)
+            {
+                context.Subjects.Remove(subject);
+            }
+
+            var oldEvents = context.Events.Where(e => e.EndDateTime < DateTime.Today.AddDays(-30) && e.ShowEndDateTime < DateTime.Today.AddDays(-30));
+            foreach (var oldEvent in oldEvents)
+            {
+                context.Events.Remove(oldEvent);
+            }
+
+            context.SaveChanges();
+        }
     }
 }

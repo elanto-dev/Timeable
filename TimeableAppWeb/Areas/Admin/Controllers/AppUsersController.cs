@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using BLL.DTO;
 using Contracts.BLL.App;
@@ -8,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using TimeableAppWeb.Areas.Admin.Helpers;
 using TimeableAppWeb.Areas.Admin.ViewModels.AppUserViewModels;
@@ -19,22 +23,20 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
     public class AppUsersController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly IEmailSender _emailSender;
         private readonly IBLLApp _bll;
 
-        public AppUsersController(UserManager<AppUser> userManager, IBLLApp bll)
+        public AppUsersController(UserManager<AppUser> userManager, IBLLApp bll, IEmailSender emailSender)
         {
             _userManager = userManager;
             _bll = bll;
+            _emailSender = emailSender;
         }
 
         // GET: Admin/AppUsers
         public async Task<IActionResult> Index()
         {
             var loggedInUser = await _userManager.GetUserAsync(User);
-            if (!loggedInUser.Activated)
-            {
-                return RedirectToAction("Activate", "Home");
-            }
 
             var currentUserScreen = (await _bll.AppUsersScreens.GetScreenForUserAsync(loggedInUser.Id.ToString())).Screen;
 
@@ -92,8 +94,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                     ChangedAt = DateTime.Now,
                     CreatedAt = DateTime.Now,
                     CreatedBy = _userManager.GetUserId(User),
-                    ChangedBy = _userManager.GetUserId(User),
-                    Activated = false
+                    ChangedBy = _userManager.GetUserId(User)
                 };
 
                 var result = await _userManager.CreateAsync(user, vm.Password);
@@ -128,6 +129,27 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                             });
                             await _bll.SaveChangesAsync();
                         }
+
+                        var passwordCode = await _userManager.GeneratePasswordResetTokenAsync(user);
+                        passwordCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(passwordCode));
+
+                        var accountCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        accountCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(accountCode));
+
+                        var callbackUrl = Url.Action(
+                            "ActivateAccountAndResetPassword",
+                            "Account",
+                            new { Area = "", accountCode, passwordCode },
+                            Request.Scheme);
+
+                        var htmlMessageText = "<h4>Timeable registration notification!</h4>" +
+                                              "<p>You have been registered to Timeable application! " +
+                                              $"Your email can be verified by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking this link</a>.</p>";
+
+                        await _emailSender.SendEmailAsync(
+                            vm.Email,
+                            "You have been registered to Timeable",
+                            htmlMessageText);
 
                         return RedirectToAction("Index");
                     }

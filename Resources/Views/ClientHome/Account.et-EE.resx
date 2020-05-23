@@ -117,40 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back" xml:space="preserve">
-    <value>Back to main page</value>
+  <data name="ActivationMessage" xml:space="preserve">
+    <value>Palun kinnitage e-mail ja uuendage parool.</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>E-mail</value>
+  <data name="Back" xml:space="preserve">
+    <value>Tagasi peavaatesse</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Sisestage enda e-maili</value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
-    <value>Forgot password</value>
+    <value>Unustasid parooli?</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
+  <data name="PassResetEmailSent" xml:space="preserve">
+    <value>Palun kontrollige enda e-maili parooli muutmiseks.</value>
   </data>
-  <data name="LogIntoTimeable" xml:space="preserve">
-    <value>Log into Timeable</value>
+  <data name="Reset" xml:space="preserve">
+    <value>Muuda</value>
   </data>
-  <data name="NoActiveScreen" xml:space="preserve">
-    <value>No active screen found! Please activate screen in settings.</value>
-  </data>
-  <data name="Or" xml:space="preserve">
-    <value>OR</value>
-  </data>
-  <data name="PassChanged" xml:space="preserve">
-    <value>Password changed successfully!</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="ShowScreen" xml:space="preserve">
-    <value>Show screen</value>
-  </data>
-  <data name="ShowUserNotActive" xml:space="preserve">
-    <value>User not activated, please check your email for a letter!</value>
-  </data>
-  <data name="UserActivated" xml:space="preserve">
-    <value>User activated successfully!</value>
+  <data name="ResetPass" xml:space="preserve">
+    <value>Muuda parool</value>
   </data>
 </root>

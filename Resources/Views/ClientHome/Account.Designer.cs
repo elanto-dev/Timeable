@@ -22,14 +22,14 @@ namespace Resources.Views.ClientHome {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Index {
+    public class Account {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Index() {
+        internal Account() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources.Views.ClientHome {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.Views.ClientHome.Index", typeof(Index).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.Views.ClientHome.Account", typeof(Account).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,16 @@ namespace Resources.Views.ClientHome {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to main page.
+        ///   Looks up a localized string similar to Please verify your email and create a password!.
+        /// </summary>
+        public static string ActivationMessage {
+            get {
+                return ResourceManager.GetString("ActivationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to login.
         /// </summary>
         public static string Back {
             get {
@@ -70,16 +79,16 @@ namespace Resources.Views.ClientHome {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E-mail.
+        ///   Looks up a localized string similar to Enter your e-mail.
         /// </summary>
-        public static string Email {
+        public static string EnterEmail {
             get {
-                return ResourceManager.GetString("Email", resourceCulture);
+                return ResourceManager.GetString("EnterEmail", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forgot password.
+        ///   Looks up a localized string similar to Forgot password?.
         /// </summary>
         public static string ForgotPassword {
             get {
@@ -88,83 +97,29 @@ namespace Resources.Views.ClientHome {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login.
+        ///   Looks up a localized string similar to Please check your email to reset your password..
         /// </summary>
-        public static string Login {
+        public static string PassResetEmailSent {
             get {
-                return ResourceManager.GetString("Login", resourceCulture);
+                return ResourceManager.GetString("PassResetEmailSent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log into Timeable.
+        ///   Looks up a localized string similar to Reset.
         /// </summary>
-        public static string LogIntoTimeable {
+        public static string Reset {
             get {
-                return ResourceManager.GetString("LogIntoTimeable", resourceCulture);
+                return ResourceManager.GetString("Reset", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No active screen found! Please activate screen in settings..
+        ///   Looks up a localized string similar to Reset your password..
         /// </summary>
-        public static string NoActiveScreen {
+        public static string ResetPass {
             get {
-                return ResourceManager.GetString("NoActiveScreen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OR.
-        /// </summary>
-        public static string Or {
-            get {
-                return ResourceManager.GetString("Or", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password changed successfully!.
-        /// </summary>
-        public static string PassChanged {
-            get {
-                return ResourceManager.GetString("PassChanged", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password.
-        /// </summary>
-        public static string Password {
-            get {
-                return ResourceManager.GetString("Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show screen.
-        /// </summary>
-        public static string ShowScreen {
-            get {
-                return ResourceManager.GetString("ShowScreen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User not activated, please check your email for a letter!.
-        /// </summary>
-        public static string ShowUserNotActive {
-            get {
-                return ResourceManager.GetString("ShowUserNotActive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User activated successfully!.
-        /// </summary>
-        public static string UserActivated {
-            get {
-                return ResourceManager.GetString("UserActivated", resourceCulture);
+                return ResourceManager.GetString("ResetPass", resourceCulture);
             }
         }
     }

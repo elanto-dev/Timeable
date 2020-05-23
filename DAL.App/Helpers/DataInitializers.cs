@@ -11,7 +11,7 @@ namespace DAL.App.Helpers
 {
     public class DataInitializers
     {
-        private const string UserName = "johndoe@gmail.ee";
+        private const string UserName = "johndoe@gmail.com";
         private const string Password = "XSy3Vfwd9dWQrLFrz8yQ6e8gX7Kqzbr6";
         private const string FirstName = "John";
         private const string LastName = "Doe";
@@ -34,10 +34,8 @@ namespace DAL.App.Helpers
                 var role = roleManager.FindByNameAsync(roleName).Result;
                 if (role == null)
                 {
-                    role = new AppRole();
-                    role.Name = roleName;
-                    role.CreatedAt = DateTime.Now;
-                    role.CreatedBy = null;
+                    role = new AppRole {Name = roleName, CreatedAt = DateTime.Now, CreatedBy = null};
+
                     var result = roleManager.CreateAsync(role).Result;
                     if (!result.Succeeded)
                     {
@@ -50,15 +48,27 @@ namespace DAL.App.Helpers
             var user = userManager.FindByNameAsync(UserName).Result;
             if (user == null)
             {
-                user = new AppUser { UserName = UserName, Email = UserName };
-                user.FirstName = FirstName;
-                user.LastName = LastName;
-                user.CreatedAt = DateTime.Now;
-                user.Activated = false;
+                user = new AppUser
+                {
+                    UserName = UserName,
+                    Email = UserName,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    CreatedAt = DateTime.Now
+                };
                 var userResult = userManager.CreateAsync(user, Password).Result;
                 if (!userResult.Succeeded)
                 {
                     throw new ApplicationException("User creation failed!");
+
+                }
+
+                // Default user creation doesn't need email confirmation!
+                var activationCode = userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+                var confirmEmail = userManager.ConfirmEmailAsync(user, activationCode).Result;
+                if (!confirmEmail.Succeeded)
+                {
+                    throw new ApplicationException("User activation failed!");
 
                 }
 

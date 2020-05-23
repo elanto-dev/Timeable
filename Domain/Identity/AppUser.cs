@@ -19,8 +19,6 @@ namespace Domain.Identity
         [MinLength(1), MaxLength(100)]
         public string LastName { get; set; } = default!;
 
-        public bool Activated { get; set; }
-
         public ICollection<AppUsersScreen>? AppUsersScreens { get; set; }
     }
 }

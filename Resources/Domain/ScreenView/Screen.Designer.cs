@@ -259,6 +259,15 @@ namespace Resources.Domain.ScreenView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Screen not assigned to you! Contact the head administrator.
+        /// </summary>
+        public static string ScreenNotAssigned {
+            get {
+                return ResourceManager.GetString("ScreenNotAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Schedule search prefix.
         /// </summary>
         public static string SearchPrefix {

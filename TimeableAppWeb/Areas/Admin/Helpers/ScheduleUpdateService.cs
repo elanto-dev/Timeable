@@ -31,49 +31,57 @@ namespace TimeableAppWeb.Areas.Admin.Helpers
             {
                 foreach (var subjectInSchedule in subjects)
                 {
+                    int subjectInScheduleId;
                     var subjectInScheduleThatAlreadyExists =
                         await bll.SubjectInSchedules.FindByUniqueIdentifierAsync(subjectInSchedule.UniqueIdentifier);
+
                     if (subjectInScheduleThatAlreadyExists != null)
                     {
                         subjectInScheduleThatAlreadyExists.ScheduleId = scheduleIdAfterSaveChanges;
                         bll.SubjectInSchedules.Update(subjectInScheduleThatAlreadyExists);
                         await bll.SaveChangesAsync();
-                        continue;
-                    }
-
-                    var bllSubjectInSchedule = new SubjectInSchedule
-                    {
-                        CreatedAt = DateTime.Now,
-                        CreatedBy = userId,
-                        Rooms = subjectInSchedule.Rooms,
-                        Groups = subjectInSchedule.Groups,
-                        UniqueIdentifier = subjectInSchedule.UniqueIdentifier,
-                        StartDateTime = subjectInSchedule.StartDateTime,
-                        EndDateTime = subjectInSchedule.EndDateTime,
-                        SubjectType = subjectInSchedule.SubjectType,
-                        ScheduleId = scheduleIdAfterSaveChanges
-                    };
-
-                    var subject = await bll.Subjects
-                        .FindBySubjectNameAndCodeAsync(subjectInSchedule.Subject.SubjectName,
-                            subjectInSchedule.Subject.SubjectCode);
-                    if (subject != null)
-                    {
-                        bllSubjectInSchedule.SubjectId = subject.Id;
-                        bllSubjectInSchedule.Subject = null;
+                        subjectInScheduleId = subjectInScheduleThatAlreadyExists.Id;
                     }
                     else
                     {
-                        var bllSubject = new Subject
+                        var bllSubjectInSchedule = new SubjectInSchedule
                         {
                             CreatedAt = DateTime.Now,
                             CreatedBy = userId,
-                            SubjectCode = subjectInSchedule.Subject.SubjectCode,
-                            SubjectName = subjectInSchedule.Subject.SubjectName
+                            Rooms = subjectInSchedule.Rooms,
+                            Groups = subjectInSchedule.Groups,
+                            UniqueIdentifier = subjectInSchedule.UniqueIdentifier,
+                            StartDateTime = subjectInSchedule.StartDateTime,
+                            EndDateTime = subjectInSchedule.EndDateTime,
+                            SubjectType = subjectInSchedule.SubjectType,
+                            ScheduleId = scheduleIdAfterSaveChanges
                         };
-                        var subjectGuid = await bll.Subjects.AddAsync(bllSubject);
+
+                        var subject = await bll.Subjects
+                            .FindBySubjectNameAndCodeAsync(subjectInSchedule.Subject.SubjectName,
+                                subjectInSchedule.Subject.SubjectCode);
+                        if (subject != null)
+                        {
+                            bllSubjectInSchedule.SubjectId = subject.Id;
+                            bllSubjectInSchedule.Subject = null;
+                        }
+                        else
+                        {
+                            var bllSubject = new Subject
+                            {
+                                CreatedAt = DateTime.Now,
+                                CreatedBy = userId,
+                                SubjectCode = subjectInSchedule.Subject.SubjectCode,
+                                SubjectName = subjectInSchedule.Subject.SubjectName
+                            };
+                            var subjectGuid = await bll.Subjects.AddAsync(bllSubject);
+                            await bll.SaveChangesAsync();
+                            bllSubjectInSchedule.SubjectId = bll.Subjects.GetUpdatesAfterUowSaveChanges(subjectGuid).Id;
+                        }
+                        var subjInScheduleGuid = await bll.SubjectInSchedules.AddAsync(bllSubjectInSchedule);
                         await bll.SaveChangesAsync();
-                        bllSubjectInSchedule.SubjectId = bll.Subjects.GetUpdatesAfterUowSaveChanges(subjectGuid).Id;
+                        subjectInScheduleId =
+                            bll.SubjectInSchedules.GetUpdatesAfterUowSaveChanges(subjInScheduleGuid).Id;
                     }
 
                     var teachers = new List<Teacher>();
@@ -106,10 +114,6 @@ namespace TimeableAppWeb.Areas.Admin.Helpers
                         }
                     }
 
-                    var subjInScheduleGuid = await bll.SubjectInSchedules.AddAsync(bllSubjectInSchedule);
-                    await bll.SaveChangesAsync();
-                    var subjectInScheduleAfterUpdate =
-                        bll.SubjectInSchedules.GetUpdatesAfterUowSaveChanges(subjInScheduleGuid);
                     foreach (var teacher in teachers)
                     {
                         bll.TeacherInSubjectEvents.Add(new TeacherInSubjectEvent
@@ -117,7 +121,7 @@ namespace TimeableAppWeb.Areas.Admin.Helpers
                             CreatedAt = DateTime.Now,
                             CreatedBy = userId,
                             TeacherId = teacher.Id,
-                            SubjectInScheduleId = subjectInScheduleAfterUpdate.Id
+                            SubjectInScheduleId = subjectInScheduleId
                         });
                     }
                     await bll.SaveChangesAsync();

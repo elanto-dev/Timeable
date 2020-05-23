@@ -168,6 +168,9 @@
   <data name="Save" xml:space="preserve">
     <value>Salvesta</value>
   </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
   <data name="Warning" xml:space="preserve">
     <value>Hoiatus</value>
   </data>

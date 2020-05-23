@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TimeableAppWeb.ViewModels;
 
 namespace TimeableAppWeb.Controllers
@@ -15,13 +14,13 @@ namespace TimeableAppWeb.Controllers
     public class HomeController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<AppUser> _userManager;
 
 
-        public HomeController(ILogger<HomeController> logger, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public HomeController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
-            _logger = logger;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
 
@@ -30,6 +29,9 @@ namespace TimeableAppWeb.Controllers
         public class InputModel
         {
             public bool NoActiveScreen { get; set; } 
+            public bool PasswordChanged { get; set; } 
+            public bool UserActivated { get; set; }
+            public bool ShowUserNotActive { get; set; }
             [Required]
             [EmailAddress]
             public string Email { get; set; } = default!;
@@ -39,11 +41,14 @@ namespace TimeableAppWeb.Controllers
             public string Password { get; set; } = default!;
         }
 
-        public IActionResult Index(bool noActiveScreen = false)
+        public IActionResult Index(bool noActiveScreen = false, bool passwordChanged = false, bool userActivated = false)
         {
             var inputModel = new InputModel
             {
-                NoActiveScreen = noActiveScreen
+                NoActiveScreen = noActiveScreen,
+                PasswordChanged = passwordChanged,
+                UserActivated = userActivated,
+                ShowUserNotActive = false
             };
 
             return View(inputModel);
@@ -58,28 +63,34 @@ namespace TimeableAppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(InputModel input)
         {
-
+            input.NoActiveScreen = false;
+            input.PasswordChanged = false;
+            input.UserActivated = false;
+            input.ShowUserNotActive = false;
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(input.Email);
+                if (user == null || !user.EmailConfirmed)
+                {
+                    input.ShowUserNotActive = true;
+                    return View(input);
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(input.Email, input.Password, false, false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
                     return RedirectToAction("Index", "Home", new { Area = "Admin" });
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                var im = new InputModel { NoActiveScreen = false };
-                return View(im);
+                input.Email = "";
+                input.Password = "";
+                return View(input);
             }
 
-            var inputModel = new InputModel {NoActiveScreen = false, Email = input.Email, Password = input.Password};
-
-
             // If we got this far, something failed, redisplay form
-            return View(inputModel);
+            return View(input);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

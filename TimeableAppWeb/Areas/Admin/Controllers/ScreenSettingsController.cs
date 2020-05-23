@@ -37,10 +37,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         public async Task<IActionResult> Index(bool showNoActiveScreenAlert = false)
         {
             var user = await _userManager.GetUserAsync(User);
-            if (!user.Activated)
-            {
-                return RedirectToAction("Activate", "Home");
-            }
 
             var vm = new ScreenIndexViewModel
             {
@@ -92,15 +88,14 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // GET: Admin/Screens/Create
         public async Task<IActionResult> Create()
         {
-            if ((await _bll.AppUsersScreens.GetScreenForUserAsync(_userManager.GetUserId(User))) != null)
+            if (await _bll.AppUsersScreens.GetScreenForUserAsync(_userManager.GetUserId(User)) != null)
             {
                 return RedirectToAction(nameof(Index));
             }
 
-            // TODO! Some workaround for this!!!!
             if (await _bll.Screens.GetFirstAndActiveScreenAsync() != null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(ScreenNotAssigned));
             }
 
             var screen = new Screen();
@@ -282,35 +277,19 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Edit));
         }
 
-        // GET: Admin/Screens/Delete/5
-        [Authorize(Roles = nameof(RoleNamesEnum.HeadAdmin) + "," + nameof(RoleNamesEnum.ScreenSettingsAdmin))]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> ScreenNotAssigned()
         {
-            if (id == null)
+            foreach (var iterationUser in _userManager.Users)
             {
-                return NotFound();
+                // Finds first user that is head admin!
+                if ((await _userManager.GetRolesAsync(iterationUser)).Any(r =>
+                    r.Equals(RoleNamesEnum.HeadAdmin.ToString())))
+                {
+                    return View(iterationUser);
+                }
             }
+            return NotFound("Head administrator not found!");
 
-            var screen = await _bll.Screens.FindAsync(id);
-
-            if (screen == null)
-            {
-                return NotFound();
-            }
-
-            return View(screen);
-        }
-
-        // POST: Admin/Screens/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = nameof(RoleNamesEnum.HeadAdmin) + "," + nameof(RoleNamesEnum.ScreenSettingsAdmin))]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var screen = await _bll.Screens.FindAsync(id);
-            _bll.Screens.Remove(screen);
-            await _bll.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool ScreenExists(int id)

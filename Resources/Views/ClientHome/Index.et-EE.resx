@@ -138,10 +138,19 @@
   <data name="Or" xml:space="preserve">
     <value>VÕI</value>
   </data>
+  <data name="PassChanged" xml:space="preserve">
+    <value>Parool edukalt muudetud!</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Parool</value>
   </data>
   <data name="ShowScreen" xml:space="preserve">
     <value>Näita ekraan</value>
+  </data>
+  <data name="ShowUserNotActive" xml:space="preserve">
+    <value>Kasutaja pole aktiveeritud, palun kontrollige e-maili postkasti!</value>
+  </data>
+  <data name="UserActivated" xml:space="preserve">
+    <value>Kasutaja aktiveeritud!</value>
   </data>
 </root>
