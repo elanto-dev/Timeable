@@ -38,9 +38,8 @@ AppDataInitialization object's parameters:
 
 Initially roles and user are created with SeedIdentity method in DAL.App.Helpers.DataInitializers class. Names of user roles and credentials used for initial user are specified there. Initial user gets the HeadAdmin role.
 
-> Functionality missing:
-> - EmailSender - sends the email when user is registered by head administrator and when he forgets password.
-> - Timetable scroll when there is too many subjects.
-> - BUG: When event and subject is being modified - wrong data appears to the calendar view.
+#### E-mail sender
+
+Email sender function was to restore forgotten password and to notify user if he has been registered and needs to verify his account. E-mail uses SMTP client which can be configured in *appsettings.json* file. 
 
 **If any other bug was found, please contact Elina Antonova: jelisa106@gmail.com** 
