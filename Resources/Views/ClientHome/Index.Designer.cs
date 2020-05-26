@@ -88,6 +88,15 @@ namespace Resources.Views.ClientHome {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid login attempt..
+        /// </summary>
+        public static string InvalidLogin {
+            get {
+                return ResourceManager.GetString("InvalidLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {

@@ -103,7 +103,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 }
                 else
                 {
-                    if (file.Length > 4194304)
+                    if (file.Length > 20971520)
                     {
                         ModelState.AddModelError(string.Empty, Resources.Domain.PictureView.Picture.FileTooBigError);
                     }

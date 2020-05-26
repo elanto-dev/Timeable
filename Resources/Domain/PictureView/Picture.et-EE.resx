@@ -136,7 +136,7 @@
     <value>Fail pole lisatud!</value>
   </data>
   <data name="FileTooBigError" xml:space="preserve">
-    <value>Fail on liiga suur! Maksimum on 4 MB.</value>
+    <value>Fail on liiga suur! Maksimum on 20 MB.</value>
   </data>
   <data name="Path" xml:space="preserve">
     <value>Pildi URL</value>

@@ -101,7 +101,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 _bll.Events.Remove(id);
             }
             await _bll.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Roles = nameof(RoleNamesEnum.HeadAdmin) + "," + nameof(RoleNamesEnum.ScheduleSettingsAdmin))]
@@ -113,7 +113,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                 await ScheduleUpdateService.GetAndSaveScheduleForScreen(_bll, _userManager.GetUserId(User),
                     scheduleInScreen.Screen);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

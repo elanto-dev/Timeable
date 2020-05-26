@@ -126,6 +126,9 @@
   <data name="ForgotPassword" xml:space="preserve">
     <value>Unustasin parooli</value>
   </data>
+  <data name="InvalidLogin" xml:space="preserve">
+    <value>Kehtetu sisselogimiskatse.</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Logi sisse</value>
   </data>

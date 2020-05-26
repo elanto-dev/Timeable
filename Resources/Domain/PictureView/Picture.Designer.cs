@@ -115,7 +115,7 @@ namespace Resources.Domain.PictureView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File is too big! Maximum is 4 MB..
+        ///   Looks up a localized string similar to File is too big! Maximum is 20 MB..
         /// </summary>
         public static string FileTooBigError {
             get {

@@ -136,7 +136,7 @@
     <value>File is missing!</value>
   </data>
   <data name="FileTooBigError" xml:space="preserve">
-    <value>File is too big! Maximum is 4 MB.</value>
+    <value>File is too big! Maximum is 20 MB.</value>
   </data>
   <data name="Path" xml:space="preserve">
     <value>Picture URL</value>

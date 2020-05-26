@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Domain.Identity;
@@ -23,27 +22,17 @@ namespace TimeableAppWeb.Controllers
             _userManager = userManager;
         }
 
-
-        [BindProperty] public InputModel Input { get; set; } = default!;
-
-        public class InputModel
-        {
-            public bool NoActiveScreen { get; set; } 
-            public bool PasswordChanged { get; set; } 
-            public bool UserActivated { get; set; }
-            public bool ShowUserNotActive { get; set; }
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; } = default!;
-
-            [Required]
-            [DataType(DataType.Password)]
-            public string Password { get; set; } = default!;
-        }
-
         public IActionResult Index(bool noActiveScreen = false, bool passwordChanged = false, bool userActivated = false)
         {
-            var inputModel = new InputModel
+            if (User != null)
+            {
+                if (_signInManager.IsSignedIn(User))
+                {
+                    return RedirectToAction("Index", "Home", new {Area = "Admin"});
+                }
+            }
+
+            var inputModel = new HomeInputViewModel
             {
                 NoActiveScreen = noActiveScreen,
                 PasswordChanged = passwordChanged,
@@ -61,7 +50,7 @@ namespace TimeableAppWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(InputModel input)
+        public async Task<IActionResult> Index(HomeInputViewModel input)
         {
             input.NoActiveScreen = false;
             input.PasswordChanged = false;
@@ -83,7 +72,7 @@ namespace TimeableAppWeb.Controllers
                     return RedirectToAction("Index", "Home", new { Area = "Admin" });
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, Resources.Views.ClientHome.Index.InvalidLogin);
                 input.Email = "";
                 input.Password = "";
                 return View(input);

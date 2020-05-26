@@ -47,7 +47,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             var screen = userScreen?.Screen;
 
             if (screen == null)
-                return RedirectToAction("Create");
+                return RedirectToAction(nameof(Create));
 
             var scheduleForScreen =
                 await _bll.ScheduleInScreens.FindForScreenForDateWithoutIncludesAsync(screen.Id, screen.Prefix, DateTime.Today);
@@ -235,6 +235,17 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                         vm.ShowPromotionSecondsStringDictionary[pictureInScreen.Id]);
                 }
             }
+            else
+            {
+                var promotions = (await _bll.PictureInScreens.GetAllPromotionsForScreenAsync(id)).ToList();
+                await _bll.SaveChangesAsync();
+
+                foreach (var promotion in promotions)
+                {
+                    promotion.ShowAddSeconds = SecondsValueManager.GetSelectedValue(0, false);
+                    _bll.PictureInScreens.Update(promotion);
+                }
+            }
 
             // Before model validation set values to the following parameters to pass model validation.
             vm.ShowPromotionSecondsStringDictionary ??= new Dictionary<int, string>();
@@ -310,7 +321,8 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
 
             var picturesWithSamePath = await _bll.Pictures.FindPicturesByPathAsync(bgPicture.Path);
 
-            if (picturesWithSamePath == null || !picturesWithSamePath.Any() || (picturesWithSamePath.Count() == 1 && picturesWithSamePath.First().Id == bgPicture.Id))
+            if (picturesWithSamePath == null || !picturesWithSamePath.Any() || 
+                (picturesWithSamePath.Count() == 1 && picturesWithSamePath.First().Id == bgPicture.Id))
             {
                 var path = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot",
                     Path.Combine(bgPicture.Path.Split("/")));
@@ -333,7 +345,8 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         {
             var promotionInScreen = await _bll.PictureInScreens.FindAsync(promotionId);
             var picturesWithSamePath = await _bll.Pictures.FindPicturesByPathAsync(promotionInScreen.Picture.Path);
-            if (picturesWithSamePath == null || !picturesWithSamePath.Any() || (picturesWithSamePath.Count() == 1 && picturesWithSamePath.First().Id == promotionId))
+            if (picturesWithSamePath == null || !picturesWithSamePath.Any() || 
+                (picturesWithSamePath.Count() == 1 && picturesWithSamePath.First().Id == promotionInScreen.PictureId))
             {
                 var path = Path.Combine(_appEnvironment.ContentRootPath, "wwwroot", 
                     Path.Combine(promotionInScreen.Picture.Path.Split("/")));

@@ -41,9 +41,9 @@
             </div>
         </div>
         <div style="height: 1vh;"></div>
-        <div class="card" style="height: 90vh; width: 96vw; overflow-y: hidden">
+        <div class="card table-responsive" style="height: 90vh; width: 96vw; overflow-y: hidden">
             <table class="table table-sm blue-text" id="content-table">
-                <tbody>
+                <tbody id="table-body">
                     @foreach (var item in Model.Events)
                     {
                         <tr class="event-bg">
@@ -162,12 +162,15 @@
     var weekSizeStyle = 2;
     var weekPosition;
     var heighToAddToDateTime;
+    var tableElement = $(".table-responsive");
 
 
     window.onload = function () {
         setWeekNumberContent(true);
         startTime(true);
-        if ('@Model.Promotions.Count' > 0) {
+        animateTableScroll();
+        // If show shedule is 0 - then string value is "Always"
+        if ('@Model.Promotions.Count' > 0 && @Model.ShowScheduleSeconds != 0) {
             changePromotions(true);
         }
         reloadWhenTimeElapses();
@@ -296,7 +299,7 @@
 
     function changePromotions(firstTime) {
         const currentTime = new Date();
-        if (currentPromotionCount > 0) { // This is promotion
+        if (currentPromotionCount > 0) { // There is promotion
             const id = `#promo-${currentPromotionCount}`;
             if (!firstTime) {
                 if (currentTime > nextUpdate) {
@@ -309,6 +312,7 @@
                         startTime(true);
                         setWeekNumberContent(true);
                         nextUpdate = currentTime.setTime(currentTime.getTime() + ('@Model.ShowScheduleSeconds' * 1000));
+                        currentPromotionCount = 0;
                     } else {
                         $(id).css('display', 'block');
                         nextUpdate = currentTime.setTime(currentTime.getTime() + ($(`#show-promo-${currentPromotionCount}-seconds`).val() * 1000));
@@ -325,7 +329,7 @@
             }
         } else { // This is schedule
             if (currentTime > nextUpdate) {
-                $('.promotion').each(function () {
+                $('.promotion').each(function() {
                     $(this).css('display', 'none');
                 });
                 $('#bg-image-wrap').css('display', 'none');
@@ -336,7 +340,18 @@
                 nextUpdate = currentTime.setTime(currentTime.getTime() + (firstPromo * 1000));
             }
         }
-        setTimeout(function () { changePromotions(false) }, 500);
+        setTimeout(function() { changePromotions(false) }, 500);
     }
+
+    function animateTableScroll() {
+        const st = tableElement.scrollTop();
+        const sb = tableElement.prop("scrollHeight") - tableElement.innerHeight();
+        tableElement.animate({ scrollTop: st < sb / 2 ? sb : 0 }, 6000, waitAndAnimate);
+    }
+
+    function waitAndAnimate() {
+        setTimeout(function () { animateTableScroll() }, 3000);
+    }
+
 </script>
 

@@ -10,6 +10,6 @@ namespace TimeableAppWeb.ViewModels
         public List<PromotionsForTimetable> Promotions { get; set; } = default!;
         public Picture? BackgroundPicture { get; set; }
         public int WeekNumber { get; set; } = default!;
-        public int? ShowScheduleSeconds { get; set; }
+        public int ShowScheduleSeconds { get; set; }
     }
 }

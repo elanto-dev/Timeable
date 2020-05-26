@@ -151,7 +151,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                             "You have been registered to Timeable",
                             htmlMessageText);
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction(nameof(Index));
                     }
 
                     foreach (var error in errorList)
@@ -188,7 +188,7 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
             // Disable head admin editing!
             if (roles.Contains(nameof(RoleNamesEnum.HeadAdmin)))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             var vm = new AppUserEditViewModel
@@ -232,6 +232,8 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
                             ? await AddUserToRoleAsync(user, nameof(RoleNamesEnum.EventSettingsAdmin))
                             : await RemoveUserFromRoleAsync(user, nameof(RoleNamesEnum.EventSettingsAdmin))
                     };
+
+                    var roles = await _userManager.GetRolesAsync(user);
                     if (errorList.TrueForAll(e => e == null))
                     {
                         return RedirectToAction(nameof(Index));

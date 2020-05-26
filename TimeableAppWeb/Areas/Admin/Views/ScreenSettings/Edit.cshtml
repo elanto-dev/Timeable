@@ -15,7 +15,7 @@
     <input type="hidden" asp-for="ScreenOldPrefix" />
     <div  id="save-alert" class="row" style="display: none;padding: 0">
         <div class="alert alert-success" role="alert">
-            Information was saved! Please wait until timetable is updated!
+            @Resources.Domain.ScreenView.Screen.ScheduleUpdateMessage
         </div>
     </div>
     <div class="form-group row">
@@ -68,7 +68,7 @@
     </div>
     <div class="form-group row" style="margin-top: 20px">
         <input type="submit" value="@Resources.Views.Common.Save" class="btn light-blue-button" id="save-button"/>
-        <button id="loading-button" class="btn light-blue-button disabled" style="display: none">
+        <button id="loading-button" class="btn light-blue-button disabled" style="display: none" style="margin-left: 20px">
             <span class="spinner-border spinner-border-sm" role="status"></span>
             @Resources.Domain.ScreenView.Screen.Loading
         </button>
@@ -97,10 +97,12 @@
             $('.schedule-dropdown').each(function () {
                 $(this).prop("disabled", true);
             });
-            for (var i = 0; i < $('.promotion-dropdown').length; i++) {
-                $('#dropdown-' + i).prop("disabled", true);
-            }
+            $('.promotion-dropdown').each(function () {
+                $(this).val('Never');
+                $(this).prop("disabled", true);
+            });
         }
+
     });
     // "Always show" checkbox is clicked
     $('#show-always-checkbox').on('click',
@@ -137,7 +139,9 @@
                     $(this).prop("disabled", false);
                 });
                 $('#save-button').css('display', 'none');
+                $('#back-to-screen-btn').css('display', 'none');
                 $('#save-alert').css('display', "inline");
+                $('#loading-button').css('display', "inline");
                 $('#refreshingModal').modal('show');
             }
         });
