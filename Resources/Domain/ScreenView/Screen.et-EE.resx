@@ -148,7 +148,7 @@
     <value>Kas olete kindel, et soovite kustutada selle reklaami?</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
-    <value>Inaktiveeri</value>
+    <value>Deaktiveeri</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>On aktiivne</value>

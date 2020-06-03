@@ -151,7 +151,7 @@ namespace Resources.Domain.ScreenView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inactivate.
+        ///   Looks up a localized string similar to Deactivate.
         /// </summary>
         public static string Inactivate {
             get {

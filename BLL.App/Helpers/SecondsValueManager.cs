@@ -9,6 +9,7 @@ namespace BLL.App.Helpers
 
         private static readonly Dictionary<string, int?> SecondsValuesDictionary = new Dictionary<string, int?>
         {
+            { "0 seconds", 0 },
             { "5 seconds", 5 },
             { "10 seconds", 10},
             { "15 seconds", 15},

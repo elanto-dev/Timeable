@@ -46,7 +46,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SubjectInScheduleCreateEditViewModel vm)
         {
             if (vm.ScheduleId == null)
@@ -192,7 +191,6 @@ namespace TimeableAppWeb.Areas.Admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, SubjectInScheduleCreateEditViewModel vm)
         {
             if (id != vm.SubjectInSchedule.Id)

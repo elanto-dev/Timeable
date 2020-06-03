@@ -169,9 +169,17 @@
         setWeekNumberContent(true);
         startTime(true);
         animateTableScroll();
-        // If show shedule is 0 - then string value is "Always"
-        if ('@Model.Promotions.Count' > 0 && @Model.ShowScheduleSeconds != 0) {
-            changePromotions(true);
+        // If show shedule is null - then string value is "Always"
+        if ('@Model.Promotions.Count' > 0 && '@Model.ShowScheduleSeconds' != '' && '@Model.ShowScheduleSeconds' != 0) {
+            changePromotionsAndSchedule(true);
+        } else if ('@Model.Promotions.Count' > 1 && '@Model.ShowScheduleSeconds' == 0) {
+            switchOnlyPromotions(true);
+        } else if ('@Model.Promotions.Count' == 1 && '@Model.ShowScheduleSeconds' == 0) {
+            $('.promotion').each(function () {
+                $(this).css('display', 'none');
+            });
+            $('#bg-image-wrap').css('display', 'none');
+            $('#promo-0').css('display', 'block');
         }
         reloadWhenTimeElapses();
         $('#content-table > tbody  > tr').each(function() {
@@ -297,7 +305,7 @@
         return i;
     }
 
-    function changePromotions(firstTime) {
+    function changePromotionsAndSchedule(firstTime) {
         const currentTime = new Date();
         if (currentPromotionCount > 0) { // There is promotion
             const id = `#promo-${currentPromotionCount}`;
@@ -340,7 +348,42 @@
                 nextUpdate = currentTime.setTime(currentTime.getTime() + (firstPromo * 1000));
             }
         }
-        setTimeout(function() { changePromotions(false) }, 500);
+        setTimeout(function () { changePromotionsAndSchedule(false) }, 500);
+    }
+
+    function switchOnlyPromotions(firstTime) {
+        const currentTime = new Date();
+        if (firstTime) {
+            $('.promotion').each(function() {
+                $(this).css('display', 'none');
+            });
+            $('#bg-image-wrap').css('display', 'none');
+            $('#promo-0').css('display', 'block');
+            currentPromotionCount = 1;
+            lastUpdated = new Date();
+            const firstPromo = $("#show-promo-0-seconds").val();
+            nextUpdate = currentTime.setTime(currentTime.getTime() + (firstPromo * 1000));
+        } else {
+            if (currentTime > nextUpdate) {
+                $('.promotion').each(function() {
+                    $(this).css('display', 'none');
+                });
+                $('#bg-image-wrap').css('display', 'none');
+                if (currentPromotionCount == '@Model.Promotions.Count') {
+                    $('#promo-0').css('display', 'block');
+                    lastUpdated = new Date();
+                    const firstPromo = $("#show-promo-0-seconds").val();
+                    nextUpdate = currentTime.setTime(currentTime.getTime() + (firstPromo * 1000));
+                    currentPromotionCount = 1;
+                } else {
+                    $(`#promo-${currentPromotionCount}`).css('display', 'block');
+                    nextUpdate = currentTime.setTime(currentTime.getTime() + ($(`#show-promo-${currentPromotionCount}-seconds`).val() * 1000));
+                    currentPromotionCount++;
+                }
+                lastUpdated = new Date();
+            }
+        }
+        setTimeout(function () { switchOnlyPromotions(false) }, 500);
     }
 
     function animateTableScroll() {

@@ -44,7 +44,7 @@ namespace TimeableAppWeb.Controllers
                 Events = new List<EventForTimetable>(),
                 Promotions = new List<PromotionsForTimetable>(),
                 BackgroundPicture = (await _bll.PictureInScreens.GetBackgroundPictureForScreen(screen.Id))?.Picture,
-                ShowScheduleSeconds = SecondsValueManager.GetIntValue(screen.ShowScheduleSeconds) ?? 0,
+                ShowScheduleSeconds = SecondsValueManager.GetIntValue(screen.ShowScheduleSeconds),
                 WeekNumber = 0
             };
 

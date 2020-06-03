@@ -148,7 +148,7 @@
     <value>Are you sure you want to delete this promotion?</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
-    <value>Inactivate</value>
+    <value>Deactivate</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>Is active</value>
