@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HTMLParser.DTO;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace HTMLParser.Services
 {
@@ -41,11 +42,15 @@ namespace HTMLParser.Services
 
             foreach (var url in (await timePlanSourceService.GetTimeTablesUrlsDictionary()).Values)
             {
+                Console.WriteLine($"Downloading data from: {url}");
+
                 var plan = await GetTimePlanFromUrl(url);
                 result.AddRange(plan);
             }
 
-            return result.GroupBy(x => x.EventIdentifier, (k, g) => g.First()).OrderBy(x => x.StartDateTime);
+            var res =
+                result.GroupBy(x => x.EventIdentifier, (k, g) => g.First()).OrderBy(x => x.StartDateTime);
+            return res;
         }
 
         /// <summary>
@@ -56,10 +61,12 @@ namespace HTMLParser.Services
         private async Task<IEnumerable<TimePlanEvent>> GetTimePlanFromUrl(string url)
         {
             var dataStringTask = await _httpClient.GetStringAsync(url);
+            Console.WriteLine($"Got data {dataStringTask.Length}");
+
             var regex = new Regex(
                 "BEGIN\\:VEVENT.*DTSTART;([^\\n]*)\\n.*DTEND;([^\\n]*)\\n.*SUMMARY\\:([^\\n]*).*DESCRIPTION\\:([^\\n]*).*LOCATION\\:([^\\n]*)",
                 RegexOptions.Singleline);
-            return (dataStringTask)
+            var res = (dataStringTask)
                 .Split("END:VEVENT")
                 .Select(x => regex.Matches(x).FirstOrDefault())
                 .Where(x => x != null)
@@ -77,12 +84,21 @@ namespace HTMLParser.Services
                         ?.Replace("kommentaar:", "")
                         .Trim();
                     var locationsString = x.Groups[5].Value
+                        .Replace("ruumid: ", "");
+                    locationsString = locationsString
                         .Replace("ruumid:", "");
+
                     if (comment != null)
                     {
                         locationsString = locationsString
                             .Replace(subjectData.First(d => d.StartsWith("kommentaar:")), "");
                     }
+
+                    var subjectCode = subjectNames[0];
+                    var subjectNameComponents = subjectNames.ToList();
+                    subjectNameComponents.RemoveAt(0);git add .
+                    var subjectName = subjectNameComponents.Join("-");
+
                     return new TimePlanEvent
                     {
                         StartDateTime = DateTime.ParseExact(x.Groups[1].Value.Split(':').Last().TrimEnd(),
@@ -90,16 +106,16 @@ namespace HTMLParser.Services
                         EndDateTime = DateTime.ParseExact(x.Groups[2].Value.Split(':').Last().TrimEnd(),
                             "yyyyMMddTHHmmss", CultureInfo.InvariantCulture),
                         SubjectEventType = subject.Last(),
-                        SubjectCode = subjectNames[0],
-                        SubjectName = subjectNames[1],
+                        SubjectCode = subjectCode,
+                        SubjectName = subjectName,
                         Groups = subjectData.FirstOrDefault(d => d
-                            .StartsWith("rühmad:"))?
+                                .StartsWith("rühmad:"))?
                             .Replace("rühmad:", "")
                             .Split("\\,", StringSplitOptions.RemoveEmptyEntries)
                             .Select(e => e.Trim())
                             .ToList() ?? new List<string>(),
                         LecturersWithRoles = subjectData.FirstOrDefault(d => d
-                            .StartsWith("õppejõud:"))?
+                                .StartsWith("õppejõud:"))?
                             .Replace("õppejõud:", "")
                             .Split("\\,", StringSplitOptions.RemoveEmptyEntries)
                             .Select(e => e.Trim())
@@ -110,7 +126,12 @@ namespace HTMLParser.Services
                             .Select(e => e.Trim())
                             .ToList()
                     };
-                }).Where(x => x.StartDateTime >= _startDateTime && x.StartDateTime < _endDateTime && x.Locations.Any(l => l.ToUpper().Contains(_prefix.ToUpper())));
+                }).AsQueryable();
+                res = res.Where(x =>
+                    x.StartDateTime >= _startDateTime && x.StartDateTime < _endDateTime &&
+                    x.Locations.Any(l => l.ToUpper().Contains(_prefix.ToUpper())));
+
+            return res;
         }
 
         public void Dispose()
