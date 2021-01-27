@@ -14,10 +14,9 @@ namespace DAL.App.Repositories
         {
         }
 
-        public async Task<AppUsersScreen> GetScreenForUserAsync(string userId)
+        public async Task<AppUsersScreen?> GetScreenForUserAsync(string userId)
         {
-            Guid userGuid;
-            if (!Guid.TryParse(userId, out userGuid))
+            if (!Guid.TryParse(userId, out var userGuid))
             {
                 return null;
             }

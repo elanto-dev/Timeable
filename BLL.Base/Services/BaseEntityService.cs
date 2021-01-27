@@ -15,7 +15,7 @@ namespace BLL.Base.Services
     where TUnitOfWork : IBaseUnitOfWork
     {
         protected readonly TUnitOfWork Uow;
-        protected IBaseRepository<TDalEntity> ServiceRepository;
+        protected IBaseRepository<TDalEntity> ServiceRepository = default!;
         private readonly IBLLMapperBase _mapper;
 
         protected BaseEntityService(TUnitOfWork uow, IBLLMapperBase mapper)
@@ -50,7 +50,7 @@ namespace BLL.Base.Services
             return (await ServiceRepository.AllAsync()).Select(e => _mapper.Map<TBllEntity>(e)).ToList();
         }
 
-        public virtual async Task<TBllEntity> FindAsync(params object[] id)
+        public virtual async Task<TBllEntity?> FindAsync(params object[] id)
         {
             return _mapper.Map<TBllEntity>(await ServiceRepository.FindAsync(id));
         }

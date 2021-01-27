@@ -14,7 +14,7 @@ namespace DAL.App.Repositories
             repositoryDbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public override async Task<Screen> FindAsync(params object[] id)
+        public override async Task<Screen?> FindAsync(params object[] id)
         {
             if (!(id[0] is int))
             {

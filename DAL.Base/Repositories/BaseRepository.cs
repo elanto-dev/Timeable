@@ -77,7 +77,7 @@ namespace DAL.Base.Repositories
                 .Select(e => _mapper.Map<TDalEntity>(e));
         }
 
-        public virtual async Task<TDalEntity> FindAsync(params object[] id)
+        public virtual async Task<TDalEntity?> FindAsync(params object[] id)
         {
             return _mapper.Map<TDalEntity>(await RepositoryDbSet.FindAsync(id));
         }

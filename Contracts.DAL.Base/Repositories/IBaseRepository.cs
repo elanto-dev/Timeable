@@ -10,7 +10,7 @@ namespace Contracts.DAL.Base.Repositories
         IEnumerable<TDalEntity> All();
         Task<IEnumerable<TDalEntity>> AllAsync();
         TDalEntity Find(params object[] id);
-        Task<TDalEntity> FindAsync(params object[] id);
+        Task<TDalEntity?> FindAsync(params object[] id);
         Guid Add(TDalEntity entity);
         Task<Guid> AddAsync(TDalEntity entity);
         TDalEntity Update(TDalEntity entity);

@@ -96,7 +96,7 @@ namespace HTMLParser.Services
 
                     var subjectCode = subjectNames[0];
                     var subjectNameComponents = subjectNames.ToList();
-                    subjectNameComponents.RemoveAt(0);git add .
+                    subjectNameComponents.RemoveAt(0);
                     var subjectName = subjectNameComponents.Join("-");
 
                     return new TimePlanEvent

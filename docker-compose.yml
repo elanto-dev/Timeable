@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    volumes:
+      - mssql-volume:/var/opt/mssql
+    restart: on-failure
+    environment:
+      TZ: "Europe/Tallinn"
+      ACCEPT_EULA: "Y"
+      # regular sql server
+      SA_PASSWORD: "Bad.Pass.1"
+      # sql edge
+      MSSQL_SA_PASSWORD: "Bad.Pass.1"
+      MSSQL_PID: Developer
+    ports:
+      # this maps external:internal, but the docker created network between images is connected directly - using the original ports
+      # so use external for connecting with admin tools - docker will forward connection to internal port
+      - "1433:1433"
+  webapp:
+    build: .
+    restart: on-failure
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      # params for connection string
+      Database__Server: "mssql"
+      # use original internal port here, we are connecting over internal docker network
+      Database__Port: "1433"
+      Database__User: "SA"
+      Database__Password: "Bad.Pass.1"
+      Database__Database: "timeable"
+    ports:
+      - "8090:80"
+    depends_on:
+      - "mssql"
+
+volumes:
+  mssql-volume: 

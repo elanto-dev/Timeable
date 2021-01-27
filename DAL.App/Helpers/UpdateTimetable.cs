@@ -68,7 +68,7 @@ namespace DAL.App.Helpers
 
                     if (subjectsInSchedule[i]?.TeacherInSubjectEvents == null) continue;
 
-                    foreach (var teacherInSubjectEvent in subjectsInSchedule[i].TeacherInSubjectEvents)
+                    foreach (var teacherInSubjectEvent in subjectsInSchedule[i].TeacherInSubjectEvents!)
                     {
                         var teacher = context.Teachers.FirstOrDefault(
                             t => t.FullName == teacherInSubjectEvent.Teacher.FullName

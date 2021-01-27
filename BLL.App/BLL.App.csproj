@@ -5,12 +5,8 @@
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>D:\University\Diplomitöö\Build\</OutputPath>
-  </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Bll.Base\BLL.Base.csproj" />
+    <ProjectReference Include="..\BLL.Base\BLL.Base.csproj" />
     <ProjectReference Include="..\Contracts.BLL.App\Contracts.BLL.App.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>

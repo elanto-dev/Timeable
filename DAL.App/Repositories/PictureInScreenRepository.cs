@@ -38,7 +38,7 @@ namespace DAL.App.Repositories
         }
 
         // Screen include removed due to tracking problem
-        public override async Task<PictureInScreen> FindAsync(params object[] id)
+        public override async Task<PictureInScreen?> FindAsync(params object[] id)
         {
             if (!(id[0] is int))
             {

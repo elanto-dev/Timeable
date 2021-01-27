@@ -16,6 +16,6 @@ namespace Contracts.DAL.App.Repositories
         /// </summary>
         /// <param name="userId">AppUser ID</param>
         /// <returns>Screen entity</returns>
-        Task<TDalEntity> GetScreenForUserAsync(string userId);
+        Task<TDalEntity?> GetScreenForUserAsync(string userId);
     }
 }

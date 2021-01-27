@@ -15,7 +15,7 @@ namespace DAL.App.Repositories
         {
         }
 
-        public override async Task<Picture> FindAsync(params object[] id)
+        public override async Task<Picture?> FindAsync(params object[] id)
         {
             if (!(id[0] is int))
             {

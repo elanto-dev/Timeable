@@ -12,13 +12,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DB36D8E-0DE3-4085-ADEF-04729F11BD9B}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		docker-compose.yml = docker-compose.yml
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		Dockerfile = Dockerfile
+		docker-compose.prod.yml = docker-compose.prod.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts.DAL.Base", "Contracts.DAL.Base\Contracts.DAL.Base.csproj", "{3F91FD42-5AA8-4A5C-A2B3-FFDB8C996E54}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.App", "DAL.App\DAL.App.csproj", "{56498FE6-2371-423E-8392-B12A09820B5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Base", "Bll.Base\BLL.Base.csproj", "{10D780A6-0118-4E11-8FD6-15BC6C7DEDD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Base", "BLL.Base\BLL.Base.csproj", "{10D780A6-0118-4E11-8FD6-15BC6C7DEDD7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL.DTO", "DAL.DTO\DAL.DTO.csproj", "{1C9EEB10-2C57-45CB-8403-329DA5EAA31E}"
 EndProject
@@ -34,6 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.App", "BLL.App\BLL.App.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeableAppWeb", "TimeableAppWeb\TimeableAppWeb.csproj", "{9B16244B-371C-43AE-92B8-993D75FCCDA8}"
 EndProject
+Contracts.BLL.Base.csproj
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resources", "Resources\Resources.csproj", "{304A8B64-AFAF-4BB7-A5D5-82A0C8CB5DAF}"
 EndProject
 Global

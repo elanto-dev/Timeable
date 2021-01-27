@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  mssql:
+    ports:
+      - "1433:1433"
+  webapp:
+    ports:
+      - "80:80"
