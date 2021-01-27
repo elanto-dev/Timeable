@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   mssql:
     ports:
-      - "1533:1433"
+      - "5433:1433"
   webapp:
     ports:
-      - "80:80"
+      - "5000:80"
