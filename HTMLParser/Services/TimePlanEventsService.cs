@@ -119,6 +119,7 @@ namespace HTMLParser.Services
                             .Replace("õppejõud:", "")
                             .Split("\\,", StringSplitOptions.RemoveEmptyEntries)
                             .Select(e => e.Trim())
+                            .Distinct() // remove duplicate teachers - if the same teacher is marked as lecturer, assistant etc
                             .ToList() ?? new List<string>(),
                         Comment = comment ?? "",
                         Locations = locationsString
