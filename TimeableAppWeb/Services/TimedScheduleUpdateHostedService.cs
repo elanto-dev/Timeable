@@ -38,9 +38,10 @@ namespace TimeableAppWeb.Services
 
             _lastRunDate = DateTime.Today;
             using var scope = _scopeFactory.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            using var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
             UpdateTimetable.DeleteScheduleRecordsOlderThan30Days(context);
             UpdateTimetable.UpdateScheduleForTimeplan(context);
+            
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
