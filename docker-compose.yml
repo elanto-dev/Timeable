@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/azure-sql-edge:latest
     volumes:
       - mssql-volume:/var/opt/mssql
-    restart: on-failure
+    restart: always
     environment:
       TZ: "Europe/Tallinn"
       ACCEPT_EULA: "Y"
